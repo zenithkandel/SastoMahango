@@ -700,9 +700,9 @@ body.dark-theme .cat-card {
 @media (max-width: 768px) {
     /* Navbar & Menu */
     .navbar {
-        width: 92%;
-        padding: 0.8rem 1.2rem;
-        flex-wrap: wrap;
+        width: 95%;
+        padding: 0.8rem 1rem;
+        /* Removed flex-wrap to prevent layout breaking */
     }
 
     .mobile-menu-btn { display: block; }
@@ -711,27 +711,36 @@ body.dark-theme .cat-card {
         display: flex;
         flex-direction: column;
         position: absolute;
-        top: calc(100% + 10px);
+        top: calc(100% + 15px);
         left: 0;
         width: 100%;
-        background: var(--surface-card);
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
         padding: 0;
         max-height: 0;
         overflow: hidden;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         border-radius: var(--radius-lg);
         box-shadow: var(--shadow-lg);
-        border: 1px solid var(--border-color);
+        border: 1px solid rgba(0,0,0,0.05);
         opacity: 0;
         gap: 0;
         visibility: hidden;
+        transform: translateY(-10px);
+    }
+
+    body.dark-theme .nav-menu {
+        background: rgba(39, 39, 42, 0.95);
+        border: 1px solid var(--border-color);
     }
 
     .nav-menu.active {
         max-height: 500px;
-        padding: 1rem;
+        padding: 0.5rem;
         opacity: 1;
         visibility: visible;
+        transform: translateY(0);
     }
 
     .nav-link {
@@ -739,16 +748,14 @@ body.dark-theme .cat-card {
         padding: 1rem;
         width: 100%;
         border-radius: var(--radius-sm);
-        border-bottom: 1px solid rgba(0,0,0,0.05);
+        color: var(--text-primary);
+        font-weight: 600;
     }
 
     .nav-link:hover {
         background: rgba(0,0,0,0.05);
         padding-left: 1.5rem;
-    }
-
-    body.dark-theme .nav-link {
-        border-bottom: 1px solid rgba(255,255,255,0.05);
+        color: var(--brand-accent);
     }
 
     body.dark-theme .nav-link:hover {
@@ -756,7 +763,22 @@ body.dark-theme .cat-card {
     }
 
     .nav-link:last-child { border-bottom: none; }
-    .nav-link::after { display: none; } /* Remove underline effect on mobile */
+    .nav-link::after { display: none; }
+
+    /* Hide full login text on mobile */
+    .login-text { display: none; }
+    
+    .btn-login {
+        padding: 0.6rem;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+    
+    .btn-login i { margin: 0; font-size: 1.1rem; }
 
     /* Hero */
     .hero-section { padding-top: 140px; padding-bottom: 60px; }
