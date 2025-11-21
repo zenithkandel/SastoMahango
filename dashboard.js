@@ -127,12 +127,18 @@ editForm.addEventListener('submit', (e) => {
     const id = parseInt(document.getElementById('editItemId').value);
     const newPrice = parseFloat(document.getElementById('editItemPrice').value);
     const prevPrice = parseFloat(document.getElementById('editItemPrevPrice').value);
+    const newName = document.getElementById('editItemName').value;
+    const newCategory = document.getElementById('editItemCategory').value;
+    const newUnit = document.getElementById('editItemUnit').value;
     
     // Update Data
     const itemIndex = marketItems.findIndex(i => i.id === id);
     if (itemIndex > -1) {
         const item = marketItems[itemIndex];
         item.price = newPrice;
+        item.name = newName;
+        item.category = newCategory;
+        item.unit = newUnit;
         
         // Calculate new trend
         const diff = newPrice - prevPrice;
