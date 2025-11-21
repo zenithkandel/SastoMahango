@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Prices | SastoMahango</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-chart-line" style="color: var(--brand-accent);"></i>
+            Sasto<span>Mahango</span>
+        </div>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="#" class="nav-link active">Market Prices</a>
+            <a href="#" class="nav-link">Insights</a>
+            <a href="#" class="nav-link">About</a>
+        </div>
+        <div class="flex items-center">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
+                <i class="fas fa-moon"></i>
+            </button>
+            <a href="#" class="btn-login" style="margin-left: 1rem;">
+                <i class="fas fa-user"></i> <span class="login-text">Contributor Login</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Market Header & Search -->
+    <section class="market-header-section">
+        <div class="container">
+            <div class="market-header-content">
+                <h1 class="section-title">Market Prices</h1>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">Real-time pricing for daily essentials and commodities.</p>
+                
+                <div class="search-wrapper" style="max-width: 100%; margin: 0;">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search item name (e.g. 'Potato', 'Cement')...">
+                    <button class="search-btn">
+                        <span class="btn-text">Search</span>
+                        <i class="fas fa-arrow-right btn-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market List -->
+    <section class="market-list-section">
+        <div class="container">
+            
+            <!-- List Header (Desktop) -->
+            <div class="market-list-header">
+                <div class="col-icon"></div>
+                <div class="col-name">Item Name</div>
+                <div class="col-category">Category</div>
+                <div class="col-price">Current Price</div>
+                <div class="col-trend">Trend (24h)</div>
+            </div>
+
+            <!-- List Items -->
+            <div class="market-list-container">
+                
+                <!-- Item 1 -->
+                <div class="market-item reveal">
+                    <div class="col-icon">
+                        <div class="item-icon-box"><i class="fas fa-carrot"></i></div>
+                    </div>
+                    <div class="col-name">
+                        <span class="name-text">Red Onion (Indian)</span>
+                        <span class="mobile-label">Vegetables</span>
+                    </div>
+                    <div class="col-category">Vegetables</div>
+                    <div class="col-price">Rs. 85.00 / kg</div>
+                    <div class="col-trend">
+                        <span class="trend-badge down"><i class="fas fa-arrow-down"></i> Rs. 5.00</span>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="market-item reveal">
+                    <div class="col-icon">
+                        <div class="item-icon-box"><i class="fas fa-apple-alt"></i></div>
+                    </div>
+                    <div class="col-name">
+                        <span class="name-text">Apple (Fuji)</span>
+                        <span class="mobile-label">Fruits</span>
+                    </div>
+                    <div class="col-category">Fruits</div>
+                    <div class="col-price">Rs. 320.00 / kg</div>
+                    <div class="col-trend">
+                        <span class="trend-badge up"><i class="fas fa-arrow-up"></i> Rs. 10.00</span>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="market-item reveal">
+                    <div class="col-icon">
+                        <div class="item-icon-box"><i class="fas fa-coins"></i></div>
+                    </div>
+                    <div class="col-name">
+                        <span class="name-text">Gold (Fine)</span>
+                        <span class="mobile-label">Bullion</span>
+                    </div>
+                    <div class="col-category">Bullion</div>
+                    <div class="col-price">Rs. 118,000 / tola</div>
+                    <div class="col-trend">
+                        <span class="trend-badge up"><i class="fas fa-arrow-up"></i> Rs. 500.00</span>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="market-item reveal">
+                    <div class="col-icon">
+                        <div class="item-icon-box"><i class="fas fa-gas-pump"></i></div>
+                    </div>
+                    <div class="col-name">
+                        <span class="name-text">Petrol</span>
+                        <span class="mobile-label">Fuel</span>
+                    </div>
+                    <div class="col-category">Fuel</div>
+                    <div class="col-price">Rs. 172.00 / L</div>
+                    <div class="col-trend">
+                        <span class="trend-badge neutral"><i class="fas fa-minus"></i> 0.00</span>
+                    </div>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="market-item reveal">
+                    <div class="col-icon">
+                        <div class="item-icon-box"><i class="fas fa-egg"></i></div>
+                    </div>
+                    <div class="col-name">
+                        <span class="name-text">Eggs (Large)</span>
+                        <span class="mobile-label">Dairy</span>
+                    </div>
+                    <div class="col-category">Dairy</div>
+                    <div class="col-price">Rs. 450.00 / crate</div>
+                    <div class="col-trend">
+                        <span class="trend-badge up"><i class="fas fa-arrow-up"></i> Rs. 15.00</span>
+                    </div>
+                </div>
+
+                <!-- Item 6 -->
+                <div class="market-item reveal">
+                    <div class="col-icon">
+                        <div class="item-icon-box"><i class="fas fa-mobile-alt"></i></div>
+                    </div>
+                    <div class="col-name">
+                        <span class="name-text">iPhone 15 (128GB)</span>
+                        <span class="mobile-label">Electronics</span>
+                    </div>
+                    <div class="col-category">Electronics</div>
+                    <div class="col-price">Rs. 158,000</div>
+                    <div class="col-trend">
+                        <span class="trend-badge down"><i class="fas fa-arrow-down"></i> Rs. 2000</span>
+                    </div>
+                </div>
+
+                <!-- Item 7 -->
+                <div class="market-item reveal">
+                    <div class="col-icon">
+                        <div class="item-icon-box"><i class="fas fa-cubes"></i></div>
+                    </div>
+                    <div class="col-name">
+                        <span class="name-text">Sugar</span>
+                        <span class="mobile-label">Groceries</span>
+                    </div>
+                    <div class="col-category">Groceries</div>
+                    <div class="col-price">Rs. 110.00 / kg</div>
+                    <div class="col-trend">
+                        <span class="trend-badge up"><i class="fas fa-arrow-up"></i> Rs. 2.00</span>
+                    </div>
+                </div>
+
+                <!-- Item 8 -->
+                <div class="market-item reveal">
+                    <div class="col-icon">
+                        <div class="item-icon-box"><i class="fas fa-hard-hat"></i></div>
+                    </div>
+                    <div class="col-name">
+                        <span class="name-text">Cement (OPC)</span>
+                        <span class="mobile-label">Construction</span>
+                    </div>
+                    <div class="col-category">Construction</div>
+                    <div class="col-price">Rs. 750.00 / sack</div>
+                    <div class="col-trend">
+                        <span class="trend-badge neutral"><i class="fas fa-minus"></i> 0.00</span>
+                    </div>
+                </div>
+
+                <!-- Item 9 -->
+                <div class="market-item reveal">
+                    <div class="col-icon">
+                        <div class="item-icon-box"><i class="fas fa-leaf"></i></div>
+                    </div>
+                    <div class="col-name">
+                        <span class="name-text">Spinach (Saag)</span>
+                        <span class="mobile-label">Vegetables</span>
+                    </div>
+                    <div class="col-category">Vegetables</div>
+                    <div class="col-price">Rs. 40.00 / bunch</div>
+                    <div class="col-trend">
+                        <span class="trend-badge down"><i class="fas fa-arrow-down"></i> Rs. 5.00</span>
+                    </div>
+                </div>
+
+                <!-- Item 10 -->
+                <div class="market-item reveal">
+                    <div class="col-icon">
+                        <div class="item-icon-box"><i class="fas fa-drumstick-bite"></i></div>
+                    </div>
+                    <div class="col-name">
+                        <span class="name-text">Chicken (Live)</span>
+                        <span class="mobile-label">Meat</span>
+                    </div>
+                    <div class="col-category">Meat</div>
+                    <div class="col-price">Rs. 280.00 / kg</div>
+                    <div class="col-trend">
+                        <span class="trend-badge up"><i class="fas fa-arrow-up"></i> Rs. 10.00</span>
+                    </div>
+                </div>
+
+                <!-- Item 11 -->
+                <div class="market-item reveal">
+                    <div class="col-icon">
+                        <div class="item-icon-box"><i class="fas fa-laptop"></i></div>
+                    </div>
+                    <div class="col-name">
+                        <span class="name-text">MacBook Air M2</span>
+                        <span class="mobile-label">Electronics</span>
+                    </div>
+                    <div class="col-category">Electronics</div>
+                    <div class="col-price">Rs. 165,000</div>
+                    <div class="col-trend">
+                        <span class="trend-badge neutral"><i class="fas fa-minus"></i> 0.00</span>
+                    </div>
+                </div>
+
+                <!-- Item 12 -->
+                <div class="market-item reveal">
+                    <div class="col-icon">
+                        <div class="item-icon-box"><i class="fas fa-seedling"></i></div>
+                    </div>
+                    <div class="col-name">
+                        <span class="name-text">Rice (Jeera Masino)</span>
+                        <span class="mobile-label">Groceries</span>
+                    </div>
+                    <div class="col-category">Groceries</div>
+                    <div class="col-price">Rs. 2,100 / sack</div>
+                    <div class="col-trend">
+                        <span class="trend-badge up"><i class="fas fa-arrow-up"></i> Rs. 50.00</span>
+                    </div>
+                </div>
+
+                <!-- Item 13 -->
+                <div class="market-item reveal">
+                    <div class="col-icon">
+                        <div class="item-icon-box"><i class="fas fa-fire"></i></div>
+                    </div>
+                    <div class="col-name">
+                        <span class="name-text">LPG Gas</span>
+                        <span class="mobile-label">Fuel</span>
+                    </div>
+                    <div class="col-category">Fuel</div>
+                    <div class="col-price">Rs. 1,895 / cyl</div>
+                    <div class="col-trend">
+                        <span class="trend-badge neutral"><i class="fas fa-minus"></i> 0.00</span>
+                    </div>
+                </div>
+
+                <!-- Item 14 -->
+                <div class="market-item reveal">
+                    <div class="col-icon">
+                        <div class="item-icon-box"><i class="fas fa-tshirt"></i></div>
+                    </div>
+                    <div class="col-name">
+                        <span class="name-text">Cotton T-Shirt</span>
+                        <span class="mobile-label">Clothing</span>
+                    </div>
+                    <div class="col-category">Clothing</div>
+                    <div class="col-price">Rs. 850.00</div>
+                    <div class="col-trend">
+                        <span class="trend-badge neutral"><i class="fas fa-minus"></i> 0.00</span>
+                    </div>
+                </div>
+
+                <!-- Item 15 -->
+                <div class="market-item reveal">
+                    <div class="col-icon">
+                        <div class="item-icon-box"><i class="fas fa-coins"></i></div>
+                    </div>
+                    <div class="col-name">
+                        <span class="name-text">Silver</span>
+                        <span class="mobile-label">Bullion</span>
+                    </div>
+                    <div class="col-category">Bullion</div>
+                    <div class="col-price">Rs. 1,450 / tola</div>
+                    <div class="col-trend">
+                        <span class="trend-badge up"><i class="fas fa-arrow-up"></i> Rs. 10.00</span>
+                    </div>
+                </div>
+
+                <!-- Item 16 -->
+                <div class="market-item reveal">
+                    <div class="col-icon">
+                        <div class="item-icon-box"><i class="fas fa-carrot"></i></div>
+                    </div>
+                    <div class="col-name">
+                        <span class="name-text">Potato (Red)</span>
+                        <span class="mobile-label">Vegetables</span>
+                    </div>
+                    <div class="col-category">Vegetables</div>
+                    <div class="col-price">Rs. 55.00 / kg</div>
+                    <div class="col-trend">
+                        <span class="trend-badge down"><i class="fas fa-arrow-down"></i> Rs. 2.00</span>
+                    </div>
+                </div>
+
+                <!-- Item 17 -->
+                <div class="market-item reveal">
+                    <div class="col-icon">
+                        <div class="item-icon-box"><i class="fas fa-oil-can"></i></div>
+                    </div>
+                    <div class="col-name">
+                        <span class="name-text">Sunflower Oil</span>
+                        <span class="mobile-label">Groceries</span>
+                    </div>
+                    <div class="col-category">Groceries</div>
+                    <div class="col-price">Rs. 240.00 / L</div>
+                    <div class="col-trend">
+                        <span class="trend-badge up"><i class="fas fa-arrow-up"></i> Rs. 5.00</span>
+                    </div>
+                </div>
+
+                <!-- Item 18 -->
+                <div class="market-item reveal">
+                    <div class="col-icon">
+                        <div class="item-icon-box"><i class="fas fa-hammer"></i></div>
+                    </div>
+                    <div class="col-name">
+                        <span class="name-text">Steel Rod (Fe 500)</span>
+                        <span class="mobile-label">Construction</span>
+                    </div>
+                    <div class="col-category">Construction</div>
+                    <div class="col-price">Rs. 115.00 / kg</div>
+                    <div class="col-trend">
+                        <span class="trend-badge down"><i class="fas fa-arrow-down"></i> Rs. 1.00</span>
+                    </div>
+                </div>
+
+                <!-- Item 19 -->
+                <div class="market-item reveal">
+                    <div class="col-icon">
+                        <div class="item-icon-box"><i class="fas fa-fish"></i></div>
+                    </div>
+                    <div class="col-name">
+                        <span class="name-text">Rohu Fish</span>
+                        <span class="mobile-label">Meat</span>
+                    </div>
+                    <div class="col-category">Meat</div>
+                    <div class="col-price">Rs. 450.00 / kg</div>
+                    <div class="col-trend">
+                        <span class="trend-badge up"><i class="fas fa-arrow-up"></i> Rs. 20.00</span>
+                    </div>
+                </div>
+
+                <!-- Item 20 -->
+                <div class="market-item reveal">
+                    <div class="col-icon">
+                        <div class="item-icon-box"><i class="fas fa-pepper-hot"></i></div>
+                    </div>
+                    <div class="col-name">
+                        <span class="name-text">Green Chilli</span>
+                        <span class="mobile-label">Vegetables</span>
+                    </div>
+                    <div class="col-category">Vegetables</div>
+                    <div class="col-price">Rs. 120.00 / kg</div>
+                    <div class="col-trend">
+                        <span class="trend-badge up"><i class="fas fa-arrow-up"></i> Rs. 10.00</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo" style="color: white;">
+                        <i class="fas fa-chart-line" style="color: var(--brand-accent);"></i>
+                        Sasto<span>Mahango</span>
+                    </div>
+                    <p>Bridging the information gap between market hubs and consumers. Transparency for everyone.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="#">Browse Items</a></li>
+                        <li><a href="#">Market Reports</a></li>
+                        <li><a href="#">API Access</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Use</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SastoMahango. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const icon = themeToggle.querySelector('i');
+
+        // Check for saved user preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-theme');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            
+            if (body.classList.contains('dark-theme')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Mobile Menu Logic
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.querySelector('.nav-menu');
+
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                if (navMenu.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+
+            // Close menu when clicking a link
+            navMenu.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                    mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                });
+            });
+        }
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.market-item');
+        
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        });
+
+        revealElements.forEach((el) => {
+            revealObserver.observe(el);
+        });
+    </script>
+</body>
+</html>
