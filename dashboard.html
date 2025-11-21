@@ -70,7 +70,7 @@
                     <i class="fas fa-search search-icon"></i>
                     <input type="text" id="dashboardSearch" class="search-input" placeholder="Search items to update...">
                 </div>
-                <button class="btn-add-new">
+                <button class="btn-add-new" id="addNewBtn">
                     <i class="fas fa-plus"></i> Add New Item
                 </button>
             </div>
@@ -127,6 +127,57 @@
                     <div class="modal-actions">
                         <button type="button" class="btn-cancel" id="cancelEdit">Cancel</button>
                         <button type="submit" class="btn-save">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Item Modal -->
+    <div class="modal-overlay" id="addModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>Add New Item</h2>
+                <button class="close-modal" id="closeAddModal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="addForm">
+                    <div class="form-group">
+                        <label>Item Name</label>
+                        <input type="text" id="addItemName" required placeholder="e.g. Local Tomato">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select id="addItemCategory" required>
+                                <option value="Vegetables">Vegetables</option>
+                                <option value="Fruits">Fruits</option>
+                                <option value="Grains">Grains</option>
+                                <option value="Essentials">Essentials</option>
+                                <option value="Meat">Meat</option>
+                                <option value="Dairy">Dairy</option>
+                                <option value="Construction">Construction</option>
+                                <option value="Energy">Energy</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Unit</label>
+                            <input type="text" id="addItemUnit" required placeholder="e.g. kg, liter, pc">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Current Price (Rs.)</label>
+                            <input type="number" id="addItemPrice" required step="0.01" placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label>Icon Class (FontAwesome)</label>
+                            <input type="text" id="addItemIcon" placeholder="fa-carrot" value="fa-box">
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-cancel" id="cancelAdd">Cancel</button>
+                        <button type="submit" class="btn-save">Add Item</button>
                     </div>
                 </form>
             </div>

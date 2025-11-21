@@ -30,6 +30,13 @@ const closeModalBtn = document.getElementById('closeModal');
 const cancelEditBtn = document.getElementById('cancelEdit');
 const editForm = document.getElementById('editForm');
 
+// Add Item Elements
+const addModal = document.getElementById('addModal');
+const addNewBtn = document.getElementById('addNewBtn');
+const closeAddModalBtn = document.getElementById('closeAddModal');
+const cancelAddBtn = document.getElementById('cancelAdd');
+const addForm = document.getElementById('addForm');
+
 // Render Items
 function renderItems(items) {
     itemsGrid.innerHTML = '';
@@ -141,4 +148,51 @@ editForm.addEventListener('submit', (e) => {
         // Show simple alert (in real app, show toast)
         alert(`Updated ${item.name} successfully!`);
     }
+});
+
+// Add Item Logic
+function openAddModal() {
+    addForm.reset();
+    addModal.classList.add('active');
+}
+
+function closeAddModal() {
+    addModal.classList.remove('active');
+}
+
+addNewBtn.addEventListener('click', openAddModal);
+closeAddModalBtn.addEventListener('click', closeAddModal);
+cancelAddBtn.addEventListener('click', closeAddModal);
+
+// Close on outside click
+addModal.addEventListener('click', (e) => {
+    if (e.target === addModal) closeAddModal();
+});
+
+// Handle Add Form Submit
+addForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const name = document.getElementById('addItemName').value;
+    const category = document.getElementById('addItemCategory').value;
+    const unit = document.getElementById('addItemUnit').value;
+    const price = parseFloat(document.getElementById('addItemPrice').value);
+    const icon = document.getElementById('addItemIcon').value || 'fa-box';
+    
+    const newItem = {
+        id: marketItems.length + 1, // Simple ID generation
+        name: name,
+        category: category,
+        price: price,
+        unit: unit,
+        trend: 'neutral',
+        change: 0.00,
+        icon: icon
+    };
+    
+    marketItems.unshift(newItem); // Add to top
+    renderItems(marketItems);
+    closeAddModal();
+    
+    alert(`Added ${name} successfully!`);
 });
