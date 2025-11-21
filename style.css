@@ -461,7 +461,7 @@ body.dark-theme .cat-card {
 
 .cat-card:hover .cat-icon-wrapper {
     background: var(--brand-primary);
-    color: white;
+    color: var(--surface-card);
     transform: rotate(-5deg) scale(1.1);
 }
 
