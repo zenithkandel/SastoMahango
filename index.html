@@ -421,6 +421,29 @@
                 });
             });
         }
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.cat-card, .feature-item, .stat-item, .step-card, .section-title, .hero-content');
+        
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Only animate once
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        });
+
+        revealElements.forEach((el, index) => {
+            el.classList.add('reveal');
+            // Add staggered delay based on index within its container if needed, 
+            // but for now simple reveal is good.
+            revealObserver.observe(el);
+        });
     </script>
 
 </body>
