@@ -1,0 +1,79 @@
+SASTOMAHANGO PROJECT STRUCTURE
+SastoMahango is a centralized market intelligence platform designed to provide the general public with accurate, daily average market prices for a wide range of items in the Nepali market.
+The main goal is to bridge the information gap between market hubs and consumers. Users can instantly access the current valuation of items ranging from daily essentials to high-end tech, fostering transparency in the economy.
+To ensure data accuracy, a dedicated team of Contributors updates the prices daily or weekly. However, to maintain the "Gold Standard" of trust, all updates must be validated by a Master Admin before appearing on the public site.
+Here is a brief description of the pages of the site:
+Landing Page / Public Interface
+* Navigation Bar (Home, Browse Categories, About Us, How it Works)
+* Hero Section (Search Bar centered: "Check the current market price...")
+* Live Ticker (Scrolling bar showing major price changes: Gold, Fuel, Seasonal Veg)
+* Browse by Category (Grid view of major categories)
+* About the Project
+* Footer
+Contributor Panel (Restricted Access)
+* Login
+* Dashboard
+* Add New Item
+* Update Price
+* My Logs
+Master Admin Panel (Restricted Access)
+* Login (Secure)
+* Main Dashboard (Stats & Overview)
+* Validation Queue (Crucial for updates)
+* Item Management
+* User Management (Contributors)
+* System Logs
+Data Structure & Item Parameters: Item Entry:
+* Item Name (e.g., "Red Onion", "iPhone 15 Pro")
+* Item ID (Auto-generated)
+* Current Price (Numeric)
+* Unit (e.g., per kg, per piece, per liter)
+* Market Location (Optional - e.g., Kalimati, New Road, Durbar Marg)
+* Last Updated Date
+* Trend Indicator (Up arrow / Down arrow based on previous price)
+* Category Selection:
+o Vegetables
+o Fruits
+o Kitchen Appliances
+o Study Material
+o Clothing
+o Tools
+o Electrical Appliances
+o Miscellaneous
+o Tech/Gadgets
+* Tags (Up to 10 tags for search indexing. E.g., "Summer", "Apple", "Imported")
+Contributor Workflow / Price Updating Mechanism:
+* Contributors are the team members responsible for data entry.
+* They log in to the Contributor Panel.
+* They have two options: Add New Item or Update Existing Item.
+* Adding New Item:
+o They fill in the Name, Category, Base Price, and upload a high-quality reference image.
+o They assign relevant Tags.
+o Upon submission, the item status becomes "Pending Validation."
+* Updating Price:
+o They search for an existing item.
+o They input the new price and the source of the information.
+o Upon submission, the update status becomes "Pending Validation."
+* Contributors can view their "My Logs" to see which of their updates were approved or rejected.
+Admin Panel & Validation Mechanism:
+* Master Admin Dashboard:
+o Total Active Items
+o Pending Validation Requests (The Priority Queue)
+o Total Daily Views
+o Price Fluctuation Alerts (Items with >20% change)
+* Validation Queue:
+o Admins see a list of all changes submitted by Contributors.
+o The view shows: Old Price vs. New Price, Item Name, and Contributor Name.
+o Action: The Admin must click "Validate" (Approved) or "Reject" (Deny).
+o Only after clicking "Validate" does the price update on the public Landing Page.
+* User Management:
+o Create/Invite new Contributors.
+o Suspend Contributors who submit inaccurate data.
+* System Logs:
+o A detailed history of who changed what price and when.
+o Useful for auditing historical price trends.
+System Settings:
+* Category Management: Add or remove market categories.
+* Banner Management: Update the scrolling ticker or hero notices.
+* Global Site Details: Update contact info or Terms of Use.
+
