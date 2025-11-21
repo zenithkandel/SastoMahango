@@ -697,12 +697,11 @@ body.dark-theme .cat-card {
     .category-showcase { gap: 1.5rem; }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
     /* Navbar & Menu */
     .navbar {
         width: 95%;
         padding: 0.8rem 1rem;
-        /* Removed flex-wrap to prevent layout breaking */
     }
 
     .mobile-menu-btn { display: block; }
@@ -765,7 +764,7 @@ body.dark-theme .cat-card {
     .nav-link:last-child { border-bottom: none; }
     .nav-link::after { display: none; }
 
-    /* Hide full login text on mobile */
+    /* Hide full login text on mobile/tablet */
     .login-text { display: none; }
     
     .btn-login {
@@ -779,7 +778,9 @@ body.dark-theme .cat-card {
     }
     
     .btn-login i { margin: 0; font-size: 1.1rem; }
+}
 
+@media (max-width: 768px) {
     /* Hero */
     .hero-section { padding-top: 140px; padding-bottom: 60px; }
     .hero-title { font-size: 2.5rem; }
