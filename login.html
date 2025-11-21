@@ -77,5 +77,39 @@
     </section>
 
     <script src="script.js"></script>
+    <script>
+        // Simple Mock Login Logic
+        const loginForm = document.querySelector('.login-form');
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        // Toggle Password Visibility
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            togglePassword.classList.toggle('fa-eye');
+            togglePassword.classList.toggle('fa-eye-slash');
+        });
+
+        // Handle Login
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if(email && password) {
+                // Simulate API call
+                const btn = loginForm.querySelector('.login-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+                btn.disabled = true;
+
+                setTimeout(() => {
+                    // Redirect to dashboard
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            }
+        });
+    </script>
 </body>
 </html>
