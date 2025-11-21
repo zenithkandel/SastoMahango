@@ -19,7 +19,7 @@
 /* List Header (Desktop) */
 .market-list-header {
     display: grid;
-    grid-template-columns: 80px 2fr 1.5fr 1.5fr 1.5fr;
+    grid-template-columns: 80px 2fr 1.5fr 1.5fr 1.2fr 1.2fr;
     gap: 1rem;
     padding: 1rem 2rem;
     background: var(--surface-card);
@@ -38,7 +38,7 @@ body.dark-theme .market-list-header {
 /* List Item */
 .market-item {
     display: grid;
-    grid-template-columns: 80px 2fr 1.5fr 1.5fr 1.5fr;
+    grid-template-columns: 80px 2fr 1.5fr 1.5fr 1.2fr 1.2fr;
     gap: 1rem;
     padding: 1.5rem 2rem;
     background: var(--surface-card);
@@ -99,6 +99,31 @@ body.dark-theme .item-icon-box {
     font-weight: 500;
 }
 
+.trend-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.trend-badge.up {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--brand-success);
+}
+
+.trend-badge.down {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--brand-danger);
+}
+
+.trend-badge.neutral {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--brand-warning);
+}
+
 .mobile-label {
     display: none;
     font-size: 0.8rem;
@@ -113,7 +138,7 @@ body.dark-theme .item-icon-box {
     }
 
     .market-item {
-        grid-template-columns: 60px 1fr auto; /* Icon | Name+Cat | Price+Updated */
+        grid-template-columns: 60px 1fr auto; /* Icon | Name+Cat+Updated | Price+Trend */
         grid-template-rows: auto auto;
         gap: 0.5rem 1rem;
         padding: 1rem;
@@ -130,11 +155,17 @@ body.dark-theme .item-icon-box {
     }
 
     .col-category {
-        display: none; /* Hide category column, show as label under name */
+        display: none; /* Hide category column */
     }
 
     .mobile-label {
         display: block; /* Show category under name */
+    }
+    
+    .col-updated {
+        display: block;
+        font-size: 0.75rem;
+        margin-top: 0.2rem;
     }
 
     .col-price {
@@ -143,11 +174,15 @@ body.dark-theme .item-icon-box {
         font-size: 1rem;
     }
 
-    .col-updated {
+    .col-trend {
         grid-column: 3;
         grid-row: 2;
         text-align: right;
         justify-self: end;
-        font-size: 0.8rem;
+    }
+    
+    .trend-badge {
+        padding: 0.2rem 0.6rem;
+        font-size: 0.75rem;
     }
 }
