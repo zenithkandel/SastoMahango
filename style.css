@@ -40,6 +40,24 @@
     --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Dark Theme Variables */
+body.dark-theme {
+    --brand-primary: #f8fafc; /* Light text for brand in dark mode */
+    --surface-bg: #020617; /* Slate 950 */
+    --surface-card: #1e293b; /* Slate 800 */
+    --surface-glass: rgba(15, 23, 42, 0.8);
+    
+    --text-primary: #f1f5f9; /* Slate 100 */
+    --text-secondary: #cbd5e1; /* Slate 300 */
+    --text-tertiary: #94a3b8; /* Slate 400 */
+
+    --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.3);
+    --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+    --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.4);
+    --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.1);
+}
+
 /* Reset & Base */
 * {
     margin: 0;
@@ -165,6 +183,30 @@ img { max-width: 100%; display: block; }
     background: var(--brand-accent);
     transform: translateY(-2px);
     box-shadow: var(--shadow-glow);
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: var(--transition-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle:hover {
+    background: rgba(0,0,0,0.05);
+    color: var(--brand-accent);
+}
+
+body.dark-theme .theme-toggle:hover {
+    background: rgba(255,255,255,0.1);
 }
 
 /* --- Hero Section --- */
@@ -432,6 +474,85 @@ img { max-width: 100%; display: block; }
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
+}
+
+/* --- How It Works Section --- */
+.how-it-works {
+    padding: 6rem 0;
+    position: relative;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 4rem;
+}
+
+.step-card {
+    text-align: center;
+    position: relative;
+    padding: 2rem;
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    background: var(--brand-accent);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    margin: 0 auto 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.step-card::after {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    width: 100%;
+    height: 2px;
+    background: var(--text-tertiary);
+    opacity: 0.2;
+    z-index: 1;
+}
+
+.step-card:last-child::after { display: none; }
+
+/* --- Stats Parallax Section --- */
+.stats-section {
+    padding: 8rem 0;
+    background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1611974765270-ca1258634369?q=80&w=1920&auto=format&fit=crop');
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    color: white;
+    text-align: center;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 3rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.stat-item h3 {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--brand-accent);
+    margin-bottom: 0.5rem;
+}
+
+.stat-item p {
+    font-size: 1.1rem;
+    color: #cbd5e1;
 }
 
 /* --- Footer --- */

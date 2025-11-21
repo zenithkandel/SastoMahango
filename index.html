@@ -21,7 +21,12 @@
             <a href="#" class="nav-link">Insights</a>
             <a href="#" class="nav-link">About</a>
         </div>
-        <a href="#" class="btn-login">Contributor Login</a>
+        <div class="flex items-center">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
+                <i class="fas fa-moon"></i>
+            </button>
+            <a href="#" class="btn-login" style="margin-left: 1rem;">Contributor Login</a>
+        </div>
     </nav>
 
     <!-- Hero Section -->
@@ -158,6 +163,10 @@
     <!-- Features Section -->
     <section class="features-section">
         <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why SastoMahango?</h2>
+                <p style="color: var(--text-secondary);">We are committed to transparency and accuracy.</p>
+            </div>
             <div class="feature-grid">
                 <div class="feature-item">
                     <div class="feature-icon-box">
@@ -180,6 +189,55 @@
                     <h3 class="feature-title">Market Trends</h3>
                     <p style="color: var(--text-secondary);">Analyze historical data and spot trends to make smarter buying decisions.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section (Parallax) -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>50k+</h3>
+                    <p>Daily Users</p>
+                </div>
+                <div class="stat-item">
+                    <h3>1,200+</h3>
+                    <p>Items Listed</p>
+                </div>
+                <div class="stat-item">
+                    <h3>15+</h3>
+                    <p>Market Hubs</p>
+                </div>
+                <div class="stat-item">
+                    <h3>24/7</h3>
+                    <p>Real-time Updates</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works container">
+        <div class="section-header">
+            <h2 class="section-title">How It Works</h2>
+            <p style="color: var(--text-secondary);">Simple steps to get the best market intelligence.</p>
+        </div>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3>Search Item</h3>
+                <p style="color: var(--text-secondary); margin-top: 0.5rem;">Type the name of any daily essential or gadget you want to check.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3>Compare Prices</h3>
+                <p style="color: var(--text-secondary); margin-top: 0.5rem;">View the average market price and compare it with local vendors.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3>Make Decision</h3>
+                <p style="color: var(--text-secondary); margin-top: 0.5rem;">Buy with confidence knowing you are paying the fair market rate.</p>
             </div>
         </div>
     </section>
@@ -225,6 +283,46 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const icon = themeToggle.querySelector('i');
+
+        // Check for saved user preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-theme');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            
+            if (body.classList.contains('dark-theme')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Simple Parallax Effect for Hero Elements
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.bento-card');
+            const x = (window.innerWidth - e.pageX * 2) / 100;
+            const y = (window.innerHeight - e.pageY * 2) / 100;
+
+            cards.forEach(card => {
+                card.style.transform = `translateX(${x}px) translateY(${y}px)`;
+            });
+        });
+    </script>
 
 </body>
 </html>
