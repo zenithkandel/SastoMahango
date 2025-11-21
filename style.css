@@ -42,32 +42,33 @@
 
 /* Dark Theme Variables */
 body.dark-theme {
-    --brand-primary: #f8fafc; /* Light text for brand in dark mode */
-    --surface-bg: #0b1120; /* Deep Navy/Black */
-    --surface-card: #1e293b; /* Slate 800 */
-    --surface-glass: rgba(30, 41, 59, 0.8);
+    --brand-primary: #ffffff; /* Pure white for brand text */
+    --surface-bg: #18181b; /* Zinc 950 - Soft Matte Black */
+    --surface-card: #27272a; /* Zinc 800 - Flat Dark Grey */
+    --surface-glass: rgba(39, 39, 42, 0.95);
     
-    --text-primary: #f1f5f9; /* Slate 100 */
-    --text-secondary: #94a3b8; /* Slate 400 */
-    --text-tertiary: #64748b; /* Slate 500 */
+    --text-primary: #e4e4e7; /* Zinc 200 - Soft White */
+    --text-secondary: #a1a1aa; /* Zinc 400 - Soft Grey */
+    --text-tertiary: #71717a; /* Zinc 500 */
 
-    --border-color: rgba(255, 255, 255, 0.1);
+    --border-color: #3f3f46; /* Zinc 700 - Flat Border */
 
-    --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.5);
-    --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.5);
-    --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.5);
-    --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.6);
-    --shadow-glow: 0 0 25px rgba(59, 130, 246, 0.2);
+    /* Flatter Shadows */
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    --shadow-glow: none; /* Removed neon glow */
 }
 
 /* Dark Mode Overrides for Specific Elements */
 body.dark-theme .navbar {
-    background: rgba(15, 23, 42, 0.85);
+    background: var(--surface-card);
     border-color: var(--border-color);
 }
 
 body.dark-theme .navbar:hover {
-    background: rgba(15, 23, 42, 0.95);
+    background: var(--surface-card);
 }
 
 body.dark-theme .btn-login,
@@ -78,20 +79,20 @@ body.dark-theme .search-btn {
 
 body.dark-theme .btn-login:hover,
 body.dark-theme .search-btn:hover {
-    background: #2563eb; /* Darker blue on hover */
+    background: #2563eb;
 }
 
 body.dark-theme .footer {
-    background: #020617;
+    background: #09090b; /* Zinc 950 - Very dark grey, not blue */
     border-top: 1px solid var(--border-color);
 }
 
 body.dark-theme .feature-icon-box {
-    background: rgba(59, 130, 246, 0.15);
+    background: rgba(255, 255, 255, 0.05); /* Subtle white tint instead of blue */
 }
 
 body.dark-theme .step-number {
-    box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+    box-shadow: none; /* Remove glow */
 }
 
 /* Reset & Base */
@@ -414,7 +415,7 @@ body.dark-theme .theme-toggle:hover {
 
 body.dark-theme .cat-card {
     border: 1px solid var(--border-color);
-    background: linear-gradient(145deg, var(--surface-card) 0%, rgba(30, 41, 59, 0.5) 100%);
+    background: var(--surface-card);
 }
 
 .cat-card::before {
