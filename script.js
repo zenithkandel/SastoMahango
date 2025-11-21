@@ -61,7 +61,7 @@ if (mobileMenuBtn && navMenu) {
 
 // Scroll Reveal Animation (Only if IntersectionObserver is supported)
 if ('IntersectionObserver' in window) {
-    const revealElements = document.querySelectorAll('.cat-card, .feature-item, .stat-item, .step-card, .section-title, .hero-content, .market-item');
+    const revealElements = document.querySelectorAll('.cat-card, .feature-item, .stat-item, .step-card, .section-title, .hero-content, .market-item, .contact-card');
     
     const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
