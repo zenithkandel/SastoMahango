@@ -3,111 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SastoMahango - Market Intelligence Platform</title>
+    <title>SastoMahango | Market Intelligence</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <!-- Navigation Bar -->
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="logo">
-            <a href="#">
-                <img src="logo transparent.png" alt="SastoMahango Logo">
-            </a>
+            <i class="fas fa-chart-line" style="color: var(--brand-accent);"></i>
+            Sasto<span>Mahango</span>
         </div>
-        <div class="nav-links">
-            <a href="#">Home</a>
-            <a href="#categories">Browse Categories</a>
-            <a href="#about">About Us</a>
-            <a href="#">How it Works</a>
+        <div class="nav-menu">
+            <a href="#" class="nav-link">Market Trends</a>
+            <a href="#" class="nav-link">Categories</a>
+            <a href="#" class="nav-link">Insights</a>
+            <a href="#" class="nav-link">About</a>
         </div>
+        <a href="#" class="btn-login">Contributor Login</a>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <h1>Check the current market price...</h1>
-        <p>Your trusted source for daily market intelligence in Nepal.</p>
-        <div class="search-container">
-            <input type="text" class="search-bar" placeholder="Search for items (e.g., Red Onion, iPhone 15)...">
-            <i class="fas fa-search search-icon"></i>
+    <section class="hero-section">
+        <div class="container text-center">
+            <div class="hero-content">
+                <div class="badge">
+                    <i class="fas fa-bolt"></i> Live Market Updates
+                </div>
+                <h1 class="hero-title">
+                    Know the Price.<br>
+                    Pay the Right Price.
+                </h1>
+                <p class="hero-subtitle">
+                    Nepal's first centralized market intelligence platform. Real-time data on daily essentials, tech, and commodities.
+                </p>
+
+                <div class="search-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search for 'Red Onion', 'Gold', 'iPhone 15'...">
+                    <button class="search-btn">Search</button>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Live Ticker -->
-    <div class="ticker-wrap">
-        <div class="ticker">
-            <span class="ticker-item">Gold: Rs. 112,000/tola <i class="fas fa-arrow-up"></i></span>
-            <span class="ticker-item">Petrol: Rs. 175/L <i class="fas fa-minus"></i></span>
-            <span class="ticker-item">Red Onion: Rs. 85/kg <i class="fas fa-arrow-down"></i></span>
-            <span class="ticker-item">Apple (Fuji): Rs. 350/kg <i class="fas fa-arrow-up"></i></span>
-            <span class="ticker-item">Silver: Rs. 1,400/tola <i class="fas fa-arrow-up"></i></span>
+    <!-- Market Ticker -->
+    <div class="market-ticker">
+        <div class="ticker-track">
+            <!-- Duplicated items for seamless loop -->
+            <div class="ticker-item">
+                <span class="item-name">Gold (Fine)</span>
+                <span class="item-price">Rs. 118,000</span>
+                <i class="fas fa-arrow-up trend-up"></i>
+            </div>
+            <div class="ticker-item">
+                <span class="item-name">Silver</span>
+                <span class="item-price">Rs. 1,450</span>
+                <i class="fas fa-arrow-up trend-up"></i>
+            </div>
+            <div class="ticker-item">
+                <span class="item-name">Petrol</span>
+                <span class="item-price">Rs. 172.00</span>
+                <i class="fas fa-minus trend-neutral"></i>
+            </div>
+            <div class="ticker-item">
+                <span class="item-name">Red Onion</span>
+                <span class="item-price">Rs. 85.00</span>
+                <i class="fas fa-arrow-down trend-down"></i>
+            </div>
+            <div class="ticker-item">
+                <span class="item-name">US Dollar</span>
+                <span class="item-price">Rs. 133.45</span>
+                <i class="fas fa-arrow-up trend-up"></i>
+            </div>
+            <div class="ticker-item">
+                <span class="item-name">Apple (Fuji)</span>
+                <span class="item-price">Rs. 320.00</span>
+                <i class="fas fa-arrow-down trend-down"></i>
+            </div>
+             <div class="ticker-item">
+                <span class="item-name">Gold (Fine)</span>
+                <span class="item-price">Rs. 118,000</span>
+                <i class="fas fa-arrow-up trend-up"></i>
+            </div>
+            <div class="ticker-item">
+                <span class="item-name">Silver</span>
+                <span class="item-price">Rs. 1,450</span>
+                <i class="fas fa-arrow-up trend-up"></i>
+            </div>
+            <div class="ticker-item">
+                <span class="item-name">Petrol</span>
+                <span class="item-price">Rs. 172.00</span>
+                <i class="fas fa-minus trend-neutral"></i>
+            </div>
         </div>
     </div>
 
-    <!-- Browse by Category -->
-    <section id="categories" class="categories">
-        <h2 class="section-title">Browse by Category</h2>
-        <div class="category-grid">
-            <div class="category-card">
-                <div class="category-icon"><i class="fas fa-carrot"></i></div>
-                <h3>Vegetables</h3>
+    <!-- Categories (Bento Grid) -->
+    <section class="categories-section container">
+        <div class="section-header">
+            <h2 class="section-title">Explore Categories</h2>
+            <p style="color: var(--text-secondary);">Browse through our comprehensive database of market items.</p>
+        </div>
+
+        <div class="bento-grid">
+            <!-- Large Card -->
+            <div class="bento-card span-2 span-row-2">
+                <div>
+                    <div class="card-icon"><i class="fas fa-carrot"></i></div>
+                    <h3 class="card-title">Vegetables & Fruits</h3>
+                    <p class="card-desc">Daily wholesale and retail prices from Kalimati and major hubs.</p>
+                </div>
+                <i class="fas fa-carrot card-bg-icon"></i>
             </div>
-            <div class="category-card">
-                <div class="category-icon"><i class="fas fa-apple-alt"></i></div>
-                <h3>Fruits</h3>
+
+            <!-- Medium Cards -->
+            <div class="bento-card">
+                <div class="card-icon"><i class="fas fa-mobile-alt"></i></div>
+                <h3 class="card-title">Tech & Gadgets</h3>
+                <i class="fas fa-mobile-alt card-bg-icon"></i>
             </div>
-            <div class="category-card">
-                <div class="category-icon"><i class="fas fa-blender"></i></div>
-                <h3>Kitchen Appliances</h3>
+
+            <div class="bento-card">
+                <div class="card-icon"><i class="fas fa-tshirt"></i></div>
+                <h3 class="card-title">Clothing</h3>
+                <i class="fas fa-tshirt card-bg-icon"></i>
             </div>
-            <div class="category-card">
-                <div class="category-icon"><i class="fas fa-book"></i></div>
-                <h3>Study Material</h3>
+
+            <div class="bento-card span-2">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="card-icon"><i class="fas fa-blender"></i></div>
+                        <h3 class="card-title">Home Appliances</h3>
+                    </div>
+                    <i class="fas fa-plug card-bg-icon" style="position: relative; right: 0; bottom: 0; font-size: 4rem; opacity: 0.1;"></i>
+                </div>
             </div>
-            <div class="category-card">
-                <div class="category-icon"><i class="fas fa-tshirt"></i></div>
-                <h3>Clothing</h3>
+
+            <div class="bento-card">
+                <div class="card-icon"><i class="fas fa-book"></i></div>
+                <h3 class="card-title">Study Material</h3>
+                <i class="fas fa-book card-bg-icon"></i>
             </div>
-            <div class="category-card">
-                <div class="category-icon"><i class="fas fa-tools"></i></div>
-                <h3>Tools</h3>
-            </div>
-            <div class="category-card">
-                <div class="category-icon"><i class="fas fa-plug"></i></div>
-                <h3>Electrical Appliances</h3>
-            </div>
-            <div class="category-card">
-                <div class="category-icon"><i class="fas fa-mobile-alt"></i></div>
-                <h3>Tech/Gadgets</h3>
-            </div>
-            <div class="category-card">
-                <div class="category-icon"><i class="fas fa-box-open"></i></div>
-                <h3>Miscellaneous</h3>
+
+            <div class="bento-card">
+                <div class="card-icon"><i class="fas fa-tools"></i></div>
+                <h3 class="card-title">Tools & Hardware</h3>
+                <i class="fas fa-tools card-bg-icon"></i>
             </div>
         </div>
     </section>
 
-    <!-- About the Project -->
-    <section id="about" class="about">
-        <h2 class="section-title">About SastoMahango</h2>
-        <div class="about-content">
-            <p>SastoMahango is a centralized market intelligence platform designed to provide the general public with accurate, daily average market prices for a wide range of items in the Nepali market.</p>
-            <br>
-            <p>Our goal is to bridge the information gap between market hubs and consumers, fostering transparency in the economy.</p>
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon-box">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3 class="feature-title">Verified Data</h3>
+                    <p style="color: var(--text-secondary);">Every price update is validated by our Master Admins to ensure the "Gold Standard" of trust.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-box">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="feature-title">Real-Time Updates</h3>
+                    <p style="color: var(--text-secondary);">Our contributors update prices daily, so you never miss a market fluctuation.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-box">
+                        <i class="fas fa-chart-area"></i>
+                    </div>
+                    <h3 class="feature-title">Market Trends</h3>
+                    <p style="color: var(--text-secondary);">Analyze historical data and spot trends to make smarter buying decisions.</p>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Use</a>
-                <a href="#">Contact Us</a>
-                <a href="#">Contributor Login</a>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo" style="color: white;">
+                        <i class="fas fa-chart-line" style="color: var(--brand-accent);"></i>
+                        Sasto<span>Mahango</span>
+                    </div>
+                    <p>Bridging the information gap between market hubs and consumers. Transparency for everyone.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="#">Browse Items</a></li>
+                        <li><a href="#">Market Reports</a></li>
+                        <li><a href="#">API Access</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Use</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="copyright">
+            <div class="footer-bottom">
                 <p>&copy; 2025 SastoMahango. All rights reserved.</p>
             </div>
         </div>
