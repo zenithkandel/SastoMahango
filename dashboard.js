@@ -202,3 +202,11 @@ addForm.addEventListener('submit', (e) => {
     
     alert(`Added ${name} successfully!`);
 });
+
+// Close modals on Esc key press
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeModal();
+        closeAddModal();
+    }
+});
