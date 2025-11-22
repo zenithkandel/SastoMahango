@@ -112,10 +112,34 @@ function renderItems(items) {
                 <div class="card-icon">
                     <i class="fas ${item.icon || 'fa-box'}"></i>
                 </div>
-                <span class="card-badge">${item.unit}</span>
+                <span class="card-badge">ID: ${item.id}</span>
             </div>
             <h3 class="card-title">${item.name}</h3>
             <p class="card-category">${item.category}</p>
+            
+            <div class="card-details-grid">
+                <div class="detail-row">
+                    <span class="d-label">Unit:</span>
+                    <span class="d-value">${item.unit}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="d-label">Views:</span>
+                    <span class="d-value">${item.views}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="d-label">Status:</span>
+                    <span class="d-value status-${item.status}">${item.status}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="d-label">Creator:</span>
+                    <span class="d-value">${item.created_by || 'Unknown'}</span>
+                </div>
+                <div class="detail-row full-width">
+                    <span class="d-label">Updated:</span>
+                    <span class="d-value">${item.last_updated}</span>
+                </div>
+            </div>
+
             <div class="card-price-section">
                 <div>
                     <span class="price-label">Current Price</span>
@@ -124,6 +148,9 @@ function renderItems(items) {
                 <div class="trend-indicator ${trendClass}">
                     <i class="fas ${trendIcon}"></i> Rs. ${parseFloat(item.change).toFixed(2)}
                 </div>
+            </div>
+            <div class="prev-price-info">
+                Prev: Rs. ${parseFloat(item.previous_price).toFixed(2)}
             </div>
         `;
         itemsGrid.appendChild(card);
