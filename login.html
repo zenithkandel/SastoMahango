@@ -90,6 +90,71 @@
             togglePassword.classList.toggle('fa-eye');
             togglePassword.classList.toggle('fa-eye-slash');
         });
+
+        // Handle Login
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Reset previous errors
+            const existingError = loginForm.querySelector('.error-message');
+            if (existingError) existingError.remove();
+
+            if(email && password) {
+                // Show loading state
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+                submitBtn.disabled = true;
+
+                try {
+                    const response = await fetch('API/validateUser.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        // Start client-side session
+                        sessionStorage.setItem('isLoggedIn', 'true');
+                        
+                        // Redirect
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        // Show error
+                        showError(data.message || 'Login failed');
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showError('An error occurred. Please try again.');
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            }
+        });
+
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+            
+            const formActions = loginForm.querySelector('.form-actions');
+            if (formActions) {
+                loginForm.insertBefore(errorDiv, formActions);
+            } else {
+                loginForm.prepend(errorDiv);
+            }
+        }
     </script>
 </body>
 </html>
