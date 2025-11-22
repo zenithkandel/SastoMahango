@@ -10,8 +10,7 @@ if (isset($_GET['id'])) {
 
     if ($id > 0) {
         // Update view count
-        // Explicitly keep last_updated same to prevent auto-update behavior
-        $sql = "UPDATE items SET views = views + 1, last_updated = last_updated WHERE id = ?";
+        $sql = "UPDATE items SET views = views + 1 WHERE id = ?";
         $stmt = $conn->prepare($sql);
         
         if ($stmt) {

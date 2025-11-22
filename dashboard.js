@@ -235,53 +235,11 @@ editModal.addEventListener('click', (e) => {
     if (e.target === editModal) closeModal();
 });
 
-// Handle Form Submit
-editForm.addEventListener('submit', async (e) => {
+// Handle Form Submit (Mock Update for now)
+editForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    
-    const id = document.getElementById('editItemId').value;
-    const name = document.getElementById('editItemName').value;
-    const category = document.getElementById('editItemCategory').value;
-    const unit = document.getElementById('editItemUnit').value;
-    const price = document.getElementById('editItemPrice').value;
-    const icon = document.getElementById('editItemIcon').value;
-    const tags = document.getElementById('editItemTags').value;
-
-    const data = {
-        id: id,
-        name: name,
-        category: category,
-        unit: unit,
-        price: price,
-        icon: icon,
-        tags: tags
-    };
-
-    try {
-        const response = await fetch('API/updateItem.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-
-        const result = await response.json();
-
-        if (result.success) {
-            closeModal();
-            // Reload items to reflect changes
-            // We reload the current view to keep pagination if possible, 
-            // but loadItems(false) resets to page 0. 
-            // For now, resetting to page 0 is safer to see the updated item if sort order changed.
-            loadItems(false); 
-        } else {
-            alert('Error: ' + result.message);
-        }
-    } catch (error) {
-        console.error('Error updating item:', error);
-        alert('An error occurred while updating the item.');
-    }
+    alert('Update functionality requires backend implementation.');
+    closeModal();
 });
 
 // Add Item Logic
