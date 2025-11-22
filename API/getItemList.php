@@ -7,11 +7,14 @@ include 'conn.php';
 
 // 1. Input Validation & Sanitization
 $indexParam = isset($_GET['index']) ? $_GET['index'] : 0;
-$countParam = isset($_GET['count']) ? intval($_GET['count']) : 10;
+$countInput = isset($_GET['count']) ? $_GET['count'] : '10';
 $orderParam = isset($_GET['order']) ? intval($_GET['order']) : 1;
 
-// Enforce positive count (default to 10 if invalid)
-if ($countParam < 1) $countParam = 10;
+$fetchAll = (strtolower($countInput) === 'all');
+$countParam = intval($countInput);
+
+// Enforce positive count (default to 10 if invalid) unless fetching all
+if (!$fetchAll && $countParam < 1) $countParam = 10;
 
 // Enforce valid order (1 or -1), default to 1 (Forward)
 if ($orderParam !== 1 && $orderParam !== -1) $orderParam = 1;
@@ -47,7 +50,10 @@ if ($targetIndex >= $totalRows) $targetIndex = $totalRows - 1;
 $offset = 0;
 $limit = $countParam;
 
-if ($orderParam === 1) {
+if ($fetchAll) {
+    $offset = 0;
+    $limit = $totalRows;
+} elseif ($orderParam === 1) {
     // Forward: Start at targetIndex, take count
     // Example: (4, 3, 1) -> Start at 4, take 3 -> Indices 4, 5, 6
     $offset = $targetIndex;
