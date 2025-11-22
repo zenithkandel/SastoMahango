@@ -1,0 +1,1 @@
+fetch('http://localhost/projects/sastomahango/API/getItemList.php', { method: 'POST', body: JSON.stringify({ index: 0, count: 10, order: 1 }) }).fetch('API/getItemList.php', { method: 'POST', body: JSON.stringify({ index: 0, count: 10, order: 1 }) }).then(r => r.json()).then(console.table);
