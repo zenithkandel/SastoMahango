@@ -30,7 +30,17 @@ async function fetchItems(index, count, order = 1) {
         const url = `${API_URL}?index=${index}&count=${count}&order=${order}`;
         const response = await fetch(url);
         if (!response.ok) throw new Error('Network response was not ok');
-        return await response.json();
+        
+        const text = await response.text();
+        try {
+            return JSON.parse(text);
+        } catch (e) {
+            console.error('Invalid JSON received:', text.substring(0, 200));
+            if (text.trim().startsWith('<?php') || text.trim().startsWith('<')) {
+                alert("⚠️ Error: PHP is not executing.\n\nPlease make sure you are accessing this site via 'http://localhost/projects/SastoMahango/' and NOT by opening the file directly or using VS Code Live Server.");
+            }
+            throw new Error('Server response was not valid JSON');
+        }
     } catch (error) {
         console.error('Error fetching items:', error);
         return [];
