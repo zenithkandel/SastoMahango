@@ -195,6 +195,12 @@ body.dark-theme .login-footer {
     gap: 0.5rem;
 }
 
+body.dark-theme .error-message {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #fca5a5;
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
 .error-message i {
     font-size: 1rem;
 }
