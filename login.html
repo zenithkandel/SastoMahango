@@ -82,81 +82,81 @@
 
     <script src="script.js"></script>
     <script>
-        const loginForm = document.querySelector('.login-form');
-        const togglePassword = document.getElementById('togglePassword');
-        const passwordInput = document.getElementById('password');
-        const submitBtn = document.querySelector('.btn-submit');
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.querySelector('.login-form');
+            const submitBtn = document.querySelector('.btn-submit');
 
-        // Toggle Password Visibility
-        togglePassword.addEventListener('click', () => {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            togglePassword.classList.toggle('fa-eye');
-            togglePassword.classList.toggle('fa-eye-slash');
-        });
+            // Handle Login
+            if (loginForm) {
+                loginForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+                    const errorDiv = document.getElementById('loginError');
 
-        // Handle Login
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const errorDiv = document.getElementById('loginError');
-
-            // Reset previous errors
-            errorDiv.style.display = 'none';
-            errorDiv.textContent = '';
-
-            if(email && password) {
-                // Show loading state
-                const originalText = submitBtn.innerHTML;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
-                submitBtn.disabled = true;
-
-                try {
-                    const response = await fetch('API/validateUser.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ email, password })
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
+                    // Reset previous errors
+                    if (errorDiv) {
+                        errorDiv.style.display = 'none';
+                        errorDiv.textContent = '';
                     }
 
-                    const data = await response.json();
+                    if(email && password) {
+                        // Show loading state
+                        const originalText = submitBtn.innerHTML;
+                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+                        submitBtn.disabled = true;
 
-                    if (data.success) {
-                        // Start client-side session
-                        sessionStorage.setItem('isLoggedIn', 'true');
-                        
-                        // Redirect
-                        window.location.href = 'dashboard.html';
-                    } else {
-                        // Show error
-                        showError(data.message || 'Login failed');
-                        submitBtn.innerHTML = originalText;
-                        submitBtn.disabled = false;
+                        try {
+                            const response = await fetch('API/validateUser.php', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ email, password })
+                            });
+
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+
+                            const data = await response.json();
+
+                            if (data.success) {
+                                // Start client-side session
+                                sessionStorage.setItem('isLoggedIn', 'true');
+                                
+                                // Redirect
+                                window.location.href = 'dashboard.html';
+                            } else {
+                                // Show error
+                                showError(data.message || 'Login failed');
+                                submitBtn.innerHTML = originalText;
+                                submitBtn.disabled = false;
+                            }
+                        } catch (error) {
+                            console.error('Error:', error);
+                            showError('An error occurred. Please try again.');
+                            submitBtn.innerHTML = originalText;
+                            submitBtn.disabled = false;
+                        }
                     }
-                } catch (error) {
-                    console.error('Error:', error);
-                    showError('An error occurred. Please try again.');
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
+                });
+            }
+
+            function showError(message) {
+                const errorDiv = document.getElementById('loginError');
+                if (errorDiv) {
+                    errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+                    errorDiv.style.display = 'flex';
+                    
+                    // Add shake animation
+                    errorDiv.classList.add('shake');
+                    setTimeout(() => errorDiv.classList.remove('shake'), 500);
+                } else {
+                    alert(message);
                 }
             }
         });
-
-        function showError(message) {
-            const errorDiv = document.getElementById('loginError');
-            errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
-            errorDiv.style.display = 'flex';
-            
-            // Add shake animation
-            errorDiv.classList.add('shake');
-            setTimeout(() => errorDiv.classList.remove('shake'), 500);
-        }
     </script>
 </body>
 </html>
