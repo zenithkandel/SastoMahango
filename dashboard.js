@@ -22,6 +22,7 @@ const addForm = document.getElementById('addForm');
 // Pagination Buttons
 const loadMoreBtn = document.getElementById('loadMoreBtn');
 const loadAllBtn = document.getElementById('loadAllBtn');
+const paginationContainer = document.querySelector('.pagination-container');
 
 // --- API Functions ---
 
@@ -56,16 +57,16 @@ async function loadItems(isAppend = false, loadAll = false) {
         data = await fetchItems(0, 'all', 1);
         currentIndex = data.length; // Update index to end
         // Hide buttons since we loaded everything
-        loadMoreBtn.style.display = 'none';
-        loadAllBtn.style.display = 'none';
+        hidePagination();
     } else {
         data = await fetchItems(currentIndex, BATCH_SIZE, 1);
         currentIndex += data.length;
         
         // Hide buttons if no more data returned
         if (data.length < BATCH_SIZE) {
-            loadMoreBtn.style.display = 'none';
-            loadAllBtn.style.display = 'none';
+            hidePagination();
+        } else {
+            showPagination();
         }
     }
 
@@ -76,6 +77,14 @@ async function loadItems(isAppend = false, loadAll = false) {
     }
 
     renderItems(currentItems);
+}
+
+function hidePagination() {
+    if (paginationContainer) paginationContainer.style.display = 'none';
+}
+
+function showPagination() {
+    if (paginationContainer) paginationContainer.style.display = 'flex';
 }
 
 // --- Render Logic ---
