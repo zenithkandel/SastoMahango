@@ -259,6 +259,16 @@ window.onclick = function(event) {
     }
 }
 
+// Close modal when pressing Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        const modal = document.getElementById('itemModal');
+        if (modal && modal.style.display === 'flex') {
+            closeModal();
+        }
+    }
+});
+
 function filterItems() {
     const searchInput = document.getElementById('marketSearch');
     const categoryFilter = document.getElementById('categoryFilter');
