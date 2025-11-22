@@ -8,8 +8,69 @@
 
 .market-header-content {
     text-align: center;
-    max-width: 800px;
+    max-width: 900px; /* Increased width for controls */
     margin: 0 auto;
+}
+
+.market-controls-row {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.search-wrapper {
+    flex: 1;
+    min-width: 300px;
+    margin: 0 !important;
+}
+
+.header-actions {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.action-btn {
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition-base);
+    font-size: 0.95rem;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    height: 50px; /* Match search height */
+}
+
+.action-btn.primary {
+    background: var(--brand-accent);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.action-btn.primary:hover {
+    background: var(--brand-accent-dark, #2563eb); /* Fallback if var not defined */
+    transform: translateY(-2px);
+}
+
+.action-btn.secondary {
+    background: var(--surface-card);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+.action-btn.secondary:hover {
+    background: var(--surface-hover, #f3f4f6);
+    border-color: var(--text-secondary);
+}
+
+body.dark-theme .action-btn.secondary:hover {
+    background: rgba(255,255,255,0.05);
 }
 
 .market-list-section {
@@ -184,6 +245,20 @@ body.dark-theme .item-icon-box {
     .trend-badge {
         padding: 0.2rem 0.6rem;
         font-size: 0.75rem;
+    }
+
+    .market-controls-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .header-actions {
+        justify-content: center;
+    }
+    
+    .action-btn {
+        flex: 1;
+        justify-content: center;
     }
 }
 
