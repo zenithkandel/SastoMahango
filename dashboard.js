@@ -1,26 +1,8 @@
-// Mock Data (Same as market.html)
-const marketItems = [
-    { id: 1, name: "Red Onion (Indian)", category: "Vegetables", price: 85.00, unit: "kg", trend: "down", change: 5.00, icon: "fa-carrot" },
-    { id: 2, name: "Apple (Fuji)", category: "Fruits", price: 320.00, unit: "kg", trend: "up", change: 10.00, icon: "fa-apple-alt" },
-    { id: 3, name: "Large Eggs (Crate)", category: "Dairy", price: 450.00, unit: "crate", trend: "neutral", change: 0.00, icon: "fa-egg" },
-    { id: 4, name: "Basmati Rice (Premium)", category: "Grains", price: 2100.00, unit: "25kg", trend: "up", change: 50.00, icon: "fa-rice" },
-    { id: 5, name: "Sunflower Oil", category: "Essentials", price: 240.00, unit: "liter", trend: "down", change: 10.00, icon: "fa-oil-can" },
-    { id: 6, name: "Green Chili", category: "Vegetables", price: 120.00, unit: "kg", trend: "up", change: 15.00, icon: "fa-pepper-hot" },
-    { id: 7, name: "Lemon (Local)", category: "Fruits", price: 15.00, unit: "pc", trend: "neutral", change: 0.00, icon: "fa-lemon" },
-    { id: 8, name: "Chicken (Broiler)", category: "Meat", price: 380.00, unit: "kg", trend: "down", change: 20.00, icon: "fa-drumstick-bite" },
-    { id: 9, name: "Sugar", category: "Essentials", price: 95.00, unit: "kg", trend: "up", change: 2.00, icon: "fa-cube" },
-    { id: 10, name: "Spinach (Saag)", category: "Vegetables", price: 40.00, unit: "bunch", trend: "down", change: 5.00, icon: "fa-leaf" },
-    { id: 11, name: "LPG Gas", category: "Energy", price: 1895.00, unit: "cyl", trend: "neutral", change: 0.00, icon: "fa-gas-pump" },
-    { id: 12, name: "Wheat Flour (Atta)", category: "Grains", price: 65.00, unit: "kg", trend: "up", change: 3.00, icon: "fa-wheat" },
-    { id: 13, name: "Fish (Rohu)", category: "Meat", price: 450.00, unit: "kg", trend: "down", change: 15.00, icon: "fa-fish" },
-    { id: 14, name: "Ginger", category: "Vegetables", price: 220.00, unit: "kg", trend: "up", change: 25.00, icon: "fa-mortar-pestle" },
-    { id: 15, name: "Mustard Oil", category: "Essentials", price: 280.00, unit: "liter", trend: "neutral", change: 0.00, icon: "fa-wine-bottle" },
-    { id: 16, name: "Lentils (Masoor)", category: "Grains", price: 160.00, unit: "kg", trend: "down", change: 5.00, icon: "fa-seedling" },
-    { id: 17, name: "Paneer", category: "Dairy", price: 850.00, unit: "kg", trend: "up", change: 20.00, icon: "fa-cheese" },
-    { id: 18, name: "Potato (Red)", category: "Vegetables", price: 65.00, unit: "kg", trend: "down", change: 2.00, icon: "fa-carrot" },
-    { id: 19, name: "Banana (Dozen)", category: "Fruits", price: 120.00, unit: "doz", trend: "neutral", change: 0.00, icon: "fa-apple-alt" },
-    { id: 20, name: "Cement (OPC)", category: "Construction", price: 750.00, unit: "sack", trend: "down", change: 10.00, icon: "fa-building" }
-];
+// State Management
+let currentItems = [];
+let currentIndex = 0;
+const BATCH_SIZE = 20;
+const API_URL = 'API/getItemList.php';
 
 // DOM Elements
 const itemsGrid = document.getElementById('itemsGrid');
@@ -37,9 +19,65 @@ const closeAddModalBtn = document.getElementById('closeAddModal');
 const cancelAddBtn = document.getElementById('cancelAdd');
 const addForm = document.getElementById('addForm');
 
-// Render Items
+// Pagination Buttons
+const loadMoreBtn = document.getElementById('loadMoreBtn');
+const loadAllBtn = document.getElementById('loadAllBtn');
+
+// --- API Functions ---
+
+async function fetchItems(index, count, order = 1) {
+    try {
+        const url = `${API_URL}?index=${index}&count=${count}&order=${order}`;
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Network response was not ok');
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching items:', error);
+        return [];
+    }
+}
+
+async function loadItems(isAppend = false, loadAll = false) {
+    // Show loading state (optional UI enhancement)
+    if (!isAppend) itemsGrid.innerHTML = '<p style="text-align:center; width:100%;">Loading...</p>';
+    
+    let data = [];
+    if (loadAll) {
+        data = await fetchItems(0, 'all', 1);
+        currentIndex = data.length; // Update index to end
+        // Hide buttons since we loaded everything
+        loadMoreBtn.style.display = 'none';
+        loadAllBtn.style.display = 'none';
+    } else {
+        data = await fetchItems(currentIndex, BATCH_SIZE, 1);
+        currentIndex += data.length;
+        
+        // Hide buttons if no more data returned
+        if (data.length < BATCH_SIZE) {
+            loadMoreBtn.style.display = 'none';
+            loadAllBtn.style.display = 'none';
+        }
+    }
+
+    if (isAppend) {
+        currentItems = [...currentItems, ...data];
+    } else {
+        currentItems = data;
+    }
+
+    renderItems(currentItems);
+}
+
+// --- Render Logic ---
+
 function renderItems(items) {
     itemsGrid.innerHTML = '';
+    
+    if (items.length === 0) {
+        itemsGrid.innerHTML = '<p style="text-align:center; width:100%; color:var(--text-secondary);">No items found.</p>';
+        return;
+    }
+
     items.forEach(item => {
         const card = document.createElement('div');
         card.className = 'item-card reveal';
@@ -53,7 +91,7 @@ function renderItems(items) {
         card.innerHTML = `
             <div class="card-header">
                 <div class="card-icon">
-                    <i class="fas ${item.icon}"></i>
+                    <i class="fas ${item.icon || 'fa-box'}"></i>
                 </div>
                 <span class="card-badge">${item.unit}</span>
             </div>
@@ -62,17 +100,17 @@ function renderItems(items) {
             <div class="card-price-section">
                 <div>
                     <span class="price-label">Current Price</span>
-                    <span class="current-price">Rs. ${item.price.toFixed(2)}</span>
+                    <span class="current-price">Rs. ${parseFloat(item.price).toFixed(2)}</span>
                 </div>
                 <div class="trend-indicator ${trendClass}">
-                    <i class="fas ${trendIcon}"></i> Rs. ${item.change.toFixed(2)}
+                    <i class="fas ${trendIcon}"></i> Rs. ${parseFloat(item.change).toFixed(2)}
                 </div>
             </div>
         `;
         itemsGrid.appendChild(card);
     });
     
-    // Re-trigger animations if needed
+    // Re-trigger animations
     if ('IntersectionObserver' in window) {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -83,13 +121,25 @@ function renderItems(items) {
     }
 }
 
-// Initial Render
-renderItems(marketItems);
+// --- Event Listeners ---
 
-// Search Functionality
+// Initial Load
+loadItems(false);
+
+// Load More Button
+loadMoreBtn.addEventListener('click', () => {
+    loadItems(true, false);
+});
+
+// Load All Button
+loadAllBtn.addEventListener('click', () => {
+    loadItems(false, true);
+});
+
+// Search Functionality (Client-side filtering of loaded items)
 searchInput.addEventListener('input', (e) => {
     const term = e.target.value.toLowerCase();
-    const filtered = marketItems.filter(item => 
+    const filtered = currentItems.filter(item => 
         item.name.toLowerCase().includes(term) || 
         item.category.toLowerCase().includes(term)
     );
@@ -103,7 +153,7 @@ function openEditModal(item) {
     document.getElementById('editItemCategory').value = item.category;
     document.getElementById('editItemUnit').value = item.unit;
     document.getElementById('editItemPrice').value = item.price;
-    document.getElementById('editItemNewPrice').value = (item.price - (item.trend === 'up' ? item.change : -item.change)).toFixed(2);
+    document.getElementById('editItemPrevPrice').value = item.previous_price;
     
     editModal.classList.add('active');
 }
@@ -120,40 +170,11 @@ editModal.addEventListener('click', (e) => {
     if (e.target === editModal) closeModal();
 });
 
-// Handle Form Submit
+// Handle Form Submit (Mock Update for now)
 editForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    
-    const id = parseInt(document.getElementById('editItemId').value);
-    const newPrice = parseFloat(document.getElementById('editItemPrice').value);
-    const prevPrice = parseFloat(document.getElementById('editItemPrevPrice').value);
-    const newName = document.getElementById('editItemName').value;
-    const newCategory = document.getElementById('editItemCategory').value;
-    const newUnit = document.getElementById('editItemUnit').value;
-    
-    // Update Data
-    const itemIndex = marketItems.findIndex(i => i.id === id);
-    if (itemIndex > -1) {
-        const item = marketItems[itemIndex];
-        item.price = newPrice;
-        item.name = newName;
-        item.category = newCategory;
-        item.unit = newUnit;
-        
-        // Calculate new trend
-        const diff = newPrice - prevPrice;
-        item.change = Math.abs(diff);
-        if (diff > 0) item.trend = 'up';
-        else if (diff < 0) item.trend = 'down';
-        else item.trend = 'neutral';
-        
-        // Re-render
-        renderItems(marketItems);
-        closeModal();
-        
-        // Show simple alert (in real app, show toast)
-        alert(`Updated ${item.name} successfully!`);
-    }
+    alert('Update functionality requires backend implementation.');
+    closeModal();
 });
 
 // Add Item Logic
@@ -175,32 +196,11 @@ addModal.addEventListener('click', (e) => {
     if (e.target === addModal) closeAddModal();
 });
 
-// Handle Add Form Submit
+// Handle Add Form Submit (Mock Add for now)
 addForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    
-    const name = document.getElementById('addItemName').value;
-    const category = document.getElementById('addItemCategory').value;
-    const unit = document.getElementById('addItemUnit').value;
-    const price = parseFloat(document.getElementById('addItemPrice').value);
-    const icon = document.getElementById('addItemIcon').value || 'fa-box';
-    
-    const newItem = {
-        id: marketItems.length + 1, // Simple ID generation
-        name: name,
-        category: category,
-        price: price,
-        unit: unit,
-        trend: 'neutral',
-        change: 0.00,
-        icon: icon
-    };
-    
-    marketItems.unshift(newItem); // Add to top
-    renderItems(marketItems);
+    alert('Add functionality requires backend implementation.');
     closeAddModal();
-    
-    alert(`Added ${name} successfully!`);
 });
 
 // Close modals on Esc key press
