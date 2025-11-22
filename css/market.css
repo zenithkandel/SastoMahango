@@ -186,3 +186,49 @@ body.dark-theme .item-icon-box {
         font-size: 0.75rem;
     }
 }
+
+/* Pagination (Floating) */
+.pagination-container {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1rem;
+    z-index: 100;
+    background: var(--surface-card);
+    padding: 0.5rem;
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+body.dark-theme .pagination-container {
+    border-color: var(--border-color);
+}
+
+.pagination-btn {
+    background: var(--surface-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition-base);
+    font-size: 0.95rem;
+}
+
+.pagination-btn:hover {
+    background: var(--brand-accent);
+    color: white;
+    border-color: var(--brand-accent);
+    transform: translateY(-2px);
+}
+
+.pagination-btn i {
+    font-size: 0.9rem;
+}
