@@ -137,6 +137,56 @@
         </div>
     </footer>
 
+    <!-- Item Details Modal -->
+    <div id="itemModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            <div class="modal-header">
+                <div class="modal-icon-box" id="modalIconBox">
+                    <i class="fas fa-box" id="modalIcon"></i>
+                </div>
+                <div class="modal-title-group">
+                    <h2 id="modalTitle">Item Name</h2>
+                    <span id="modalCategory" class="modal-category">Category</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-price-section">
+                    <div class="current-price">
+                        <span class="label">Current Price</span>
+                        <span class="value" id="modalPrice">Rs. 0.00 / unit</span>
+                    </div>
+                    <div class="price-trend" id="modalTrend">
+                        <span class="trend-badge neutral"><i class="fas fa-minus"></i> Rs. 0.00</span>
+                    </div>
+                </div>
+                
+                <div class="modal-details-grid">
+                    <div class="detail-item">
+                        <span class="label">Previous Price</span>
+                        <span class="value" id="modalPrevPrice">Rs. 0.00</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Last Updated</span>
+                        <span class="value" id="modalUpdated">Just now</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Views</span>
+                        <span class="value" id="modalViews">0</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Contributor</span>
+                        <span class="value" id="modalContributor">Unknown</span>
+                    </div>
+                </div>
+
+                <div class="modal-tags" id="modalTags">
+                    <!-- Tags will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
     <script src="products.js"></script>
 </body>
