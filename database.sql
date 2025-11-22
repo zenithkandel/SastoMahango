@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS SastoMahango;
+USE SastoMahango;
+
 CREATE TABLE contributors (
     id INT AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(100) NOT NULL,
