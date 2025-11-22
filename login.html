@@ -116,21 +116,30 @@
                         body: JSON.stringify({ email, password })
                     });
 
-                    const data = await response.json();
+                    // Check if response is ok
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const text = await response.text();
+                    let data;
+                    try {
+                        data = JSON.parse(text);
+                    } catch (e) {
+                        console.error('Invalid JSON:', text);
+                        throw new Error('Server returned invalid response');
+                    }
 
                     if (data.success) {
-                        // Store session info in localStorage if needed (optional, but PHP session handles auth)
-                        // Redirect
                         window.location.href = data.redirect;
                     } else {
-                        // Show error
                         showError(data.message || 'Login failed');
                         submitBtn.innerHTML = originalText;
                         submitBtn.disabled = false;
                     }
                 } catch (error) {
                     console.error('Error:', error);
-                    showError('An error occurred. Please try again.');
+                    showError(error.message || 'An error occurred. Please try again.');
                     submitBtn.innerHTML = originalText;
                     submitBtn.disabled = false;
                 }
@@ -140,18 +149,15 @@
         function showError(message) {
             const errorDiv = document.createElement('div');
             errorDiv.className = 'error-message';
-            errorDiv.style.color = '#ef4444';
-            errorDiv.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
-            errorDiv.style.padding = '0.8rem';
-            errorDiv.style.borderRadius = '0.5rem';
-            errorDiv.style.marginBottom = '1rem';
-            errorDiv.style.fontSize = '0.9rem';
-            errorDiv.style.textAlign = 'center';
             errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
             
-            // Insert before the form actions
             const formActions = loginForm.querySelector('.form-actions');
-            loginForm.insertBefore(errorDiv, formActions);
+            if (formActions) {
+                loginForm.insertBefore(errorDiv, formActions);
+            } else {
+                // Fallback if form-actions not found
+                loginForm.prepend(errorDiv);
+            }
         }
     </script>
 </body>

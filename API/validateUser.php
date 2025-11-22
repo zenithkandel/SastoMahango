@@ -21,25 +21,24 @@ if (isset($data['email']) && isset($data['password'])) {
     if ($stmt) {
         $stmt->bind_param("s", $email);
         $stmt->execute();
-        $result = $stmt->get_result();
+        $stmt->store_result();
 
-        if ($result->num_rows === 1) {
-            $user = $result->fetch_assoc();
+        if ($stmt->num_rows === 1) {
+            $stmt->bind_result($id, $full_name, $hashed_password);
+            $stmt->fetch();
             
             // Verify password
-            // Note: In a real application, passwords should be hashed. 
-            // Assuming they are hashed with password_hash()
-            if (password_verify($password, $user['password'])) {
+            if (password_verify($password, $hashed_password)) {
                 
                 // Set session variables
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_name'] = $user['full_name'];
+                $_SESSION['user_id'] = $id;
+                $_SESSION['user_name'] = $full_name;
                 $_SESSION['user_role'] = 'contributor';
 
                 // Update last login
                 $updateSql = "UPDATE contributors SET last_login = NOW() WHERE id = ?";
                 $updateStmt = $conn->prepare($updateSql);
-                $updateStmt->bind_param("i", $user['id']);
+                $updateStmt->bind_param("i", $id);
                 $updateStmt->execute();
 
                 echo json_encode([
