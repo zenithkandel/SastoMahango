@@ -458,6 +458,55 @@ body.dark-theme .pagination-container {
     font-size: 1rem;
 }
 
+/* Card Details Grid */
+.card-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    background: var(--surface-bg);
+    padding: 0.8rem;
+    border-radius: var(--radius-sm);
+}
+
+.detail-row {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-row.full-width {
+    grid-column: span 2;
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.5rem;
+    margin-top: 0.2rem;
+}
+
+.d-label {
+    color: var(--text-tertiary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.d-value {
+    color: var(--text-primary);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.d-value.status-active { color: var(--brand-success); }
+.d-value.status-inactive { color: var(--brand-danger); }
+
+.prev-price-info {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    margin-top: 0.5rem;
+    text-align: right;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .user-name { display: none; }
