@@ -408,6 +408,56 @@ body.dark-theme .form-group textarea {
 
 .btn-save:hover { background: #2563eb; }
 
+/* Pagination Floating Bar */
+.pagination-container {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 0.8rem 1.2rem;
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    gap: 1rem;
+    z-index: 900;
+    border: 1px solid rgba(0,0,0,0.1);
+    transition: var(--transition-base);
+}
+
+body.dark-theme .pagination-container {
+    background: rgba(39, 39, 42, 0.9);
+    border-color: rgba(255,255,255,0.1);
+}
+
+.pagination-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--radius-full);
+    transition: var(--transition-base);
+}
+
+.pagination-btn:hover {
+    background: var(--brand-accent);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.pagination-btn i {
+    font-size: 1rem;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .user-name { display: none; }
