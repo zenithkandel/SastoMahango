@@ -86,3 +86,37 @@ The API returns an array of item objects.
     ...
 ]
 ```
+
+---
+
+# Item View Updater API
+
+This API increments the view count for a specific item.
+
+## Base URL
+```
+http://localhost/projects/SastoMahango/API/itemViewer.php
+```
+
+## Method
+**GET**
+
+## Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| **`id`** | `Integer` | **Yes** | The unique ID of the item to update. |
+
+## Usage Example
+
+### Increment View Count for Item ID 5
+- **URL:** `.../itemViewer.php?id=5`
+
+## Response Format (JSON)
+
+```json
+{
+    "success": true,
+    "message": "View count updated"
+}
+```

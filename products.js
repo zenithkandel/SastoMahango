@@ -158,7 +158,7 @@ function renderItems(items) {
         }
         
         return `
-            <div class="market-item reveal">
+            <div class="market-item reveal" onclick="openItemModal(${item.id})" style="cursor: pointer;">
                 <div class="col-icon">
                     <div class="item-icon-box"><i class="fas ${iconClass}"></i></div>
                 </div>
@@ -179,6 +179,84 @@ function renderItems(items) {
     // Trigger animations if any
     const reveals = document.querySelectorAll('.reveal');
     reveals.forEach(reveal => reveal.classList.add('active'));
+}
+
+async function openItemModal(id) {
+    const item = currentItems.find(i => i.id === id);
+    if (!item) return;
+
+    // Update View Count
+    try {
+        fetch(`http://localhost/projects/SastoMahango/API/itemViewer.php?id=${id}`);
+        // Optimistically update local view count
+        item.views = (parseInt(item.views) || 0) + 1;
+    } catch (e) {
+        console.error('Failed to update view count', e);
+    }
+
+    // Populate Modal Data
+    document.getElementById('modalTitle').textContent = item.name;
+    document.getElementById('modalCategory').textContent = item.category;
+    document.getElementById('modalPrice').textContent = `Rs. ${item.price} / ${item.unit}`;
+    document.getElementById('modalPrevPrice').textContent = `Rs. ${item.previous_price}`;
+    document.getElementById('modalUpdated').textContent = formatDate(item.last_updated);
+    document.getElementById('modalViews').textContent = item.views;
+    document.getElementById('modalContributor').textContent = item.created_by || 'Unknown';
+
+    // Icon
+    let iconClass = 'fa-box';
+    const cat = (item.category || '').toLowerCase();
+    if (cat.includes('veg')) iconClass = 'fa-carrot';
+    else if (cat.includes('fruit')) iconClass = 'fa-apple-alt';
+    else if (cat.includes('dairy') || cat.includes('egg')) iconClass = 'fa-egg';
+    else if (cat.includes('grain') || cat.includes('rice')) iconClass = 'fa-rice';
+    else if (cat.includes('oil')) iconClass = 'fa-oil-can';
+    else if (cat.includes('meat') || cat.includes('chicken') || cat.includes('fish')) iconClass = 'fa-drumstick-bite';
+    else if (cat.includes('gas') || cat.includes('energy')) iconClass = 'fa-gas-pump';
+    
+    document.getElementById('modalIcon').className = `fas ${iconClass}`;
+
+    // Trend
+    const trendEl = document.getElementById('modalTrend');
+    let trendHtml = '';
+    if (item.trend === 'up') {
+        trendHtml = `<span class="trend-badge up"><i class="fas fa-arrow-up"></i> Rs. ${item.change}</span>`;
+    } else if (item.trend === 'down') {
+        trendHtml = `<span class="trend-badge down"><i class="fas fa-arrow-down"></i> Rs. ${item.change}</span>`;
+    } else {
+        trendHtml = `<span class="trend-badge neutral"><i class="fas fa-minus"></i> Rs. ${item.change || '0.00'}</span>`;
+    }
+    trendEl.innerHTML = trendHtml;
+
+    // Tags
+    const tagsContainer = document.getElementById('modalTags');
+    if (item.tags && item.tags.length > 0) {
+        tagsContainer.innerHTML = item.tags.map(tag => `<span class="tag-pill">#${tag}</span>`).join('');
+    } else {
+        tagsContainer.innerHTML = '';
+    }
+
+    // Show Modal
+    const modal = document.getElementById('itemModal');
+    modal.style.display = 'flex';
+    // Small delay for animation
+    setTimeout(() => modal.classList.add('active'), 10);
+}
+
+function closeModal() {
+    const modal = document.getElementById('itemModal');
+    modal.classList.remove('active');
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 300);
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('itemModal');
+    if (event.target === modal) {
+        closeModal();
+    }
 }
 
 function filterItems() {
