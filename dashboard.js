@@ -186,16 +186,42 @@ searchInput.addEventListener('input', (e) => {
 });
 
 // Modal Logic
+const editItemIconInput = document.getElementById('editItemIcon');
+const editItemIconPreview = document.getElementById('editItemIconPreview');
+
 function openEditModal(item) {
     document.getElementById('editItemId').value = item.id;
     document.getElementById('editItemName').value = item.name;
     document.getElementById('editItemCategory').value = item.category;
     document.getElementById('editItemUnit').value = item.unit;
     document.getElementById('editItemPrice').value = item.price;
-    document.getElementById('editItemPrevPrice').value = item.previous_price;
+    
+    // Icon
+    const iconClass = item.icon || 'fa-box';
+    editItemIconInput.value = iconClass;
+    updateIconPreview(iconClass);
+
+    // Tags
+    const tags = item.tags ? (Array.isArray(item.tags) ? item.tags.join(', ') : item.tags) : '';
+    document.getElementById('editItemTags').value = tags;
     
     editModal.classList.add('active');
 }
+
+function updateIconPreview(iconClass) {
+    // Remove 'fa-' prefix if user typed it, but we need it for the class
+    // Actually, let's assume user types 'fa-carrot' or just 'carrot'
+    // But FontAwesome usually needs 'fa-carrot'.
+    // Let's just use what they type, but ensure 'fas' is there in the container or i tag.
+    // The preview container has <i class="fas fa-box"></i>
+    
+    const iTag = editItemIconPreview.querySelector('i');
+    iTag.className = `fas ${iconClass}`;
+}
+
+editItemIconInput.addEventListener('input', (e) => {
+    updateIconPreview(e.target.value);
+});
 
 function closeModal() {
     editModal.classList.remove('active');
