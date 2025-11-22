@@ -181,6 +181,18 @@ body.dark-theme .login-footer {
     text-decoration: underline;
 }
 
+.error-message {
+    color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.1);
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    text-align: center;
+    display: block;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
 /* Responsive */
 @media (max-width: 480px) {
     .login-container {
