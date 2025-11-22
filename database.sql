@@ -27,5 +27,6 @@ CREATE TABLE items (
     modified_by INT,
     tags TEXT,
     status ENUM('active', 'pending', 'rejected') DEFAULT 'pending',
+    views INT DEFAULT 0,
     last_updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
