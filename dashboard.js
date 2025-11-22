@@ -108,49 +108,43 @@ function renderItems(items) {
         if (item.trend === 'down') { trendIcon = 'fa-arrow-down'; trendClass = 'down'; }
 
         card.innerHTML = `
-            <div class="card-header">
-                <div class="card-icon">
+            <div class="card-top-row">
+                <div class="card-icon-wrapper">
                     <i class="fas ${item.icon || 'fa-box'}"></i>
+                    <span class="status-dot status-${item.status}" title="Status: ${item.status}"></span>
                 </div>
-                <span class="card-badge">ID: ${item.id}</span>
+                <span class="card-id-badge">#${item.id}</span>
             </div>
-            <h3 class="card-title">${item.name}</h3>
-            <p class="card-category">${item.category}</p>
             
-            <div class="card-details-grid">
-                <div class="detail-row">
-                    <span class="d-label">Unit:</span>
-                    <span class="d-value">${item.unit}</span>
+            <div class="card-main-info">
+                <h3 class="card-title">${item.name}</h3>
+                <p class="card-category">${item.category}</p>
+            </div>
+
+            <div class="card-price-block">
+                <div class="price-main">
+                    <span class="currency">Rs.</span>
+                    <span class="amount">${parseFloat(item.price).toFixed(2)}</span>
+                    <span class="unit">/${item.unit}</span>
                 </div>
-                <div class="detail-row">
-                    <span class="d-label">Views:</span>
-                    <span class="d-value">${item.views}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="d-label">Status:</span>
-                    <span class="d-value status-${item.status}">${item.status}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="d-label">Creator:</span>
-                    <span class="d-value">${item.created_by || 'Unknown'}</span>
-                </div>
-                <div class="detail-row full-width">
-                    <span class="d-label">Updated:</span>
-                    <span class="d-value">${item.last_updated}</span>
+                <div class="price-sub">
+                    <span class="trend-pill ${trendClass}">
+                        <i class="fas ${trendIcon}"></i> ${parseFloat(item.change).toFixed(2)}
+                    </span>
+                    <span class="prev-price">was ${parseFloat(item.previous_price).toFixed(2)}</span>
                 </div>
             </div>
 
-            <div class="card-price-section">
-                <div>
-                    <span class="price-label">Current Price</span>
-                    <span class="current-price">Rs. ${parseFloat(item.price).toFixed(2)}</span>
+            <div class="card-meta-footer">
+                <div class="meta-item" title="Total Views">
+                    <i class="fas fa-eye"></i> <span>${item.views}</span>
                 </div>
-                <div class="trend-indicator ${trendClass}">
-                    <i class="fas ${trendIcon}"></i> Rs. ${parseFloat(item.change).toFixed(2)}
+                <div class="meta-item" title="Created By">
+                    <i class="fas fa-user-circle"></i> <span>${item.created_by || 'Unknown'}</span>
                 </div>
-            </div>
-            <div class="prev-price-info">
-                Prev: Rs. ${parseFloat(item.previous_price).toFixed(2)}
+                <div class="meta-item" title="Last Updated">
+                    <i class="fas fa-clock"></i> <span>${formatDateShort(item.last_updated)}</span>
+                </div>
             </div>
         `;
         itemsGrid.appendChild(card);
@@ -256,3 +250,9 @@ document.addEventListener('keydown', (e) => {
         closeAddModal();
     }
 });
+
+function formatDateShort(dateString) {
+    if (!dateString) return '-';
+    const date = new Date(dateString);
+    return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+}
