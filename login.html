@@ -58,6 +58,10 @@
                         <i class="fas fa-eye toggle-password" id="togglePassword"></i>
                     </div>
                 </div>
+                
+                <!-- Error Message Container -->
+                <div id="loginError" class="error-message" style="display: none;"></div>
+
                 <div class="form-actions">
                     <label class="checkbox-container">
                         <input type="checkbox">
@@ -96,10 +100,11 @@
             e.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('loginError');
 
             // Reset previous errors
-            const existingError = loginForm.querySelector('.error-message');
-            if (existingError) existingError.remove();
+            errorDiv.style.display = 'none';
+            errorDiv.textContent = '';
 
             if(email && password) {
                 // Show loading state
@@ -144,16 +149,13 @@
         });
 
         function showError(message) {
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'error-message';
+            const errorDiv = document.getElementById('loginError');
             errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+            errorDiv.style.display = 'block';
             
-            const formActions = loginForm.querySelector('.form-actions');
-            if (formActions) {
-                loginForm.insertBefore(errorDiv, formActions);
-            } else {
-                loginForm.prepend(errorDiv);
-            }
+            // Add shake animation
+            errorDiv.classList.add('shake');
+            setTimeout(() => errorDiv.classList.remove('shake'), 500);
         }
     </script>
 </body>

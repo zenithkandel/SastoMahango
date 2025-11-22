@@ -182,15 +182,33 @@ body.dark-theme .login-footer {
 }
 
 .error-message {
-    color: #ef4444;
-    background-color: rgba(239, 68, 68, 0.1);
-    padding: 0.8rem;
-    border-radius: 0.5rem;
-    margin-bottom: 1rem;
+    color: #b91c1c;
+    background-color: #fef2f2;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 1.5rem;
     font-size: 0.9rem;
-    text-align: center;
-    display: block;
-    border: 1px solid rgba(239, 68, 68, 0.2);
+    text-align: left;
+    display: none; /* Hidden by default */
+    border: 1px solid #fca5a5;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.error-message i {
+    font-size: 1rem;
+}
+
+/* Shake Animation */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+    20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+.shake {
+    animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
 }
 
 /* Responsive */
