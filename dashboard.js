@@ -108,30 +108,29 @@ function renderItems(items) {
         if (item.trend === 'down') { trendIcon = 'fa-arrow-down'; trendClass = 'down'; }
 
         card.innerHTML = `
-            <div class="card-top-row">
-                <div class="card-icon-wrapper">
-                    <i class="fas ${item.icon || 'fa-box'}"></i>
-                    <span class="status-dot status-${item.status}" title="Status: ${item.status}"></span>
+            <div class="card-main-content">
+                <div class="card-icon-section">
+                    <div class="card-icon-wrapper">
+                        <i class="fas ${item.icon || 'fa-box'}"></i>
+                        <span class="status-dot status-${item.status}" title="Status: ${item.status}"></span>
+                    </div>
                 </div>
-                <span class="card-id-badge">#${item.id}</span>
-            </div>
-            
-            <div class="card-main-info">
-                <h3 class="card-title">${item.name}</h3>
-                <p class="card-category">${item.category}</p>
-            </div>
-
-            <div class="card-price-block">
-                <div class="price-main">
-                    <span class="currency">Rs.</span>
-                    <span class="amount">${parseFloat(item.price).toFixed(2)}</span>
-                    <span class="unit">/${item.unit}</span>
-                </div>
-                <div class="price-sub">
-                    <span class="trend-pill ${trendClass}">
-                        <i class="fas ${trendIcon}"></i> ${parseFloat(item.change).toFixed(2)}
-                    </span>
-                    <span class="prev-price">was ${parseFloat(item.previous_price).toFixed(2)}</span>
+                
+                <div class="card-info-section">
+                    <div class="card-header-line">
+                        <h3 class="card-title">${item.name}</h3>
+                        <span class="card-id-badge">#${item.id}</span>
+                    </div>
+                    <p class="card-category">${item.category}</p>
+                    
+                    <div class="card-price-compact">
+                        <span class="price-currency">Rs.</span>
+                        <span class="price-amount">${parseFloat(item.price).toFixed(2)}</span>
+                        <span class="price-unit">/${item.unit}</span>
+                        <span class="trend-pill ${trendClass} small-trend">
+                            <i class="fas ${trendIcon}"></i> ${parseFloat(item.change).toFixed(2)}
+                        </span>
+                    </div>
                 </div>
             </div>
 
