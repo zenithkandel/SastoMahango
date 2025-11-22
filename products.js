@@ -96,10 +96,7 @@ async function loadItems(count) {
     }
     
     // Re-apply search filter if exists
-    const searchInput = document.getElementById('marketSearch');
-    if (searchInput && searchInput.value) {
-        filterItems(searchInput.value);
-    }
+    filterItems();
 }
 
 async function loadAllItems() {
@@ -123,10 +120,7 @@ async function loadAllItems() {
     if (loadAllBtn) loadAllBtn.style.display = 'none';
     
     // Re-apply search filter if exists
-    const searchInput = document.getElementById('marketSearch');
-    if (searchInput && searchInput.value) {
-        filterItems(searchInput.value);
-    }
+    filterItems();
 }
 
 function renderItems(items) {
@@ -187,12 +181,20 @@ function renderItems(items) {
     reveals.forEach(reveal => reveal.classList.add('active'));
 }
 
-function filterItems(searchTerm) {
-    const term = searchTerm.toLowerCase();
-    const filtered = currentItems.filter(item => 
-        item.name.toLowerCase().includes(term) || 
-        item.category.toLowerCase().includes(term)
-    );
+function filterItems() {
+    const searchInput = document.getElementById('marketSearch');
+    const categoryFilter = document.getElementById('categoryFilter');
+    
+    const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+    const category = categoryFilter ? categoryFilter.value.toLowerCase() : '';
+
+    const filtered = currentItems.filter(item => {
+        const matchesSearch = item.name.toLowerCase().includes(searchTerm) || 
+                              item.category.toLowerCase().includes(searchTerm);
+        const matchesCategory = category === '' || item.category.toLowerCase() === category;
+        
+        return matchesSearch && matchesCategory;
+    });
     
     renderItems(filtered);
     
@@ -203,7 +205,7 @@ function filterItems(searchTerm) {
         let message = `
             <div class="no-results" style="text-align: center; padding: 2rem; color: #666;">
                 <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 1rem; color: #ccc;"></i>
-                <p>No items found matching "${searchTerm}"</p>
+                <p>No items found matching your criteria</p>
             </div>
         `;
         
