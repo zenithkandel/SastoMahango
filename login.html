@@ -78,10 +78,10 @@
 
     <script src="script.js"></script>
     <script>
-        // Simple Mock Login Logic
         const loginForm = document.querySelector('.login-form');
         const togglePassword = document.getElementById('togglePassword');
         const passwordInput = document.getElementById('password');
+        const submitBtn = document.querySelector('.btn-submit');
 
         // Toggle Password Visibility
         togglePassword.addEventListener('click', () => {
@@ -92,24 +92,67 @@
         });
 
         // Handle Login
-        loginForm.addEventListener('submit', (e) => {
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            if(email && password) {
-                // Simulate API call
-                const btn = loginForm.querySelector('.login-btn');
-                const originalText = btn.innerHTML;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
-                btn.disabled = true;
+            // Reset previous errors
+            const existingError = loginForm.querySelector('.error-message');
+            if (existingError) existingError.remove();
 
-                setTimeout(() => {
-                    // Redirect to dashboard
-                    window.location.href = 'dashboard.html';
-                }, 1500);
+            if(email && password) {
+                // Show loading state
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+                submitBtn.disabled = true;
+
+                try {
+                    const response = await fetch('API/validateUser.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        // Store session info in localStorage if needed (optional, but PHP session handles auth)
+                        // Redirect
+                        window.location.href = data.redirect;
+                    } else {
+                        // Show error
+                        showError(data.message || 'Login failed');
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showError('An error occurred. Please try again.');
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
             }
         });
+
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.style.color = '#ef4444';
+            errorDiv.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
+            errorDiv.style.padding = '0.8rem';
+            errorDiv.style.borderRadius = '0.5rem';
+            errorDiv.style.marginBottom = '1rem';
+            errorDiv.style.fontSize = '0.9rem';
+            errorDiv.style.textAlign = 'center';
+            errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+            
+            // Insert before the form actions
+            const formActions = loginForm.querySelector('.form-actions');
+            loginForm.insertBefore(errorDiv, formActions);
+        }
     </script>
 </body>
 </html>
