@@ -191,7 +191,6 @@ body.dark-theme .login-footer {
     text-align: left;
     display: none; /* Hidden by default */
     border: 1px solid #fca5a5;
-    display: flex;
     align-items: center;
     gap: 0.5rem;
 }
