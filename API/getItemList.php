@@ -1,16 +1,14 @@
 <?php
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, GET");
+header("Access-Control-Allow-Methods: GET");
 
 include 'conn.php';
 
-// Get Input (Support JSON Body, POST Form, or GET Query Params)
-$input = json_decode(file_get_contents('php://input'), true);
-
-$indexParam = isset($input['index']) ? $input['index'] : (isset($_REQUEST['index']) ? $_REQUEST['index'] : 0);
-$countParam = isset($input['count']) ? intval($input['count']) : (isset($_REQUEST['count']) ? intval($_REQUEST['count']) : 10);
-$orderParam = isset($input['order']) ? intval($input['order']) : (isset($_REQUEST['order']) ? intval($_REQUEST['order']) : 1);
+// Get Input from URL parameters
+$indexParam = isset($_GET['index']) ? $_GET['index'] : 0;
+$countParam = isset($_GET['count']) ? intval($_GET['count']) : 10;
+$orderParam = isset($_GET['order']) ? intval($_GET['order']) : 1;
 
 // 1. Get Total Count (needed for 'last' keyword and boundary checks)
 $countSql = "SELECT COUNT(*) as total FROM items";
