@@ -103,7 +103,7 @@ function openEditModal(item) {
     document.getElementById('editItemCategory').value = item.category;
     document.getElementById('editItemUnit').value = item.unit;
     document.getElementById('editItemPrice').value = item.price;
-    document.getElementById('editItemPrevPrice').value = (item.price - (item.trend === 'up' ? item.change : -item.change)).toFixed(2);
+    document.getElementById('editItemNewPrice').value = (item.price - (item.trend === 'up' ? item.change : -item.change)).toFixed(2);
     
     editModal.classList.add('active');
 }
