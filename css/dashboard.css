@@ -417,7 +417,9 @@ body.dark-theme .modal-header {
     margin-bottom: 0.5rem;
 }
 
-.form-group input, .form-group textarea {
+.form-group input, 
+.form-group textarea,
+.form-group select {
     width: 100%;
     padding: 0.8rem;
     border: 1px solid rgba(0,0,0,0.1);
@@ -429,7 +431,8 @@ body.dark-theme .modal-header {
 }
 
 body.dark-theme .form-group input, 
-body.dark-theme .form-group textarea {
+body.dark-theme .form-group textarea,
+body.dark-theme .form-group select {
     border-color: rgba(255,255,255,0.1);
 }
 
