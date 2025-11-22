@@ -5,12 +5,18 @@ header("Access-Control-Allow-Methods: GET");
 
 include 'conn.php';
 
-// Get Input from URL parameters
+// 1. Input Validation & Sanitization
 $indexParam = isset($_GET['index']) ? $_GET['index'] : 0;
 $countParam = isset($_GET['count']) ? intval($_GET['count']) : 10;
 $orderParam = isset($_GET['order']) ? intval($_GET['order']) : 1;
 
-// 1. Get Total Count (needed for 'last' keyword and boundary checks)
+// Enforce positive count (default to 10 if invalid)
+if ($countParam < 1) $countParam = 10;
+
+// Enforce valid order (1 or -1), default to 1 (Forward)
+if ($orderParam !== 1 && $orderParam !== -1) $orderParam = 1;
+
+// 2. Get Total Count (needed for 'last' keyword and boundary checks)
 $countSql = "SELECT COUNT(*) as total FROM items";
 $countResult = $conn->query($countSql);
 $totalRows = 0;
@@ -19,7 +25,13 @@ if ($countResult) {
     $totalRows = intval($row['total']);
 }
 
-// 2. Determine Target Index (0-based)
+// Handle empty DB case
+if ($totalRows === 0) {
+    echo json_encode([]);
+    exit;
+}
+
+// 3. Determine Target Index (0-based)
 $targetIndex = 0;
 if (strtolower((string)$indexParam) === 'last') {
     $targetIndex = $totalRows - 1;
@@ -27,17 +39,11 @@ if (strtolower((string)$indexParam) === 'last') {
     $targetIndex = intval($indexParam);
 }
 
-// Validate bounds
+// Clamp Index to valid range [0, totalRows - 1]
 if ($targetIndex < 0) $targetIndex = 0;
 if ($targetIndex >= $totalRows) $targetIndex = $totalRows - 1;
 
-// Handle empty DB case
-if ($totalRows === 0) {
-    echo json_encode([]);
-    exit;
-}
-
-// 3. Calculate SQL OFFSET and LIMIT based on Order
+// 4. Calculate SQL OFFSET and LIMIT based on Order
 $offset = 0;
 $limit = $countParam;
 
@@ -52,19 +58,19 @@ if ($orderParam === 1) {
     $calculatedOffset = $targetIndex - $countParam + 1;
     
     if ($calculatedOffset < 0) {
-        // Requested more items than exist before the index
+        // Underflow: Requested more items than exist before the index
         // Example: Index 2, Count 5 -> Range [-2, 2] -> Actual [0, 2]
-        $limit = $countParam + $calculatedOffset; // 5 + (-2) = 3
-        $offset = 0;
+        $limit = $countParam + $calculatedOffset; // Reduce limit (e.g., 5 + (-2) = 3)
+        $offset = 0; // Start from beginning
     } else {
         $offset = $calculatedOffset;
     }
 }
 
-// Safety check
+// Final Safety Check
 if ($limit < 0) $limit = 0;
 
-// 4. Fetch Data
+// 5. Fetch Data
 // Sorted by Views (Popularity) DESC, then ID ASC for stability
 $sql = "SELECT i.*, c.full_name as creator_name 
         FROM items i 
