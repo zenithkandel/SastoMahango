@@ -243,8 +243,23 @@ editForm.addEventListener('submit', (e) => {
 });
 
 // Add Item Logic
+const addItemIconInput = document.getElementById('addItemIcon');
+const addItemIconPreview = document.getElementById('addItemIconPreview');
+
+function updateAddIconPreview(iconClass) {
+    const iTag = addItemIconPreview.querySelector('i');
+    // Default to fa-box if empty
+    if (!iconClass) iconClass = 'fa-box';
+    iTag.className = `fas ${iconClass}`;
+}
+
+addItemIconInput.addEventListener('input', (e) => {
+    updateAddIconPreview(e.target.value);
+});
+
 function openAddModal() {
     addForm.reset();
+    updateAddIconPreview('fa-box'); // Reset preview
     addModal.classList.add('active');
 }
 
