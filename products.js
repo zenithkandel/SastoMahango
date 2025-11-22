@@ -11,9 +11,33 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const searchInput = document.getElementById('marketSearch');
     if (searchInput) {
-        searchInput.addEventListener('input', (e) => filterItems(e.target.value));
+        searchInput.addEventListener('input', (e) => filterItems());
+    }
+
+    const categoryFilter = document.getElementById('categoryFilter');
+    if (categoryFilter) {
+        categoryFilter.addEventListener('change', handleCategoryChange);
     }
 });
+
+async function handleCategoryChange() {
+    const category = document.getElementById('categoryFilter').value;
+    const warning = document.getElementById('filterWarning');
+    
+    // If a category is selected and we haven't loaded all items, load them now
+    if (category && !isAllLoaded) {
+        if (warning) warning.style.display = 'inline-flex';
+        
+        // Small delay to allow UI to update before heavy operation
+        setTimeout(async () => {
+            await loadAllItems();
+            if (warning) warning.style.display = 'none';
+            filterItems();
+        }, 50);
+    } else {
+        filterItems();
+    }
+}
 
 async function fetchItems(index, count) {
     try {
@@ -121,9 +145,23 @@ function renderItems(items) {
         else if (cat.includes('meat') || cat.includes('chicken') || cat.includes('fish')) iconClass = 'fa-drumstick-bite';
         else if (cat.includes('gas') || cat.includes('energy')) iconClass = 'fa-gas-pump';
         
-        // Trend logic (mock logic since API might not have trend data yet, or we use price change if available)
-        // For now, randomizing trend for demo purposes if not in API, or just showing neutral
-        // Assuming API returns price.
+        // Trend Logic
+        let trendClass = 'neutral';
+        let trendIcon = 'fa-minus';
+        let trendText = 'Rs. 0.00';
+        
+        // API returns 'up', 'down', 'neutral' and 'change'
+        if (item.trend === 'up') {
+            trendClass = 'up';
+            trendIcon = 'fa-arrow-up';
+            trendText = `Rs. ${item.change}`;
+        } else if (item.trend === 'down') {
+            trendClass = 'down';
+            trendIcon = 'fa-arrow-down';
+            trendText = `Rs. ${item.change}`;
+        } else {
+            trendText = `Rs. ${item.change || '0.00'}`;
+        }
         
         return `
             <div class="market-item reveal">
@@ -137,9 +175,9 @@ function renderItems(items) {
                 <div class="col-category">${item.category}</div>
                 <div class="col-price">Rs. ${item.price} / ${item.unit}</div>
                 <div class="col-trend">
-                    <span class="trend-badge neutral"><i class="fas fa-minus"></i> --</span>
+                    <span class="trend-badge ${trendClass}"><i class="fas ${trendIcon}"></i> ${trendText}</span>
                 </div>
-                <div class="col-updated">${formatDate(item.updated_at)}</div>
+                <div class="col-updated">${formatDate(item.last_updated)}</div>
             </div>
         `;
     }).join('');
