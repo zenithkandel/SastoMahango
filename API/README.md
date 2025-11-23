@@ -39,6 +39,38 @@ Handles user login requests. It verifies the provided username and password agai
 
 ---
 
+### `validateAdmin.php`
+**Function:**  
+Handles administrator login requests. It verifies credentials against the `admins` table and establishes an admin session.
+
+**Working Mechanism:**
+1.  Accepts a POST request with JSON data containing `email` and `password`.
+2.  Queries the `admins` table for the email.
+3.  Verifies the password using `password_verify()`.
+4.  If successful:
+    *   Sets `$_SESSION['admin_id']` and `$_SESSION['user_role'] = 'admin'`.
+    *   Updates the `last_login` timestamp.
+    *   Returns a JSON success response with a redirect URL.
+
+**Endpoint:** `POST /API/validateAdmin.php`
+**Input:**
+```json
+{
+  "email": "admin@sastomahango.com",
+  "password": "adminpassword"
+}
+```
+**Output (Success):**
+```json
+{
+  "success": true,
+  "message": "Login successful",
+  "redirect": "admin-dashboard.html"
+}
+```
+
+---
+
 ### `getLoggedDetails.php`
 **Function:**  
 Checks if a user is currently logged in and returns their session details. Used by the frontend to persist login state and display user information.
