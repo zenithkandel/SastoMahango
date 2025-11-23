@@ -48,8 +48,8 @@
                     <td><span class="status-badge status-success">Active</span></td>
                     <td>Nov 20, 2023</td>
                     <td>
-                        <button class="action-btn edit"><i class="fas fa-pen"></i></button>
-                        <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                        <button class="action-btn edit" onclick="openEditModal('Zenith Kandel', 'zenith@example.com', 'Editor')"><i class="fas fa-pen"></i></button>
+                        <button class="action-btn delete" onclick="openDeleteModal('Zenith Kandel')"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>
                 <tr>
@@ -64,8 +64,8 @@
                     <td><span class="status-badge status-success">Active</span></td>
                     <td>Oct 15, 2023</td>
                     <td>
-                        <button class="action-btn edit"><i class="fas fa-pen"></i></button>
-                        <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                        <button class="action-btn edit" onclick="openEditModal('John Doe', 'john.doe@example.com', 'Contributor')"><i class="fas fa-pen"></i></button>
+                        <button class="action-btn delete" onclick="openDeleteModal('John Doe')"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>
                 <tr>
@@ -80,12 +80,113 @@
                     <td><span class="status-badge status-warning">Inactive</span></td>
                     <td>Sep 01, 2023</td>
                     <td>
-                        <button class="action-btn edit"><i class="fas fa-pen"></i></button>
-                        <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                        <button class="action-btn edit" onclick="openEditModal('Alice Smith', 'alice@example.com', 'Contributor')"><i class="fas fa-pen"></i></button>
+                        <button class="action-btn delete" onclick="openDeleteModal('Alice Smith')"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
+
+    <!-- Edit Modal -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>Edit Contributor</h2>
+                <button class="close-modal" onclick="closeModal('editModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="editName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="editEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Role</label>
+                        <select id="editRole">
+                            <option value="Contributor">Contributor</option>
+                            <option value="Editor">Editor</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('editModal')">Cancel</button>
+                <button class="btn-submit" style="width: auto; padding: 0.6rem 1.5rem;" onclick="saveChanges()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-container" style="max-width: 400px;">
+            <div class="modal-header">
+                <h2 style="color: var(--brand-danger);">Confirm Deletion</h2>
+                <button class="close-modal" onclick="closeModal('deleteModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                    Are you sure you want to remove <strong id="deleteUserName" style="color: var(--text-primary);">User</strong>?
+                </p>
+                <p style="font-size: 0.85rem; color: var(--brand-danger); background: rgba(239, 68, 68, 0.1); padding: 0.75rem; border-radius: var(--radius-sm);">
+                    <i class="fas fa-exclamation-triangle"></i> This action cannot be undone.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('deleteModal')">Cancel</button>
+                <button class="btn-submit" style="width: auto; padding: 0.6rem 1.5rem; background: var(--brand-danger);" onclick="confirmDelete()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal Functions
+        function openEditModal(name, email, role) {
+            document.getElementById('editName').value = name;
+            document.getElementById('editEmail').value = email;
+            document.getElementById('editRole').value = role;
+            
+            const modal = document.getElementById('editModal');
+            modal.classList.add('active');
+        }
+
+        let userToDelete = '';
+        function openDeleteModal(name) {
+            userToDelete = name;
+            document.getElementById('deleteUserName').textContent = name;
+            const modal = document.getElementById('deleteModal');
+            modal.classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('active');
+        }
+
+        function saveChanges() {
+            // Here you would typically send an API request
+            const name = document.getElementById('editName').value;
+            alert(`Changes saved for ${name}`);
+            closeModal('editModal');
+        }
+
+        function confirmDelete() {
+            // Here you would typically send an API request
+            alert(`User ${userToDelete} has been deleted.`);
+            closeModal('deleteModal');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                event.target.classList.remove('active');
+            }
+        }
+    </script>
 </body>
 </html>
