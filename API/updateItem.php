@@ -32,7 +32,7 @@ $tags = $data['tags'] ?? '';
 
 // 3. Fetch Current Data (to calculate trend/change)
 // We need previous values to determine if price changed
-$stmt = $conn->prepare("SELECT price, previous_price, `change`, trend FROM items WHERE id = ?");
+$stmt = $conn->prepare("SELECT price, previous_price FROM items WHERE id = ?");
 if (!$stmt) {
     echo json_encode(['success' => false, 'message' => 'Database error: ' . $conn->error]);
     exit;
@@ -49,27 +49,14 @@ if ($result->num_rows === 0) {
 $row = $result->fetch_assoc();
 $currentPrice = floatval($row['price']);
 $oldPreviousPrice = floatval($row['previous_price']);
-$oldChange = floatval($row['change']);
-$oldTrend = $row['trend'];
 
 // Calculate Change & Trend
 // Only update price history if the price actually changed
 if (abs($price - $currentPrice) > 0.001) {
     $previousPrice = $currentPrice;
-    $priceChange = $price - $previousPrice;
-    
-    if ($priceChange > 0) {
-        $trend = 'up';
-    } elseif ($priceChange < 0) {
-        $trend = 'down';
-    } else {
-        $trend = 'neutral';
-    }
 } else {
     // Price didn't change, keep old history
     $previousPrice = $oldPreviousPrice;
-    $priceChange = $oldChange;
-    $trend = $oldTrend;
 }
 
 // 4. Update Database
@@ -80,8 +67,6 @@ $sql = "UPDATE items SET
         unit = ?, 
         price = ?, 
         previous_price = ?, 
-        `change` = ?, 
-        trend = ?, 
         icon = ?, 
         tags = ?, 
         last_updated = NOW(), 
@@ -94,14 +79,12 @@ if (!$updateStmt) {
     exit;
 }
 
-$updateStmt->bind_param("sssdsssssii", 
+$updateStmt->bind_param("sssdsssii", 
     $name, 
     $category, 
     $unit, 
     $price, 
     $previousPrice, 
-    $priceChange, 
-    $trend, 
     $icon, 
     $tags, 
     $userId, 
