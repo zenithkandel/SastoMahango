@@ -158,6 +158,24 @@ body.dark-theme .input-wrapper input {
     box-shadow: var(--shadow-md);
 }
 
+.btn-admin {
+    background: var(--brand-primary);
+    color: #ffffff;
+}
+
+.btn-admin:hover {
+    background: var(--text-primary);
+    color: var(--surface-bg);
+}
+
+body.dark-theme .btn-admin {
+    color: var(--surface-bg);
+}
+
+body.dark-theme .btn-admin:hover {
+    background: #e4e4e7; /* Zinc 200 */
+}
+
 .login-footer {
     text-align: center;
     margin-top: 2rem;
