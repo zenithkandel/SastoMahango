@@ -23,6 +23,7 @@ $price = $data['price'];
 $unit = $data['unit'];
 $icon = isset($data['icon']) ? $data['icon'] : 'fa-box';
 $status = isset($data['status']) ? $data['status'] : 'active';
+$modified_by = $_SESSION['admin_id'];
 
 try {
     // Get previous price for history
@@ -40,9 +41,9 @@ try {
     $prevStmt->close();
 
     // Update item
-    $sql = "UPDATE items SET name = ?, category = ?, price = ?, unit = ?, icon = ?, status = ?, previous_price = ? WHERE id = ?";
+    $sql = "UPDATE items SET name = ?, category = ?, price = ?, unit = ?, icon = ?, status = ?, previous_price = ?, modified_by = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssdsssdi", $name, $category, $price, $unit, $icon, $status, $previous_price, $id);
+    $stmt->bind_param("ssdsssdii", $name, $category, $price, $unit, $icon, $status, $previous_price, $modified_by, $id);
 
     if ($stmt->execute()) {
         echo json_encode([
