@@ -32,11 +32,11 @@
                 <div class="menu-category" style="margin-top: 1.5rem;">Verification</div>
                 <a class="menu-item" onclick="loadPage('admin/verify-updates.html', this)">
                     <i class="fas fa-clipboard-check"></i> Update Requests
-                    <span class="status-badge status-warning" style="margin-left: auto; font-size: 0.6rem; padding: 0.1rem 0.4rem;">3</span>
+                    <span id="badge-update-requests" class="status-badge status-warning" style="margin-left: auto; font-size: 0.6rem; padding: 0.1rem 0.4rem; display: none;">0</span>
                 </a>
                 <a class="menu-item" onclick="loadPage('admin/verify-items.html', this)">
                     <i class="fas fa-plus-circle"></i> New Items
-                    <span class="status-badge status-info" style="margin-left: auto; font-size: 0.6rem; padding: 0.1rem 0.4rem;">5</span>
+                    <span id="badge-new-items" class="status-badge status-info" style="margin-left: auto; font-size: 0.6rem; padding: 0.1rem 0.4rem; display: none;">0</span>
                 </a>
             </div>
 
@@ -114,6 +114,8 @@
                     frame.style.opacity = '1';
                     // Attempt to sync theme
                     syncThemeToFrame();
+                    // Refresh badges when page loads (e.g. after approving/rejecting)
+                    updateBadges();
                 };
             }, 200);
         }
@@ -144,6 +146,40 @@
                 setTimeout(syncThemeToFrame, 50);
             });
         }
+
+        function updateBadges() {
+            fetch('API/admin/getPendingCounts.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const updateBadge = document.getElementById('badge-update-requests');
+                        const newBadge = document.getElementById('badge-new-items');
+                        
+                        const updates = data.counts.updates;
+                        const newItems = data.counts.new_items;
+
+                        if (updates > 0) {
+                            updateBadge.textContent = updates;
+                            updateBadge.style.display = 'inline-block';
+                        } else {
+                            updateBadge.style.display = 'none';
+                        }
+
+                        if (newItems > 0) {
+                            newBadge.textContent = newItems;
+                            newBadge.style.display = 'inline-block';
+                        } else {
+                            newBadge.style.display = 'none';
+                        }
+                    }
+                })
+                .catch(err => console.error('Error fetching badge counts:', err));
+        }
+
+        // Initial load and periodic refresh
+        updateBadges();
+        setInterval(updateBadges, 30000); // Refresh every 30 seconds
+
     </script>
 </body>
 </html>
