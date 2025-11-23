@@ -393,3 +393,35 @@ function formatDateShort(dateString) {
     const date = new Date(dateString);
     return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 }
+
+// Call it
+updateDashboardStats();
+
+async function updateDashboardStats() {
+    try {
+        // Fetch all items to calculate stats
+        // Note: In a production environment with large data, it's better to have a dedicated API endpoint for stats.
+        const items = await fetchItems(0, 'all'); 
+        
+        const totalItems = items.length;
+        
+        const today = new Date().toDateString();
+        const updatedToday = items.filter(item => {
+            if (!item.last_updated) return false;
+            // Handle MySQL timestamp format (YYYY-MM-DD HH:MM:SS)
+            // Replace space with T for better cross-browser parsing if needed, 
+            // but standard Date constructor usually handles it.
+            const itemDate = new Date(item.last_updated.replace(' ', 'T')).toDateString();
+            return itemDate === today;
+        }).length;
+
+        const totalEl = document.getElementById('totalItemsStat');
+        const updatedEl = document.getElementById('updatedTodayStat');
+
+        if (totalEl) totalEl.textContent = totalItems;
+        if (updatedEl) updatedEl.textContent = updatedToday;
+
+    } catch (error) {
+        console.error('Error updating stats:', error);
+    }
+}
