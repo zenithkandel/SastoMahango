@@ -59,27 +59,19 @@ if (abs($price - $currentPrice) > 0.001) {
     $previousPrice = $oldPreviousPrice;
 }
 
-// 4. Update Database
-// We explicitly update last_updated to NOW() and set modified_by to the user ID
-$sql = "UPDATE items SET 
-        name = ?, 
-        category = ?, 
-        unit = ?, 
-        price = ?, 
-        previous_price = ?, 
-        icon = ?, 
-        tags = ?, 
-        last_updated = NOW(), 
-        modified_by = ? 
-        WHERE id = ?";
+// 4. Insert into updateItems table (Request for Update)
+// Instead of updating `items` directly, we insert a request into `updateItems`
+$sql = "INSERT INTO updateItems (
+            name, category, unit, price, previous_price, icon, tags, modified_by, status, last_updated
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending', NOW())";
 
-$updateStmt = $conn->prepare($sql);
-if (!$updateStmt) {
+$insertStmt = $conn->prepare($sql);
+if (!$insertStmt) {
     echo json_encode(['success' => false, 'message' => 'Database prepare error: ' . $conn->error]);
     exit;
 }
 
-$updateStmt->bind_param("sssdsssii", 
+$insertStmt->bind_param("sssdsssi", 
     $name, 
     $category, 
     $unit, 
@@ -87,14 +79,13 @@ $updateStmt->bind_param("sssdsssii",
     $previousPrice, 
     $icon, 
     $tags, 
-    $userId, 
-    $id
+    $userId
 );
 
-if ($updateStmt->execute()) {
-    echo json_encode(['success' => true, 'message' => 'Item updated successfully']);
+if ($insertStmt->execute()) {
+    echo json_encode(['success' => true, 'message' => 'Update request submitted successfully. Pending admin approval.']);
 } else {
-    echo json_encode(['success' => false, 'message' => 'Failed to update item: ' . $updateStmt->error]);
+    echo json_encode(['success' => false, 'message' => 'Failed to submit update request: ' . $insertStmt->error]);
 }
 
 $stmt->close();
