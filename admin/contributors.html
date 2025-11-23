@@ -204,13 +204,23 @@
                             tbody.innerHTML += row;
                         });
                     } else {
-                        console.error('Failed to load contributors:', data.message);
+                        if (data.redirect) {
+                            window.top.location.href = data.redirect;
+                        } else {
+                            console.error('Failed to load contributors:', data.message);
+                        }
                     }
                 })
                 .catch(error => console.error('Error:', error));
         }
 
         // Modal Functions
+        function openAddModal() {
+            document.getElementById('addForm').reset();
+            const modal = document.getElementById('addModal');
+            modal.classList.add('active');
+        }
+
         function openEditModal(id, name, email, phone) {
             document.getElementById('editId').value = id;
             document.getElementById('editName').value = name;
@@ -234,6 +244,41 @@
             modal.classList.remove('active');
         }
 
+        function saveNewContributor() {
+            const name = document.getElementById('addName').value;
+            const email = document.getElementById('addEmail').value;
+            const password = document.getElementById('addPassword').value;
+            const phone = document.getElementById('addPhone').value;
+
+            if(!name || !email || !password) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            fetch('../API/admin/addContributor.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ full_name: name, email, password, phone }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Contributor added successfully');
+                    closeModal('addModal');
+                    loadContributors();
+                } else {
+                    if (data.redirect) {
+                        window.top.location.href = data.redirect;
+                    } else {
+                        alert('Failed to add: ' + data.message);
+                    }
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
         function saveChanges() {
             const id = document.getElementById('editId').value;
             const name = document.getElementById('editName').value;
@@ -254,7 +299,11 @@
                     closeModal('editModal');
                     loadContributors();
                 } else {
-                    alert('Failed to update: ' + data.message);
+                    if (data.redirect) {
+                        window.top.location.href = data.redirect;
+                    } else {
+                        alert('Failed to update: ' + data.message);
+                    }
                 }
             })
             .catch(error => console.error('Error:', error));
@@ -277,7 +326,11 @@
                     closeModal('deleteModal');
                     loadContributors();
                 } else {
-                    alert('Failed to delete: ' + data.message);
+                    if (data.redirect) {
+                        window.top.location.href = data.redirect;
+                    } else {
+                        alert('Failed to delete: ' + data.message);
+                    }
                 }
             })
             .catch(error => console.error('Error:', error));
