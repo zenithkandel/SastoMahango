@@ -77,13 +77,36 @@
 
     <script src="script.js"></script>
     <script>
+        // Initialize Dashboard
+        document.addEventListener('DOMContentLoaded', () => {
+            // Restore last visited page
+            const lastPage = sessionStorage.getItem('adminCurrentPage');
+            const defaultPage = 'admin/contributors.html';
+            const pageToLoad = lastPage || defaultPage;
+            
+            // Find the menu item corresponding to the page
+            const menuItem = document.querySelector(`a[onclick*="${pageToLoad}"]`);
+            if (menuItem) {
+                loadPage(pageToLoad, menuItem);
+            } else {
+                // Fallback if menu item not found (e.g. if structure changed)
+                const defaultMenu = document.querySelector(`a[onclick*="${defaultPage}"]`);
+                loadPage(defaultPage, defaultMenu);
+            }
+        });
+
         function loadPage(url, element) {
+            // Save current page
+            sessionStorage.setItem('adminCurrentPage', url);
+
             // Update active state
             document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
-            element.classList.add('active');
+            if(element) element.classList.add('active');
             
             // Load page
             const frame = document.getElementById('contentFrame');
+            // Only fade if changing source to avoid flicker on initial load if we want
+            // But the fade effect is nice.
             frame.style.opacity = '0';
             setTimeout(() => {
                 frame.src = url;
@@ -100,7 +123,10 @@
             const frame = document.getElementById('contentFrame');
             try {
                 const frameDoc = frame.contentDocument || frame.contentWindow.document;
-                if (document.body.classList.contains('dark-theme')) {
+                // Check localStorage directly as source of truth, or parent body
+                const isDark = document.body.classList.contains('dark-theme');
+                
+                if (isDark) {
                     frameDoc.body.classList.add('dark-theme');
                 } else {
                     frameDoc.body.classList.remove('dark-theme');
@@ -114,6 +140,7 @@
         const themeToggleBtn = document.getElementById('themeToggle');
         if(themeToggleBtn) {
             themeToggleBtn.addEventListener('click', () => {
+                // Wait for script.js to toggle the class/storage
                 setTimeout(syncThemeToFrame, 50);
             });
         }
