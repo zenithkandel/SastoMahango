@@ -75,6 +75,30 @@ Logs the user out by destroying the current session.
 
 ---
 
+### `getContributors.php`
+**Function:**  
+Retrieves a list of all contributors registered on the platform.
+
+**Working Mechanism:**
+1.  Queries the `contributors` table.
+2.  Selects `id`, `full_name`, and `email`.
+3.  Returns a JSON array of contributor objects.
+
+**Endpoint:** `GET /API/getContributors.php`
+**Output:**
+```json
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "email": "john@example.com"
+  },
+  ...
+]
+```
+
+---
+
 ## 2. Item Management APIs
 
 ### `getItemList.php`
@@ -116,19 +140,18 @@ Increments the view count for a specific item.
 
 ### `updateItem.php`
 **Function:**  
-Updates an existing item's details in the database. It handles price change calculations (trend analysis) and tracks who made the update.
+Updates an existing item's details in the database. It handles price history tracking and records who modified the item.
 
 **Working Mechanism:**
 1.  **Authentication Check:** Verifies if the user is logged in via PHP Session. Returns error if not.
 2.  **Input Parsing:** Accepts a JSON payload with item details (`id`, `name`, `price`, etc.).
-3.  **Trend Calculation:**
+3.  **Price History:**
     *   Fetches the current price from the database.
-    *   Compares it with the new price.
-    *   Updates `previous_price`, `change`, and `trend` ('up', 'down', 'neutral') only if the price has changed.
+    *   If the price has changed, the old price is moved to `previous_price`.
 4.  **Database Update:**
-    *   Updates all item fields.
+    *   Updates item fields (name, category, unit, price, icon, tags).
     *   Sets `last_updated` to the current timestamp.
-    *   Sets `updated_by` to the logged-in user's ID.
+    *   Sets `modified_by` to the logged-in user's ID.
 5.  Returns a JSON success or failure message.
 
 **Endpoint:** `POST /API/updateItem.php`
