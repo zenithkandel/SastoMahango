@@ -46,6 +46,11 @@ try {
     $stmt->bind_param("ssdsssdii", $name, $category, $price, $unit, $icon, $status, $previous_price, $modified_by, $id);
 
     if ($stmt->execute()) {
+        // Log to admin.log
+        $logMessage = "[" . date('Y-m-d H:i:s') . "] Admin directly updated item '{$name}' (ID: {$id}).\n";
+        $logFile = '../../admin.log';
+        file_put_contents($logFile, $logMessage, FILE_APPEND);
+
         echo json_encode([
             "success" => true,
             "message" => "Item updated successfully"

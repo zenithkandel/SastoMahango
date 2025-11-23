@@ -30,6 +30,11 @@ try {
     $stmt->bind_param("ssdsssi", $name, $category, $price, $unit, $icon, $status, $created_by);
 
     if ($stmt->execute()) {
+        // Log to admin.log
+        $logMessage = "[" . date('Y-m-d H:i:s') . "] Admin directly added new item '{$name}'.\n";
+        $logFile = '../../admin.log';
+        file_put_contents($logFile, $logMessage, FILE_APPEND);
+
         echo json_encode([
             "success" => true,
             "message" => "Item added successfully",
