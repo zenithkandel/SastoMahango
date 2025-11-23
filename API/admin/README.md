@@ -197,7 +197,7 @@ Permanently removes an item from the database.
   ```
 
 ### 9. Get Update Requests
-Retrieves a list of pending item update requests submitted by contributors.
+Retrieves a list of pending item update requests (both modifications and new items) submitted by contributors.
 
 - **URL:** `getUpdateRequests.php`
 - **Method:** `GET`
@@ -209,6 +209,7 @@ Retrieves a list of pending item update requests submitted by contributors.
       {
         "id": 5,
         "targetID": 101,
+        "type": "update",
         "name": "Tomato Big",
         "price": 95.00,
         "contributor_name": "John Doe",
@@ -217,13 +218,23 @@ Retrieves a list of pending item update requests submitted by contributors.
             "price": 90.00
         },
         "created_at": "2023-11-23 12:00:00"
+      },
+      {
+        "id": 6,
+        "targetID": 0,
+        "type": "create",
+        "name": "New Apple",
+        "price": 200.00,
+        "contributor_name": "Jane Doe",
+        "current_item": null,
+        "created_at": "2023-11-23 12:30:00"
       }
     ]
   }
   ```
 
 ### 10. Approve Update Request
-Approves a pending request, updates the main item table, and removes the request.
+Approves a pending request. If it's an update, it modifies the existing item. If it's a new item request, it creates the item in the database.
 
 - **URL:** `approveUpdate.php`
 - **Method:** `POST`
@@ -237,7 +248,8 @@ Approves a pending request, updates the main item table, and removes the request
   ```json
   {
     "success": true,
-    "message": "Request approved and item updated successfully"
+    "message": "Request approved and item updated successfully" 
+    // OR "Request approved and new item created successfully"
   }
   ```
 
@@ -257,5 +269,21 @@ Rejects a pending request, removes it from the queue, and logs the rejection to 
   {
     "success": true,
     "message": "Request rejected successfully"
+  }
+  ```
+
+### 12. Get Pending Counts
+Retrieves the counts of pending update requests and new item requests for notification badges.
+
+- **URL:** `getPendingCounts.php`
+- **Method:** `GET`
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "counts": {
+      "updates": 3,
+      "new_items": 5
+    }
   }
   ```
