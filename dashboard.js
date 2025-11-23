@@ -4,6 +4,32 @@ let currentIndex = 0;
 const BATCH_SIZE = 20;
 const API_URL = 'API/getItemList.php';
 
+// --- Auth Check ---
+async function checkAuth() {
+    try {
+        const response = await fetch('API/getLoggedDetails.php');
+        const data = await response.json();
+
+        if (!data.isLoggedIn) {
+            window.location.href = 'login.html';
+        } else {
+            // Update User Profile UI
+            const userNameEl = document.querySelector('.user-name');
+            const userAvatarEl = document.querySelector('.user-avatar');
+            
+            if (userNameEl) userNameEl.textContent = data.user_name;
+            if (userAvatarEl) {
+                userAvatarEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.user_name)}&background=3b82f6&color=fff`;
+            }
+        }
+    } catch (error) {
+        console.error('Auth check failed:', error);
+        // Optional: Redirect on error or allow to stay (safer to redirect if strict)
+        // window.location.href = 'login.html';
+    }
+}
+checkAuth();
+
 // DOM Elements
 const itemsGrid = document.getElementById('itemsGrid');
 const searchInput = document.getElementById('dashboardSearch');
