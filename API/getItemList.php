@@ -78,9 +78,10 @@ if ($limit < 0) $limit = 0;
 
 // 5. Fetch Data
 // Sorted by Views (Popularity) DESC, then ID ASC for stability
-$sql = "SELECT i.*, c.full_name as creator_name 
+$sql = "SELECT i.*, c.full_name as creator_name, m.full_name as modifier_name 
         FROM items i 
         LEFT JOIN contributors c ON i.created_by = c.id
+        LEFT JOIN contributors m ON i.modified_by = m.id
         ORDER BY i.views DESC, i.id ASC
         LIMIT $limit OFFSET $offset";
 
@@ -109,6 +110,9 @@ if ($result && $result->num_rows > 0) {
             $trend = 'down';
         }
 
+        // Determine display name (Prioritize modifier, then creator)
+        $displayUser = !empty($row['modifier_name']) ? $row['modifier_name'] : (!empty($row['creator_name']) ? $row['creator_name'] : 'Unknown');
+
         $item = [
             'id' => intval($row['id']),
             'name' => $row['name'],
@@ -119,7 +123,7 @@ if ($result && $result->num_rows > 0) {
             'change' => round($change, 2),
             'trend' => $trend,
             'icon' => $row['icon'],
-            'created_by' => $row['creator_name'] ? $row['creator_name'] : 'Unknown', 
+            'created_by' => $displayUser, 
             'tags' => $tagsArray,
             'status' => $row['status'],
             'views' => intval($row['views']),
