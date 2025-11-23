@@ -27,11 +27,10 @@
         <table class="data-table">
             <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>Full Name</th>
                     <th>Email</th>
-                    <th>Role</th>
-                    <th>Status</th>
-                    <th>Joined Date</th>
+                    <th>Phone</th>
+                    <th>Last Login</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -44,11 +43,10 @@
                         </div>
                     </td>
                     <td>zenith@example.com</td>
-                    <td>Editor</td>
-                    <td><span class="status-badge status-success">Active</span></td>
-                    <td>Nov 20, 2023</td>
+                    <td>9800000000</td>
+                    <td>2023-11-20 10:30:00</td>
                     <td>
-                        <button class="action-btn edit" onclick="openEditModal('Zenith Kandel', 'zenith@example.com', 'Editor')"><i class="fas fa-pen"></i></button>
+                        <button class="action-btn edit" onclick="openEditModal('Zenith Kandel', 'zenith@example.com', '9800000000')"><i class="fas fa-pen"></i></button>
                         <button class="action-btn delete" onclick="openDeleteModal('Zenith Kandel')"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>
@@ -60,28 +58,11 @@
                         </div>
                     </td>
                     <td>john.doe@example.com</td>
-                    <td>Contributor</td>
-                    <td><span class="status-badge status-success">Active</span></td>
-                    <td>Oct 15, 2023</td>
+                    <td>9811111111</td>
+                    <td>2023-10-15 14:20:00</td>
                     <td>
-                        <button class="action-btn edit" onclick="openEditModal('John Doe', 'john.doe@example.com', 'Contributor')"><i class="fas fa-pen"></i></button>
+                        <button class="action-btn edit" onclick="openEditModal('John Doe', 'john.doe@example.com', '9811111111')"><i class="fas fa-pen"></i></button>
                         <button class="action-btn delete" onclick="openDeleteModal('John Doe')"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div style="display: flex; align-items: center; gap: 0.75rem;">
-                            <div class="admin-avatar" style="width: 32px; height: 32px; font-size: 0.8rem; background: var(--brand-danger);">AS</div>
-                            <span style="font-weight: 500;">Alice Smith</span>
-                        </div>
-                    </td>
-                    <td>alice@example.com</td>
-                    <td>Contributor</td>
-                    <td><span class="status-badge status-warning">Inactive</span></td>
-                    <td>Sep 01, 2023</td>
-                    <td>
-                        <button class="action-btn edit" onclick="openEditModal('Alice Smith', 'alice@example.com', 'Contributor')"><i class="fas fa-pen"></i></button>
-                        <button class="action-btn delete" onclick="openDeleteModal('Alice Smith')"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>
             </tbody>
@@ -106,12 +87,8 @@
                         <input type="email" id="editEmail" required>
                     </div>
                     <div class="form-group">
-                        <label>Role</label>
-                        <select id="editRole">
-                            <option value="Contributor">Contributor</option>
-                            <option value="Editor">Editor</option>
-                            <option value="Admin">Admin</option>
-                        </select>
+                        <label>Phone</label>
+                        <input type="tel" id="editPhone" placeholder="98XXXXXXXX">
                     </div>
                 </form>
             </div>
@@ -146,10 +123,10 @@
 
     <script>
         // Modal Functions
-        function openEditModal(name, email, role) {
+        function openEditModal(name, email, phone) {
             document.getElementById('editName').value = name;
             document.getElementById('editEmail').value = email;
-            document.getElementById('editRole').value = role;
+            document.getElementById('editPhone').value = phone;
             
             const modal = document.getElementById('editModal');
             modal.classList.add('active');
