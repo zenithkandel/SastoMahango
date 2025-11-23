@@ -29,11 +29,11 @@ if (empty($name) || empty($category) || empty($unit) || $price <= 0) {
     exit;
 }
 
-// 3. Insert into newItem table (Request for New Item)
-// Instead of inserting into `items` directly, we insert a request into `newItem`
-$sql = "INSERT INTO newItem (
-            name, category, unit, price, icon, tags, created_by, status, last_updated
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', NOW())";
+// 3. Insert into updateItems table (Request for New Item)
+// We use targetID = 0 to indicate a new item request
+$sql = "INSERT INTO updateItems (
+            targetID, name, category, unit, price, icon, tags, modified_by, status, last_updated
+        ) VALUES (0, ?, ?, ?, ?, ?, ?, ?, 'pending', NOW())";
 
 $stmt = $conn->prepare($sql);
 if (!$stmt) {
@@ -48,7 +48,7 @@ $stmt->bind_param("sssdssi",
     $price, 
     $icon, 
     $tags, 
-    $userId
+    $userId // This maps to modified_by
 );
 
 if ($stmt->execute()) {
