@@ -8,7 +8,7 @@ include 'checkSession.php';
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-if (!isset($data['id']) || !isset($data['full_name']) || !isset($data['email'])) {
+if (!isset($data['full_name']) || !isset($data['email']) || !isset($data['password'])) {
     echo json_encode([
         "success" => false,
         "message" => "Missing required fields"
@@ -16,40 +16,41 @@ if (!isset($data['id']) || !isset($data['full_name']) || !isset($data['email']))
     exit;
 }
 
-$id = $data['id'];
 $full_name = $data['full_name'];
 $email = $data['email'];
+$password = password_hash($data['password'], PASSWORD_DEFAULT);
 $phone = isset($data['phone']) ? $data['phone'] : null;
 
 try {
-    // Check if email exists for other users
-    $checkSql = "SELECT id FROM contributors WHERE email = ? AND id != ?";
+    // Check if email exists
+    $checkSql = "SELECT id FROM contributors WHERE email = ?";
     $checkStmt = $conn->prepare($checkSql);
-    $checkStmt->bind_param("si", $email, $id);
+    $checkStmt->bind_param("s", $email);
     $checkStmt->execute();
     $checkResult = $checkStmt->get_result();
 
     if ($checkResult->num_rows > 0) {
         echo json_encode([
             "success" => false,
-            "message" => "Email already in use by another contributor"
+            "message" => "Email already in use"
         ]);
         exit;
     }
 
-    $sql = "UPDATE contributors SET full_name = ?, email = ?, phone = ? WHERE id = ?";
+    $sql = "INSERT INTO contributors (full_name, email, password, phone) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssi", $full_name, $email, $phone, $id);
+    $stmt->bind_param("ssss", $full_name, $email, $password, $phone);
 
     if ($stmt->execute()) {
         echo json_encode([
             "success" => true,
-            "message" => "Contributor updated successfully"
+            "message" => "Contributor added successfully",
+            "id" => $stmt->insert_id
         ]);
     } else {
         echo json_encode([
             "success" => false,
-            "message" => "Failed to update contributor"
+            "message" => "Failed to add contributor"
         ]);
     }
 

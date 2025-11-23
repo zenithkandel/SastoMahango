@@ -4,6 +4,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET");
 
 include '../conn.php';
+include 'checkSession.php';
 
 try {
     $sql = "SELECT id, full_name, email, phone, last_login FROM contributors ORDER BY id DESC";
