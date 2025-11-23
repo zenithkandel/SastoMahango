@@ -22,7 +22,7 @@ try {
             $targetID = intval($row['targetID']);
             
             if ($targetID > 0) {
-                $itemSql = "SELECT name, price, category, unit, icon FROM items WHERE id = $targetID";
+                $itemSql = "SELECT name, price, category, unit, icon, tags FROM items WHERE id = $targetID";
                 $itemResult = $conn->query($itemSql);
                 if ($itemResult && $itemResult->num_rows > 0) {
                     $currentItem = $itemResult->fetch_assoc();

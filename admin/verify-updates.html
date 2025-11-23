@@ -119,6 +119,12 @@
                             if (req.category !== current.category) {
                                 diffHtml += createDiffBox('Category', current.category, req.category);
                             }
+                            if (req.icon !== current.icon) {
+                                diffHtml += createDiffBox('Icon', `<i class="fas ${current.icon}"></i> ${current.icon}`, `<i class="fas ${req.icon}"></i> ${req.icon}`);
+                            }
+                            if (req.tags !== current.tags) {
+                                diffHtml += createDiffBox('Tags', current.tags || '<em>None</em>', req.tags || '<em>None</em>');
+                            }
                         } else {
                             // Skip new item requests in this view
                             return;
