@@ -5,15 +5,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | SastoMahango</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/fontawesome.css">
-    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/brands.css">
-    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/solid.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css">
 </head>
 <body>
-    <div class="container" style="padding-top: 150px; text-align: center;">
-        <h1>Welcome to Admin Dashboard</h1>
-        <p>This area is under construction.</p>
-        <a href="index.html" class="btn-login" style="display: inline-block; margin-top: 20px;">Go Home</a>
+
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <a href="index.html" class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-chart-line" style="color: var(--brand-accent);"></i>
+                    Sasto<span>Mahango</span>
+                </div>
+            </a>
+
+            <div class="sidebar-menu">
+                <div class="menu-category">Management</div>
+                <a class="menu-item active" onclick="loadPage('admin/contributors.html', this)">
+                    <i class="fas fa-users"></i> Contributors
+                </a>
+                <a class="menu-item" onclick="loadPage('admin/items.html', this)">
+                    <i class="fas fa-box-open"></i> Manage Items
+                </a>
+
+                <div class="menu-category" style="margin-top: 1.5rem;">Verification</div>
+                <a class="menu-item" onclick="loadPage('admin/verify-updates.html', this)">
+                    <i class="fas fa-clipboard-check"></i> Update Requests
+                    <span class="status-badge status-warning" style="margin-left: auto; font-size: 0.6rem; padding: 0.1rem 0.4rem;">3</span>
+                </a>
+                <a class="menu-item" onclick="loadPage('admin/verify-items.html', this)">
+                    <i class="fas fa-plus-circle"></i> New Items
+                    <span class="status-badge status-info" style="margin-left: auto; font-size: 0.6rem; padding: 0.1rem 0.4rem;">5</span>
+                </a>
+            </div>
+
+            <div class="sidebar-footer">
+                <a href="index.html" class="menu-item" style="color: var(--brand-danger);">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Header -->
+            <header class="admin-header">
+                <div class="header-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+
+                <div class="header-profile">
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode" style="background:none; border:none; cursor:pointer; font-size:1.1rem; color:var(--text-secondary);">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="admin-info">
+                        <span class="admin-name">Admin User</span>
+                        <span class="admin-role">Super Admin</span>
+                    </div>
+                    <div class="admin-avatar">A</div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-wrapper">
+                <iframe id="contentFrame" src="admin/contributors.html" frameborder="0"></iframe>
+            </div>
+        </main>
     </div>
+
+    <script src="script.js"></script>
+    <script>
+        function loadPage(url, element) {
+            // Update active state
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+            
+            // Load page
+            const frame = document.getElementById('contentFrame');
+            frame.style.opacity = '0';
+            setTimeout(() => {
+                frame.src = url;
+                frame.onload = () => {
+                    frame.style.opacity = '1';
+                    // Attempt to sync theme
+                    syncThemeToFrame();
+                };
+            }, 200);
+        }
+
+        // Sync Dark Mode to Iframe
+        function syncThemeToFrame() {
+            const frame = document.getElementById('contentFrame');
+            try {
+                const frameDoc = frame.contentDocument || frame.contentWindow.document;
+                if (document.body.classList.contains('dark-theme')) {
+                    frameDoc.body.classList.add('dark-theme');
+                } else {
+                    frameDoc.body.classList.remove('dark-theme');
+                }
+            } catch (e) {
+                console.log('Cannot access iframe content for theming');
+            }
+        }
+
+        // Listen for theme toggle in main page
+        const themeToggleBtn = document.getElementById('themeToggle');
+        if(themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => {
+                setTimeout(syncThemeToFrame, 50);
+            });
+        }
+    </script>
 </body>
 </html>

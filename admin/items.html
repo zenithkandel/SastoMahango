@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Items | Admin</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css">
+    <style>
+        body { background: transparent; padding: 0; margin: 0; overflow-x: hidden; }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <div class="page-title">
+            <h1>Manage Items</h1>
+            <p>Add, edit, or remove items from the database.</p>
+        </div>
+        <button class="btn-submit" style="width: auto; padding: 0.6rem 1.2rem;">
+            <i class="fas fa-plus" style="margin-right: 0.5rem;"></i> Add New Item
+        </button>
+    </div>
+
+    <div class="card">
+        <div style="margin-bottom: 1rem; display: flex; gap: 1rem;">
+            <div class="header-search" style="width: 100%; max-width: 300px;">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search items...">
+            </div>
+            <select style="padding: 0 1rem; border-radius: var(--radius-full); border: 1px solid rgba(0,0,0,0.1); background: var(--surface-bg); color: var(--text-primary);">
+                <option>All Categories</option>
+                <option>Vegetables</option>
+                <option>Fruits</option>
+                <option>Grains</option>
+            </select>
+        </div>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Category</th>
+                    <th>Unit</th>
+                    <th>Avg Price</th>
+                    <th>Last Updated</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="font-weight: 500;">Tomato Big</td>
+                    <td>Vegetables</td>
+                    <td>kg</td>
+                    <td>Rs. 85</td>
+                    <td>Today, 10:30 AM</td>
+                    <td>
+                        <button class="action-btn edit"><i class="fas fa-pen"></i></button>
+                        <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 500;">Red Potato</td>
+                    <td>Vegetables</td>
+                    <td>kg</td>
+                    <td>Rs. 65</td>
+                    <td>Today, 09:15 AM</td>
+                    <td>
+                        <button class="action-btn edit"><i class="fas fa-pen"></i></button>
+                        <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 500;">Onion Dry (Indian)</td>
+                    <td>Vegetables</td>
+                    <td>kg</td>
+                    <td>Rs. 95</td>
+                    <td>Yesterday</td>
+                    <td>
+                        <button class="action-btn edit"><i class="fas fa-pen"></i></button>
+                        <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 500;">Apple (Fuji)</td>
+                    <td>Fruits</td>
+                    <td>kg</td>
+                    <td>Rs. 320</td>
+                    <td>2 days ago</td>
+                    <td>
+                        <button class="action-btn edit"><i class="fas fa-pen"></i></button>
+                        <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 500;">Basmati Rice</td>
+                    <td>Grains</td>
+                    <td>kg</td>
+                    <td>Rs. 180</td>
+                    <td>1 week ago</td>
+                    <td>
+                        <button class="action-btn edit"><i class="fas fa-pen"></i></button>
+                        <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

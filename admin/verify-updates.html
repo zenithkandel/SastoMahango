@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Updates | Admin</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css">
+    <style>
+        body { background: transparent; padding: 0; margin: 0; overflow-x: hidden; }
+        .diff-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .diff-box {
+            padding: 0.75rem;
+            border-radius: var(--radius-sm);
+            background: var(--surface-bg);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .diff-label {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .diff-val {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        .diff-val.old { text-decoration: line-through; color: var(--text-secondary); }
+        .diff-val.new { color: var(--brand-success); }
+        
+        body.dark-theme .diff-box { border-color: rgba(255,255,255,0.1); }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <div class="page-title">
+            <h1>Update Requests</h1>
+            <p>Review and approve changes to existing items.</p>
+        </div>
+    </div>
+
+    <!-- Request 1 -->
+    <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+            <div>
+                <h3 style="margin: 0; color: var(--text-primary);">Organic Honey 500g</h3>
+                <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-secondary);">
+                    Requested by <span style="color: var(--brand-accent);">Zenith Kandel</span> • 2 hours ago
+                </p>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+                <button class="btn-submit" style="width: auto; padding: 0.5rem 1rem; background: var(--brand-success);">
+                    <i class="fas fa-check"></i> Approve
+                </button>
+                <button class="btn-submit" style="width: auto; padding: 0.5rem 1rem; background: var(--brand-danger);">
+                    <i class="fas fa-times"></i> Reject
+                </button>
+            </div>
+        </div>
+
+        <div class="diff-grid">
+            <div class="diff-box">
+                <div class="diff-label">Current Price</div>
+                <div class="diff-val old">Rs. 450</div>
+            </div>
+            <div class="diff-box" style="border-color: var(--brand-success);">
+                <div class="diff-label">New Price</div>
+                <div class="diff-val new">Rs. 480</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request 2 -->
+    <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+            <div>
+                <h3 style="margin: 0; color: var(--text-primary);">Basmati Rice (Premium)</h3>
+                <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-secondary);">
+                    Requested by <span style="color: var(--brand-accent);">John Doe</span> • 5 hours ago
+                </p>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+                <button class="btn-submit" style="width: auto; padding: 0.5rem 1rem; background: var(--brand-success);">
+                    <i class="fas fa-check"></i> Approve
+                </button>
+                <button class="btn-submit" style="width: auto; padding: 0.5rem 1rem; background: var(--brand-danger);">
+                    <i class="fas fa-times"></i> Reject
+                </button>
+            </div>
+        </div>
+
+        <div class="diff-grid">
+            <div class="diff-box">
+                <div class="diff-label">Current Unit</div>
+                <div class="diff-val old">kg</div>
+            </div>
+            <div class="diff-box" style="border-color: var(--brand-success);">
+                <div class="diff-label">New Unit</div>
+                <div class="diff-val new">Packet (5kg)</div>
+            </div>
+        </div>
+        <div class="diff-grid">
+            <div class="diff-box">
+                <div class="diff-label">Current Price</div>
+                <div class="diff-val old">Rs. 120</div>
+            </div>
+            <div class="diff-box" style="border-color: var(--brand-success);">
+                <div class="diff-label">New Price</div>
+                <div class="diff-val new">Rs. 650</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify New Items | Admin</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css">
+    <style>
+        body { background: transparent; padding: 0; margin: 0; overflow-x: hidden; }
+        .item-preview {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .item-img {
+            width: 100px;
+            height: 100px;
+            border-radius: var(--radius-sm);
+            background: #eee;
+            object-fit: cover;
+        }
+        .item-details {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        .detail-group label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            margin-bottom: 0.25rem;
+        }
+        .detail-group span {
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <div class="page-title">
+            <h1>New Item Requests</h1>
+            <p>Review and approve new items added by contributors.</p>
+        </div>
+    </div>
+
+    <!-- New Item 1 -->
+    <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+                <h3 style="margin: 0; color: var(--text-primary);">Local Ghee (Pure)</h3>
+                <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-secondary);">
+                    Submitted by <span style="color: var(--brand-accent);">Alice Smith</span> • 1 day ago
+                </p>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+                <button class="btn-submit" style="width: auto; padding: 0.5rem 1rem; background: var(--brand-success);">
+                    <i class="fas fa-check"></i> Approve
+                </button>
+                <button class="btn-submit" style="width: auto; padding: 0.5rem 1rem; background: var(--brand-danger);">
+                    <i class="fas fa-times"></i> Reject
+                </button>
+            </div>
+        </div>
+
+        <div class="item-preview">
+            <div class="item-img" style="display: flex; align-items: center; justify-content: center; color: var(--text-tertiary);">
+                <i class="fas fa-image fa-2x"></i>
+            </div>
+            <div class="item-details">
+                <div class="detail-group">
+                    <label>Category</label>
+                    <span>Dairy</span>
+                </div>
+                <div class="detail-group">
+                    <label>Price</label>
+                    <span>Rs. 1200</span>
+                </div>
+                <div class="detail-group">
+                    <label>Unit</label>
+                    <span>Liter</span>
+                </div>
+                <div class="detail-group">
+                    <label>Market</label>
+                    <span>Kalimati</span>
+                </div>
+                <div class="detail-group" style="grid-column: span 2;">
+                    <label>Description</label>
+                    <span>Pure cow ghee from local farmers in Kavre.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Item 2 -->
+    <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+                <h3 style="margin: 0; color: var(--text-primary);">Red Apple (Mustang)</h3>
+                <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-secondary);">
+                    Submitted by <span style="color: var(--brand-accent);">Zenith Kandel</span> • 2 days ago
+                </p>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+                <button class="btn-submit" style="width: auto; padding: 0.5rem 1rem; background: var(--brand-success);">
+                    <i class="fas fa-check"></i> Approve
+                </button>
+                <button class="btn-submit" style="width: auto; padding: 0.5rem 1rem; background: var(--brand-danger);">
+                    <i class="fas fa-times"></i> Reject
+                </button>
+            </div>
+        </div>
+
+        <div class="item-preview">
+            <div class="item-img" style="display: flex; align-items: center; justify-content: center; color: var(--text-tertiary);">
+                <i class="fas fa-image fa-2x"></i>
+            </div>
+            <div class="item-details">
+                <div class="detail-group">
+                    <label>Category</label>
+                    <span>Fruits</span>
+                </div>
+                <div class="detail-group">
+                    <label>Price</label>
+                    <span>Rs. 350</span>
+                </div>
+                <div class="detail-group">
+                    <label>Unit</label>
+                    <span>kg</span>
+                </div>
+                <div class="detail-group">
+                    <label>Market</label>
+                    <span>Balkhu</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
