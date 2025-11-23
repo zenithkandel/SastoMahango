@@ -33,11 +33,17 @@
     flex: 2; /* Give more space to search/filter */
 }
 
+.search-wrapper .search-icon {
+    padding-left: 1rem;
+    color: var(--text-tertiary);
+    margin-right: 0.5rem;
+}
+
 .search-input {
     flex: 1;
     border: none;
     background: transparent;
-    padding: 0.8rem;
+    padding: 0.8rem 0.8rem 0.8rem 0;
     font-size: 1rem;
     color: var(--text-primary);
     outline: none;
