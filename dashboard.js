@@ -280,11 +280,63 @@ editModal.addEventListener('click', (e) => {
     if (e.target === editModal) closeModal();
 });
 
-// Handle Form Submit (Mock Update for now)
-editForm.addEventListener('submit', (e) => {
+// Handle Form Submit
+editForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    alert('Update functionality requires backend implementation.');
-    closeModal();
+    
+    const id = document.getElementById('editItemId').value;
+    const name = document.getElementById('editItemName').value;
+    const category = document.getElementById('editItemCategory').value;
+    const unit = document.getElementById('editItemUnit').value;
+    const price = document.getElementById('editItemPrice').value;
+    const icon = document.getElementById('editItemIcon').value;
+    const tags = document.getElementById('editItemTags').value;
+
+    const submitBtn = editForm.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.textContent;
+    submitBtn.textContent = 'Saving...';
+    submitBtn.disabled = true;
+
+    try {
+        const response = await fetch('API/updateItem.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id,
+                name,
+                category,
+                unit,
+                price,
+                icon,
+                tags
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            closeModal();
+            // Reload items to show changes
+            // We reload the current batch. If we were on page 2, this might reset to page 1 depending on loadItems logic.
+            // loadItems(false) resets grid.
+            // Ideally we just update the local item in currentItems and re-render, but reloading from server is safer to get calculated fields like trend.
+            currentIndex = 0; // Reset index to reload from start or just reload current view?
+            // loadItems(false) clears grid and fetches from currentIndex. 
+            // We should reset currentIndex to 0 to refresh the list properly.
+            currentIndex = 0;
+            loadItems(false); 
+        } else {
+            alert('Error: ' + result.message);
+        }
+    } catch (error) {
+        console.error('Error updating item:', error);
+        alert('An error occurred while updating the item.');
+    } finally {
+        submitBtn.textContent = originalBtnText;
+        submitBtn.disabled = false;
+    }
 });
 
 // Add Item Logic
