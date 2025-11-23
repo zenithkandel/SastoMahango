@@ -61,9 +61,10 @@ if (abs($price - $currentPrice) > 0.001) {
 
 // 4. Insert into updateItems table (Request for Update)
 // Instead of updating `items` directly, we insert a request into `updateItems`
+// We store the original item's ID as `targetID`
 $sql = "INSERT INTO updateItems (
-            name, category, unit, price, previous_price, icon, tags, modified_by, status, last_updated
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending', NOW())";
+            targetID, name, category, unit, price, previous_price, icon, tags, modified_by, status, last_updated
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', NOW())";
 
 $insertStmt = $conn->prepare($sql);
 if (!$insertStmt) {
@@ -71,7 +72,8 @@ if (!$insertStmt) {
     exit;
 }
 
-$insertStmt->bind_param("sssdsssi", 
+$insertStmt->bind_param("isssdsssi", 
+    $id, // This is the targetID (the ID of the item being edited)
     $name, 
     $category, 
     $unit, 
