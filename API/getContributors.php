@@ -5,12 +5,8 @@ header("Access-Control-Allow-Methods: GET");
 
 include 'conn.php';
 
-// Fetch contributors and their contribution count
-$sql = "SELECT c.id, c.full_name, c.email, COUNT(i.id) as contributions 
-        FROM contributors c 
-        LEFT JOIN items i ON c.id = i.created_by 
-        GROUP BY c.id 
-        ORDER BY contributions DESC";
+// Fetch contributors
+$sql = "SELECT id, full_name, email FROM contributors ORDER BY full_name ASC";
 
 $result = $conn->query($sql);
 
@@ -21,8 +17,7 @@ if ($result && $result->num_rows > 0) {
         $contributors[] = [
             'id' => $row['id'],
             'name' => $row['full_name'],
-            'email' => $row['email'],
-            'contributions' => intval($row['contributions'])
+            'email' => $row['email']
         ];
     }
 }
