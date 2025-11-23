@@ -72,7 +72,7 @@ if (!$insertStmt) {
     exit;
 }
 
-$insertStmt->bind_param("isssdsssi", 
+$insertStmt->bind_param("isssddssi", 
     $id, // This is the targetID (the ID of the item being edited)
     $name, 
     $category, 
@@ -91,6 +91,6 @@ if ($insertStmt->execute()) {
 }
 
 $stmt->close();
-$updateStmt->close();
+$insertStmt->close();
 $conn->close();
 ?>
