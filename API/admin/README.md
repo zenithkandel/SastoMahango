@@ -195,3 +195,67 @@ Permanently removes an item from the database.
     "message": "Item deleted successfully"
   }
   ```
+
+### 9. Get Update Requests
+Retrieves a list of pending item update requests submitted by contributors.
+
+- **URL:** `getUpdateRequests.php`
+- **Method:** `GET`
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "data": [
+      {
+        "id": 5,
+        "targetID": 101,
+        "name": "Tomato Big",
+        "price": 95.00,
+        "contributor_name": "John Doe",
+        "current_item": {
+            "name": "Tomato Big",
+            "price": 90.00
+        },
+        "created_at": "2023-11-23 12:00:00"
+      }
+    ]
+  }
+  ```
+
+### 10. Approve Update Request
+Approves a pending request, updates the main item table, and removes the request.
+
+- **URL:** `approveUpdate.php`
+- **Method:** `POST`
+- **Body (JSON):**
+  ```json
+  {
+    "id": 5
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Request approved and item updated successfully"
+  }
+  ```
+
+### 11. Reject Update Request
+Rejects a pending request, removes it from the queue, and logs the rejection to `admin.log`.
+
+- **URL:** `rejectUpdate.php`
+- **Method:** `POST`
+- **Body (JSON):**
+  ```json
+  {
+    "id": 5
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Request rejected successfully"
+  }
+  ```
