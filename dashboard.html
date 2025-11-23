@@ -1,232 +1,325 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contributor Dashboard | SastoMahango</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/dashboard.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link
+      rel="stylesheet"
+      href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"
+    />
+  </head>
+  <body>
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="logo">
-            <i class="fas fa-chart-line" style="color: var(--brand-accent);"></i>
-            Sasto<span>Mahango</span>
+      <div class="logo">
+        <i class="fas fa-chart-line" style="color: var(--brand-accent)"></i>
+        Sasto<span>Mahango</span>
+      </div>
+      <div class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="market.html" class="nav-link">Products</a>
+        <a href="#" class="nav-link">Insights</a>
+        <a href="#" class="nav-link">Settings</a>
+      </div>
+      <div class="flex items-center">
+        <button
+          class="theme-toggle"
+          id="themeToggle"
+          aria-label="Toggle Dark Mode"
+        >
+          <i class="fas fa-moon"></i>
+        </button>
+        <div class="user-profile">
+          <img
+            src="https://ui-avatars.com/api/?name=Zenith+Kandel&background=3b82f6&color=fff"
+            alt="User"
+            class="user-avatar"
+          />
+          <span class="user-name">Zenith Kandel</span>
+          <a href="index.html" class="btn-logout" title="Logout">
+            <i class="fas fa-sign-out-alt"></i>
+          </a>
         </div>
-        <div class="nav-menu">
-            <a href="index.html" class="nav-link">Home</a>
-            <a href="market.html" class="nav-link">Products</a>
-            <a href="#" class="nav-link">Insights</a>
-            <a href="#" class="nav-link">Settings</a>
-        </div>
-        <div class="flex items-center">
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
-                <i class="fas fa-moon"></i>
-            </button>
-            <div class="user-profile">
-                <img src="https://ui-avatars.com/api/?name=Zenith+Kandel&background=3b82f6&color=fff" alt="User" class="user-avatar">
-                <span class="user-name">Zenith Kandel</span>
-                <a href="index.html" class="btn-logout" title="Logout">
-                    <i class="fas fa-sign-out-alt"></i>
-                </a>
-            </div>
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
+        <button
+          class="mobile-menu-btn"
+          id="mobileMenuBtn"
+          aria-label="Toggle Menu"
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
     </nav>
 
     <!-- Dashboard Header -->
     <section class="dashboard-header">
-        <div class="container">
-            <div class="header-content">
-                <div class="welcome-text">
-                    <h1>Welcome back, Zenith! 👋</h1>
-                    <p>Manage market prices and update daily essentials.</p>
-                </div>
-                <div class="dashboard-stats">
-                    <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-box"></i></div>
-                        <div class="stat-info">
-                            <span class="stat-value">24</span>
-                            <span class="stat-label">Total Items</span>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon update"><i class="fas fa-history"></i></div>
-                        <div class="stat-info">
-                            <span class="stat-value">12</span>
-                            <span class="stat-label">Updated Today</span>
-                        </div>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="header-content">
+          <div class="welcome-text">
+            <h1>Welcome back, Zenith! 👋</h1>
+            <p>Manage market prices and update daily essentials.</p>
+          </div>
+          <div class="dashboard-stats">
+            <div class="stat-card">
+              <div class="stat-icon"><i class="fas fa-box"></i></div>
+              <div class="stat-info">
+                <span class="stat-value">24</span>
+                <span class="stat-label">Total Items</span>
+              </div>
             </div>
-            
-            <div class="search-bar-container">
-                <div class="search-wrapper">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="dashboardSearch" class="search-input" placeholder="Search items to update...">
-                </div>
-                <button class="btn-add-new" id="addNewBtn">
-                    <i class="fas fa-plus"></i> Add New Item
-                </button>
+            <div class="stat-card">
+              <div class="stat-icon update"><i class="fas fa-history"></i></div>
+              <div class="stat-info">
+                <span class="stat-value">12</span>
+                <span class="stat-label">Updated Today</span>
+              </div>
             </div>
+          </div>
         </div>
+
+        <div class="search-bar-container">
+          <div class="search-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input
+              type="text"
+              id="dashboardSearch"
+              class="search-input"
+              placeholder="Search items to update..."
+            />
+          </div>
+          <button class="btn-add-new" id="addNewBtn">
+            <i class="fas fa-plus"></i> Add New Item
+          </button>
+        </div>
+      </div>
     </section>
 
     <!-- Items Grid -->
     <section class="dashboard-content">
-        <div class="container">
-            <div class="items-grid" id="itemsGrid">
-                <!-- Items will be populated by JS -->
-            </div>
-            
-            <!-- Pagination Buttons (Floating) -->
-            <div class="pagination-container">
-                <button id="loadMoreBtn" class="pagination-btn">
-                    <i class="fas fa-chevron-down"></i> Load More
-                </button>
-                <button id="loadAllBtn" class="pagination-btn">
-                    <i class="fas fa-list"></i> Load All
-                </button>
-            </div>
+      <div class="container">
+        <div class="items-grid" id="itemsGrid">
+          <!-- Items will be populated by JS -->
         </div>
+
+        <!-- Pagination Buttons (Floating) -->
+        <div class="pagination-container">
+          <button id="loadMoreBtn" class="pagination-btn">
+            <i class="fas fa-chevron-down"></i> Load More
+          </button>
+          <button id="loadAllBtn" class="pagination-btn">
+            <i class="fas fa-list"></i> Load All
+          </button>
+        </div>
+      </div>
     </section>
 
     <!-- Edit Modal -->
     <div class="modal-overlay" id="editModal">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h2>Edit Item Details</h2>
-                <button class="close-modal" id="closeModal"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="modal-body">
-                <form id="editForm">
-                    <input type="hidden" id="editItemId">
-                    
-                    <div class="form-row">
-                        <div class="form-group" style="flex: 1;">
-                            <label>Item Name</label>
-                            <input type="text" id="editItemName" required>
-                        </div>
-                        <div class="form-group" style="width: 200px;">
-                            <label>Icon Class</label>
-                            <div class="icon-input-wrapper" style="display: flex; gap: 10px; align-items: center;">
-                                <input type="text" id="editItemIcon" placeholder="fa-box" style="flex: 1;">
-                                <div id="editItemIconPreview" style="width: 36px; height: 36px; background: var(--surface-bg); border: 1px solid var(--border-color); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: var(--brand-accent);">
-                                    <i class="fas fa-box"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Category</label>
-                            <select id="editItemCategory" required>
-                                <option value="Vegetables">Vegetables</option>
-                                <option value="Fruits">Fruits</option>
-                                <option value="Grains">Grains</option>
-                                <option value="Essentials">Essentials</option>
-                                <option value="Meat">Meat</option>
-                                <option value="Dairy">Dairy</option>
-                                <option value="Construction">Construction</option>
-                                <option value="Energy">Energy</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Unit</label>
-                            <input type="text" id="editItemUnit" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Price (Rs.)</label>
-                        <input type="number" id="editItemPrice" required step="0.01">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Tags (comma separated)</label>
-                        <input type="text" id="editItemTags" placeholder="fresh, organic, local">
-                    </div>
-
-                    <div class="modal-actions">
-                        <button type="button" class="btn-cancel" id="cancelEdit">Cancel</button>
-                        <button type="submit" class="btn-save">Save Changes</button>
-                    </div>
-                </form>
-            </div>
+      <div class="modal-container">
+        <div class="modal-header">
+          <h2>Edit Item Details</h2>
+          <button class="close-modal" id="closeModal">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
+        <div class="modal-body">
+          <form id="editForm">
+            <input type="hidden" id="editItemId" />
+
+            <div class="form-row">
+              <div class="form-group" style="flex: 1">
+                <label>Item Name</label>
+                <input type="text" id="editItemName" required />
+              </div>
+              <div class="form-group" style="width: 200px">
+                <label>Icon Class</label>
+                <div
+                  class="icon-input-wrapper"
+                  style="display: flex; gap: 10px; align-items: center"
+                >
+                  <input
+                    type="text"
+                    id="editItemIcon"
+                    placeholder="fa-box"
+                    style="flex: 1"
+                  />
+                  <div
+                    id="editItemIconPreview"
+                    style="
+                      width: 36px;
+                      height: 36px;
+                      background: var(--surface-bg);
+                      border: 1px solid var(--border-color);
+                      border-radius: 4px;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      color: var(--brand-accent);
+                    "
+                  >
+                    <i class="fas fa-box"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Category</label>
+                <select id="editItemCategory" required>
+                  <option value="Vegetables">Vegetables</option>
+                  <option value="Fruits">Fruits</option>
+                  <option value="Grains">Grains</option>
+                  <option value="Essentials">Essentials</option>
+                  <option value="Meat">Meat</option>
+                  <option value="Dairy">Dairy</option>
+                  <option value="Construction">Construction</option>
+                  <option value="Energy">Energy</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Unit</label>
+                <input type="text" id="editItemUnit" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Price (Rs.)</label>
+              <input type="number" id="editItemPrice" required step="0.01" />
+            </div>
+
+            <div class="form-group">
+              <label>Tags (comma separated)</label>
+              <input
+                type="text"
+                id="editItemTags"
+                placeholder="fresh, organic, local"
+              />
+            </div>
+
+            <div class="modal-actions">
+              <button type="button" class="btn-cancel" id="cancelEdit">
+                Cancel
+              </button>
+              <button type="submit" class="btn-save">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
     <!-- Add Item Modal -->
     <div class="modal-overlay" id="addModal">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h2>Add New Item</h2>
-                <button class="close-modal" id="closeAddModal"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="modal-body">
-                <form id="addForm">
-                    <div class="form-row">
-                        <div class="form-group" style="flex: 1;">
-                            <label>Item Name</label>
-                            <input type="text" id="addItemName" required placeholder="e.g. Local Tomato">
-                        </div>
-                        <div class="form-group" style="width: 200px;">
-                            <label>Icon Class</label>
-                            <div class="icon-input-wrapper" style="display: flex; gap: 10px; align-items: center;">
-                                <input type="text" id="addItemIcon" placeholder="fa-box" style="flex: 1;">
-                                <div id="addItemIconPreview" style="width: 36px; height: 36px; background: var(--surface-bg); border: 1px solid var(--border-color); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: var(--brand-accent);">
-                                    <i class="fas fa-box"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Category</label>
-                            <select id="addItemCategory" required>
-                                <option value="Vegetables">Vegetables</option>
-                                <option value="Fruits">Fruits</option>
-                                <option value="Grains">Grains</option>
-                                <option value="Essentials">Essentials</option>
-                                <option value="Meat">Meat</option>
-                                <option value="Dairy">Dairy</option>
-                                <option value="Construction">Construction</option>
-                                <option value="Energy">Energy</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Unit</label>
-                            <input type="text" id="addItemUnit" required placeholder="e.g. kg, liter, pc">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Price (Rs.)</label>
-                        <input type="number" id="addItemPrice" required step="0.01" placeholder="0.00">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Tags (comma separated)</label>
-                        <input type="text" id="addItemTags" placeholder="fresh, organic, local">
-                    </div>
-
-                    <div class="modal-actions">
-                        <button type="button" class="btn-cancel" id="cancelAdd">Cancel</button>
-                        <button type="submit" class="btn-save">Add Item</button>
-                    </div>
-                </form>
-            </div>
+      <div class="modal-container">
+        <div class="modal-header">
+          <h2>Add New Item</h2>
+          <button class="close-modal" id="closeAddModal">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
+        <div class="modal-body">
+          <form id="addForm">
+            <div class="form-row">
+              <div class="form-group" style="flex: 1">
+                <label>Item Name</label>
+                <input
+                  type="text"
+                  id="addItemName"
+                  required
+                  placeholder="e.g. Local Tomato"
+                />
+              </div>
+              <div class="form-group" style="width: 200px">
+                <label>Icon Class</label>
+                <div
+                  class="icon-input-wrapper"
+                  style="display: flex; gap: 10px; align-items: center"
+                >
+                  <input
+                    type="text"
+                    id="addItemIcon"
+                    placeholder="fa-box"
+                    style="flex: 1"
+                  />
+                  <div
+                    id="addItemIconPreview"
+                    style="
+                      width: 36px;
+                      height: 36px;
+                      background: var(--surface-bg);
+                      border: 1px solid var(--border-color);
+                      border-radius: 4px;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      color: var(--brand-accent);
+                    "
+                  >
+                    <i class="fas fa-box"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Category</label>
+                <select id="addItemCategory" required>
+                  <option value="Vegetables">Vegetables</option>
+                  <option value="Fruits">Fruits</option>
+                  <option value="Grains">Grains</option>
+                  <option value="Essentials">Essentials</option>
+                  <option value="Meat">Meat</option>
+                  <option value="Dairy">Dairy</option>
+                  <option value="Construction">Construction</option>
+                  <option value="Energy">Energy</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Unit</label>
+                <input
+                  type="text"
+                  id="addItemUnit"
+                  required
+                  placeholder="e.g. kg, liter, pc"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Price (Rs.)</label>
+              <input
+                type="number"
+                id="addItemPrice"
+                required
+                step="0.01"
+                placeholder="0.00"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Tags (comma separated)</label>
+              <input
+                type="text"
+                id="addItemTags"
+                placeholder="fresh, organic, local"
+              />
+            </div>
+
+            <div class="modal-actions">
+              <button type="button" class="btn-cancel" id="cancelAdd">
+                Cancel
+              </button>
+              <button type="submit" class="btn-save">Add Item</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
     <script src="script.js"></script>
     <script src="dashboard.js"></script>
-</body>
+  </body>
 </html>
