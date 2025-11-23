@@ -96,7 +96,8 @@
                         const card = document.createElement('div');
                         card.className = 'card';
                         
-                        const date = new Date(req.created_at).toLocaleString();
+                        // Use last_updated as the timestamp
+                        const date = new Date(req.last_updated).toLocaleString();
                         const iconClass = req.icon || 'fa-box';
 
                         card.innerHTML = `
