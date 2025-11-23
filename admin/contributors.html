@@ -35,7 +35,7 @@
 
         /* Add Button Style */
         .btn-add {
-            background: var(--brand-primary);
+            background: var(--brand-accent);
             color: white;
             border: none;
             padding: 0.6rem 1.2rem;
@@ -49,6 +49,27 @@
         }
         .btn-add:hover {
             background: var(--brand-primary-dark, #2563eb);
+        }
+
+        /* Dark Mode Specifics */
+        body.dark-theme .btn-add {
+            background: var(--brand-accent);
+            color: white;
+        }
+        
+        body.dark-theme .modal-container {
+            background: var(--surface-card);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        body.dark-theme input {
+            background: var(--surface-bg);
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        body.dark-theme input:focus {
+            border-color: var(--brand-accent);
         }
     </style>
 </head>
