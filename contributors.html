@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contributors | SastoMahango</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/fontawesome.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/brands.css">
+
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/solid.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/regular.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/light.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/thin.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/duotone.css">
+
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/sharp-solid.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/sharp-regular.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/sharp-light.css">
+    <style>
+        .contributors-section {
+            padding-top: 140px;
+            padding-bottom: 6rem;
+            min-height: 80vh;
+        }
+        
+        .contributors-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .contributors-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .contributors-header p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contributors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .contributor-card {
+            background: var(--surface-card);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: var(--transition-base);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        body.dark-theme .contributor-card {
+            border-color: var(--border-color);
+        }
+
+        .contributor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--brand-accent);
+        }
+
+        .contributor-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 3px solid var(--surface-bg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .contributor-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .contributor-role {
+            font-size: 0.9rem;
+            color: var(--brand-accent);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            background: rgba(59, 130, 246, 0.1);
+            padding: 0.2rem 0.8rem;
+            border-radius: var(--radius-full);
+        }
+
+        .contribution-count {
+            margin-top: auto;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cta-section {
+            margin-top: 6rem;
+            text-align: center;
+            background: var(--surface-card);
+            padding: 4rem 2rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        body.dark-theme .cta-section {
+            border-color: var(--border-color);
+        }
+
+        .cta-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .cta-text {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: var(--brand-accent);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition-base);
+        }
+
+        .btn-cta:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-chart-line" style="color: var(--brand-accent);"></i>
+            Sasto<span>Mahango</span>
+        </div>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="market.html" class="nav-link">Products</a>
+            <a href="#" class="nav-link active">Contributors</a>
+            <a href="#" class="nav-link">About</a>
+        </div>
+        <div class="flex items-center">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
+                <i class="fas fa-moon"></i>
+            </button>
+            <a href="login.html" class="btn-login">
+                <i class="fas fa-user"></i> <span class="login-text">Contributor Login</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Contributors Section -->
+    <section class="contributors-section">
+        <div class="container">
+            <div class="contributors-header">
+                <h1>Our Community Heroes</h1>
+                <p>Meet the dedicated individuals who keep SastoMahango up-to-date with the latest market prices.</p>
+            </div>
+
+            <div class="contributors-grid" id="contributorsGrid">
+                <!-- Contributors will be loaded here -->
+                <div style="grid-column: 1/-1; text-align: center; padding: 2rem;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--brand-accent);"></i>
+                </div>
+            </div>
+
+            <!-- Become a Contributor CTA -->
+            <div class="cta-section">
+                <h2 class="cta-title">Want to make a difference?</h2>
+                <p class="cta-text">Join our community of contributors and help thousands of people make informed buying decisions every day.</p>
+                <a href="request-access.html" class="btn-cta">
+                    <i class="fas fa-user-plus"></i> Request Access
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo" style="color: white;">
+                        <i class="fas fa-chart-line" style="color: var(--brand-accent);"></i>
+                        Sasto<span>Mahango</span>
+                    </div>
+                    <p>Bridging the information gap between market hubs and consumers. Transparency for everyone.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="market.html">Browse Items</a></li>
+                        <li><a href="#">Market Reports</a></li>
+                        <li><a href="#">API Access</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="contributors.html">Contributors</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Use</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SastoMahango. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Fetch and display contributors
+        document.addEventListener('DOMContentLoaded', async () => {
+            const grid = document.getElementById('contributorsGrid');
+            
+            try {
+                const response = await fetch('API/getContributors.php');
+                const contributors = await response.json();
+                
+                grid.innerHTML = ''; // Clear loading spinner
+
+                if (contributors.length === 0) {
+                    grid.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: var(--text-secondary);">No contributors found yet.</p>';
+                    return;
+                }
+
+                contributors.forEach(contributor => {
+                    const card = document.createElement('div');
+                    card.className = 'contributor-card';
+                    
+                    // Generate avatar based on name
+                    const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(contributor.name)}&background=random&color=fff&size=128`;
+
+                    card.innerHTML = `
+                        <img src="${avatarUrl}" alt="${contributor.name}" class="contributor-avatar">
+                        <h3 class="contributor-name">${contributor.name}</h3>
+                        <span class="contributor-role">Contributor</span>
+                        <div class="contribution-count">
+                            <i class="fas fa-box-open"></i>
+                            <span>${contributor.contributions} Items Contributed</span>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error('Error fetching contributors:', error);
+                grid.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: var(--brand-danger);">Failed to load contributors.</p>';
+            }
+        });
+    </script>
+</body>
+</html>
