@@ -92,7 +92,7 @@
 
         <div class="category-showcase">
             <!-- Card 1 -->
-            <div class="cat-card">
+            <a href="market.html?category=Vegetables" class="cat-card">
                 <div class="cat-bg-blob"></div>
                 <div class="cat-icon-wrapper">
                     <i class="fas fa-carrot"></i>
@@ -104,10 +104,10 @@
                 <div class="cat-arrow">
                     Explore <i class="fas fa-arrow-right"></i>
                 </div>
-            </div>
+            </a>
 
             <!-- Card 2 -->
-            <div class="cat-card">
+            <a href="market.html?category=Electronics" class="cat-card">
                 <div class="cat-bg-blob"></div>
                 <div class="cat-icon-wrapper">
                     <i class="fas fa-mobile-alt"></i>
@@ -119,10 +119,10 @@
                 <div class="cat-arrow">
                     Explore <i class="fas fa-arrow-right"></i>
                 </div>
-            </div>
+            </a>
 
             <!-- Card 3 -->
-            <div class="cat-card">
+            <a href="market.html?category=Clothing" class="cat-card">
                 <div class="cat-bg-blob"></div>
                 <div class="cat-icon-wrapper">
                     <i class="fas fa-tshirt"></i>
@@ -134,10 +134,10 @@
                 <div class="cat-arrow">
                     Explore <i class="fas fa-arrow-right"></i>
                 </div>
-            </div>
+            </a>
 
             <!-- Card 4 -->
-            <div class="cat-card">
+            <a href="market.html?category=Appliances" class="cat-card">
                 <div class="cat-bg-blob"></div>
                 <div class="cat-icon-wrapper">
                     <i class="fas fa-blender"></i>
@@ -149,10 +149,10 @@
                 <div class="cat-arrow">
                     Explore <i class="fas fa-arrow-right"></i>
                 </div>
-            </div>
+            </a>
 
             <!-- Card 5 -->
-            <div class="cat-card">
+            <a href="market.html?category=Construction" class="cat-card">
                 <div class="cat-bg-blob"></div>
                 <div class="cat-icon-wrapper">
                     <i class="fas fa-hard-hat"></i>
@@ -164,10 +164,10 @@
                 <div class="cat-arrow">
                     Explore <i class="fas fa-arrow-right"></i>
                 </div>
-            </div>
+            </a>
 
             <!-- Card 6 -->
-            <div class="cat-card">
+            <a href="market.html?category=Bullion" class="cat-card">
                 <div class="cat-bg-blob"></div>
                 <div class="cat-icon-wrapper">
                     <i class="fas fa-coins"></i>
@@ -179,37 +179,7 @@
                 <div class="cat-arrow">
                     Explore <i class="fas fa-arrow-right"></i>
                 </div>
-            </div>
-
-            <!-- Card 7 -->
-            <div class="cat-card">
-                <div class="cat-bg-blob"></div>
-                <div class="cat-icon-wrapper">
-                    <i class="fas fa-car"></i>
-                </div>
-                <div class="cat-info">
-                    <h3>Automobiles</h3>
-                    <p>New and used cars, bikes, and vehicle parts.</p>
-                </div>
-                <div class="cat-arrow">
-                    Explore <i class="fas fa-arrow-right"></i>
-                </div>
-            </div>
-
-            <!-- Card 8 -->
-            <div class="cat-card">
-                <div class="cat-bg-blob"></div>
-                <div class="cat-icon-wrapper">
-                    <i class="fas fa-gas-pump"></i>
-                </div>
-                <div class="cat-info">
-                    <h3>Energy & Fuels</h3>
-                    <p>Petrol, diesel, LPG gas, and electricity tariffs.</p>
-                </div>
-                <div class="cat-arrow">
-                    Explore <i class="fas fa-arrow-right"></i>
-                </div>
-            </div>
+            </a>
         </div>
     </section>
 
@@ -338,5 +308,38 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Dynamic Ticker Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('API/getItemList.php?count=10')
+                .then(res => res.json())
+                .then(data => {
+                    const track = document.getElementById('tickerTrack');
+                    if (data.length > 0) {
+                        track.innerHTML = '';
+                        // Duplicate items to create seamless loop effect
+                        const itemsToDisplay = [...data, ...data]; 
+                        
+                        itemsToDisplay.forEach(item => {
+                            const div = document.createElement('div');
+                            div.className = 'ticker-item';
+                            
+                            let trendIcon = 'fa-minus';
+                            let trendClass = 'trend-neutral';
+                            if (item.trend === 'up') { trendIcon = 'fa-arrow-up'; trendClass = 'trend-up'; }
+                            if (item.trend === 'down') { trendIcon = 'fa-arrow-down'; trendClass = 'trend-down'; }
+
+                            div.innerHTML = `
+                                <span class="item-name">${item.name}</span>
+                                <span class="item-price">Rs. ${parseFloat(item.price).toFixed(2)}</span>
+                                <i class="fas ${trendIcon} ${trendClass}"></i>
+                            `;
+                            track.appendChild(div);
+                        });
+                    }
+                })
+                .catch(err => console.error('Error loading ticker:', err));
+        });
+    </script>
 </body>
 </html>

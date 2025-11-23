@@ -100,7 +100,18 @@
                                 diffHtml += createDiffBox('Name', current.name, req.name);
                             }
                             if (parseFloat(req.price) !== parseFloat(current.price)) {
-                                diffHtml += createDiffBox('Price', 'Rs. ' + current.price, 'Rs. ' + req.price);
+                                const oldPrice = parseFloat(current.price);
+                                const newPrice = parseFloat(req.price);
+                                const percentChange = ((newPrice - oldPrice) / oldPrice) * 100;
+                                
+                                let warningHtml = '';
+                                if (Math.abs(percentChange) > 20) {
+                                    warningHtml = `<div style="color: var(--brand-danger); font-size: 0.8rem; margin-top: 0.25rem; font-weight: 600;">
+                                        <i class="fas fa-exclamation-triangle"></i> High Fluctuation: ${percentChange.toFixed(1)}%
+                                    </div>`;
+                                }
+
+                                diffHtml += createDiffBox('Price', 'Rs. ' + current.price, 'Rs. ' + req.price + warningHtml);
                             }
                             if (req.unit !== current.unit) {
                                 diffHtml += createDiffBox('Unit', current.unit, req.unit);

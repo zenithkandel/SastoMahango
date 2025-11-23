@@ -18,6 +18,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (categoryFilter) {
         categoryFilter.addEventListener('change', handleCategoryChange);
     }
+
+    // Check for URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryParam = urlParams.get('category');
+    if (categoryParam) {
+        if (categoryFilter) {
+            categoryFilter.value = categoryParam;
+            // Trigger change event manually
+            handleCategoryChange();
+        }
+    }
 });
 
 async function handleCategoryChange() {
