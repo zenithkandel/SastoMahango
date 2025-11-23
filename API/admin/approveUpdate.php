@@ -20,7 +20,10 @@ $requestId = $data['id'];
 
 try {
     // 1. Fetch request details
-    $sql = "SELECT * FROM updateItems WHERE id = ?";
+    $sql = "SELECT u.*, c.full_name as contributor_name 
+            FROM updateItems u 
+            LEFT JOIN contributors c ON u.modified_by = c.id 
+            WHERE u.id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $requestId);
     $stmt->execute();
@@ -110,7 +113,16 @@ try {
     }
 
     if ($success) {
-        // 3. Delete from updateItems
+        // 3. Log to admin.log
+        $itemName = $request['name'];
+        $contributorName = $request['contributor_name'] ?? 'Unknown';
+        $actionType = ($targetID > 0) ? "approved the update for" : "approved the creation of";
+        
+        $logMessage = "[" . date('Y-m-d H:i:s') . "] Admin {$actionType} item '{$itemName}' requested by {$contributorName}.\n";
+        $logFile = '../../admin.log';
+        file_put_contents($logFile, $logMessage, FILE_APPEND);
+
+        // 4. Delete from updateItems
         $deleteSql = "DELETE FROM updateItems WHERE id = ?";
         $deleteStmt = $conn->prepare($deleteSql);
         $deleteStmt->bind_param("i", $requestId);

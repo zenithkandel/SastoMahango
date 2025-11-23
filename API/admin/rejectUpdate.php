@@ -20,7 +20,7 @@ $requestId = $data['id'];
 
 try {
     // 1. Fetch request details for logging
-    $sql = "SELECT u.name as item_name, c.full_name as contributor_name 
+    $sql = "SELECT u.name as item_name, u.targetID, c.full_name as contributor_name 
             FROM updateItems u 
             LEFT JOIN contributors c ON u.modified_by = c.id 
             WHERE u.id = ?";
@@ -39,6 +39,7 @@ try {
 
     $row = $result->fetch_assoc();
     $itemName = $row['item_name'];
+    $targetID = intval($row['targetID']);
     $contributorName = $row['contributor_name'] ?? 'Unknown';
     $stmt->close();
 
@@ -49,7 +50,8 @@ try {
     
     if ($deleteStmt->execute()) {
         // 3. Log to admin.log
-        $logMessage = "[" . date('Y-m-d H:i:s') . "] Admin rejected the change for {$itemName} requested by {$contributorName}.\n";
+        $actionType = ($targetID > 0) ? "rejected the update for" : "rejected the creation of";
+        $logMessage = "[" . date('Y-m-d H:i:s') . "] Admin {$actionType} item '{$itemName}' requested by {$contributorName}.\n";
         $logFile = '../../admin.log'; // Root directory relative to API/admin/
         file_put_contents($logFile, $logMessage, FILE_APPEND);
 
