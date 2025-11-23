@@ -37,6 +37,25 @@ const editModal = document.getElementById('editModal');
 const closeModalBtn = document.getElementById('closeModal');
 const cancelEditBtn = document.getElementById('cancelEdit');
 const editForm = document.getElementById('editForm');
+const logoutBtn = document.querySelector('.btn-logout');
+
+// Logout Logic
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch('API/logout.php', { method: 'POST' });
+            const data = await response.json();
+            if (data.success) {
+                sessionStorage.removeItem('isLoggedIn');
+                window.location.href = data.redirect;
+            }
+        } catch (error) {
+            console.error('Logout failed:', error);
+            window.location.href = 'login.html';
+        }
+    });
+}
 
 // Add Item Elements
 const addModal = document.getElementById('addModal');
