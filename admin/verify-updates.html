@@ -52,76 +52,141 @@
         </div>
     </div>
 
-    <!-- Request 1 -->
-    <div class="card">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-            <div>
-                <h3 style="margin: 0; color: var(--text-primary);">Organic Honey 500g</h3>
-                <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-secondary);">
-                    Requested by <span style="color: var(--brand-accent);">Zenith Kandel</span> • 2 hours ago
-                </p>
-            </div>
-            <div style="display: flex; gap: 0.5rem;">
-                <button class="btn-submit" style="width: auto; padding: 0.5rem 1rem; background: var(--brand-success);">
-                    <i class="fas fa-check"></i> Approve
-                </button>
-                <button class="btn-submit" style="width: auto; padding: 0.5rem 1rem; background: var(--brand-danger);">
-                    <i class="fas fa-times"></i> Reject
-                </button>
-            </div>
-        </div>
-
-        <div class="diff-grid">
-            <div class="diff-box">
-                <div class="diff-label">Current Price</div>
-                <div class="diff-val old">Rs. 450</div>
-            </div>
-            <div class="diff-box" style="border-color: var(--brand-success);">
-                <div class="diff-label">New Price</div>
-                <div class="diff-val new">Rs. 480</div>
-            </div>
-        </div>
+    <div id="requests-container">
+        <!-- Requests will be loaded here dynamically -->
+        <p style="text-align: center; color: var(--text-secondary);">Loading requests...</p>
     </div>
 
-    <!-- Request 2 -->
-    <div class="card">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-            <div>
-                <h3 style="margin: 0; color: var(--text-primary);">Basmati Rice (Premium)</h3>
-                <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-secondary);">
-                    Requested by <span style="color: var(--brand-accent);">John Doe</span> • 5 hours ago
-                </p>
-            </div>
-            <div style="display: flex; gap: 0.5rem;">
-                <button class="btn-submit" style="width: auto; padding: 0.5rem 1rem; background: var(--brand-success);">
-                    <i class="fas fa-check"></i> Approve
-                </button>
-                <button class="btn-submit" style="width: auto; padding: 0.5rem 1rem; background: var(--brand-danger);">
-                    <i class="fas fa-times"></i> Reject
-                </button>
-            </div>
-        </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', loadRequests);
 
-        <div class="diff-grid">
-            <div class="diff-box">
-                <div class="diff-label">Current Unit</div>
-                <div class="diff-val old">kg</div>
-            </div>
-            <div class="diff-box" style="border-color: var(--brand-success);">
-                <div class="diff-label">New Unit</div>
-                <div class="diff-val new">Packet (5kg)</div>
-            </div>
-        </div>
-        <div class="diff-grid">
-            <div class="diff-box">
-                <div class="diff-label">Current Price</div>
-                <div class="diff-val old">Rs. 120</div>
-            </div>
-            <div class="diff-box" style="border-color: var(--brand-success);">
-                <div class="diff-label">New Price</div>
-                <div class="diff-val new">Rs. 650</div>
-            </div>
-        </div>
-    </div>
+        function loadRequests() {
+            fetch('../API/admin/getUpdateRequests.php')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('requests-container');
+                    container.innerHTML = '';
+
+                    if (data.error) {
+                        container.innerHTML = `<p style="color: var(--brand-danger); text-align: center;">${data.error}</p>`;
+                        return;
+                    }
+
+                    if (data.length === 0) {
+                        container.innerHTML = `<p style="text-align: center; color: var(--text-secondary);">No pending update requests.</p>`;
+                        return;
+                    }
+
+                    data.forEach(req => {
+                        const card = document.createElement('div');
+                        card.className = 'card';
+                        
+                        // Format date
+                        const date = new Date(req.created_at).toLocaleString();
+
+                        let diffHtml = '';
+                        
+                        // Compare fields to show diffs
+                        // We need to know what changed. The API returns the new values in updateItems.
+                        // We also need the old values. The API getUpdateRequests.php joins with items table.
+                        // Let's check the API response structure again.
+                        // The API returns: u.*, i.name as item_name, i.price as current_price, i.unit as current_unit, i.category as current_category, u.contributor_id, users.username as contributor_name
+                        
+                        if (req.name !== req.item_name) {
+                            diffHtml += createDiffBox('Name', req.item_name, req.name);
+                        }
+                        if (req.price != req.current_price) { // loose comparison for numbers/strings
+                            diffHtml += createDiffBox('Price', 'Rs. ' + req.current_price, 'Rs. ' + req.price);
+                        }
+                        if (req.unit !== req.current_unit) {
+                            diffHtml += createDiffBox('Unit', req.current_unit, req.unit);
+                        }
+                        if (req.category !== req.current_category) {
+                            diffHtml += createDiffBox('Category', req.current_category, req.category);
+                        }
+
+                        card.innerHTML = `
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                                <div>
+                                    <h3 style="margin: 0; color: var(--text-primary);">${req.item_name}</h3>
+                                    <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-secondary);">
+                                        Requested by <span style="color: var(--brand-accent);">${req.contributor_name || 'Unknown'}</span> • ${date}
+                                    </p>
+                                </div>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button onclick="approveRequest(${req.id})" class="btn-submit" style="width: auto; padding: 0.5rem 1rem; background: var(--brand-success);">
+                                        <i class="fas fa-check"></i> Approve
+                                    </button>
+                                    <button onclick="rejectRequest(${req.id})" class="btn-submit" style="width: auto; padding: 0.5rem 1rem; background: var(--brand-danger);">
+                                        <i class="fas fa-times"></i> Reject
+                                    </button>
+                                </div>
+                            </div>
+                            ${diffHtml}
+                        `;
+                        container.appendChild(card);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('requests-container').innerHTML = '<p style="text-align: center; color: var(--brand-danger);">Error loading requests.</p>';
+                });
+        }
+
+        function createDiffBox(label, oldVal, newVal) {
+            return `
+                <div class="diff-grid">
+                    <div class="diff-box">
+                        <div class="diff-label">Current ${label}</div>
+                        <div class="diff-val old">${oldVal}</div>
+                    </div>
+                    <div class="diff-box" style="border-color: var(--brand-success);">
+                        <div class="diff-label">New ${label}</div>
+                        <div class="diff-val new">${newVal}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function approveRequest(id) {
+            if(!confirm('Are you sure you want to approve this update?')) return;
+
+            fetch('../API/admin/approveUpdate.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success) {
+                    alert('Update approved successfully!');
+                    loadRequests();
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            })
+            .catch(err => console.error(err));
+        }
+
+        function rejectRequest(id) {
+            if(!confirm('Are you sure you want to reject this update?')) return;
+
+            fetch('../API/admin/rejectUpdate.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success) {
+                    alert('Update rejected.');
+                    loadRequests();
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            })
+            .catch(err => console.error(err));
+        }
+    </script>
 </body>
 </html>

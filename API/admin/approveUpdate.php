@@ -51,7 +51,7 @@ try {
                   WHERE id = ?";
                   
     $updateStmt = $conn->prepare($updateSql);
-    $updateStmt->bind_param("sssdissisi", 
+    $updateStmt->bind_param("sssddssisi", 
         $request['name'],
         $request['category'],
         $request['unit'],
