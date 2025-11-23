@@ -22,11 +22,32 @@ document.addEventListener('DOMContentLoaded', () => {
     // Check for URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const categoryParam = urlParams.get('category');
-    if (categoryParam) {
-        if (categoryFilter) {
-            categoryFilter.value = categoryParam;
-            // Trigger change event manually
-            handleCategoryChange();
+    const searchParam = urlParams.get('search');
+    
+    let shouldLoadAll = false;
+
+    if (categoryParam && categoryFilter) {
+        categoryFilter.value = categoryParam;
+        shouldLoadAll = true;
+    }
+
+    if (searchParam && searchInput) {
+        searchInput.value = searchParam;
+        shouldLoadAll = true;
+    }
+
+    if (shouldLoadAll) {
+        if (!isAllLoaded) {
+            // Show loading state on buttons if they exist
+            const loadAllBtn = document.getElementById('loadAllBtn');
+            if (loadAllBtn) loadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+            
+            setTimeout(async () => {
+                await loadAllItems();
+                filterItems();
+            }, 50);
+        } else {
+            filterItems();
         }
     }
 });

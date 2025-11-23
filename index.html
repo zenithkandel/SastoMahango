@@ -339,6 +339,29 @@
                     }
                 })
                 .catch(err => console.error('Error loading ticker:', err));
+
+            // Home Search Logic
+            const searchInput = document.getElementById('homeSearchInput');
+            const searchBtn = document.getElementById('homeSearchBtn');
+
+            function performSearch() {
+                const query = searchInput.value.trim();
+                if (query) {
+                    window.location.href = `market.html?search=${encodeURIComponent(query)}`;
+                }
+            }
+
+            if (searchBtn) {
+                searchBtn.addEventListener('click', performSearch);
+            }
+
+            if (searchInput) {
+                searchInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        performSearch();
+                    }
+                });
+            }
         });
     </script>
 </body>
