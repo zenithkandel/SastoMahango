@@ -114,6 +114,46 @@ Increments the view count for a specific item.
 
 ---
 
+### `updateItem.php`
+**Function:**  
+Updates an existing item's details in the database. It handles price change calculations (trend analysis) and tracks who made the update.
+
+**Working Mechanism:**
+1.  **Authentication Check:** Verifies if the user is logged in via PHP Session. Returns error if not.
+2.  **Input Parsing:** Accepts a JSON payload with item details (`id`, `name`, `price`, etc.).
+3.  **Trend Calculation:**
+    *   Fetches the current price from the database.
+    *   Compares it with the new price.
+    *   Updates `previous_price`, `change`, and `trend` ('up', 'down', 'neutral') only if the price has changed.
+4.  **Database Update:**
+    *   Updates all item fields.
+    *   Sets `last_updated` to the current timestamp.
+    *   Sets `updated_by` to the logged-in user's ID.
+5.  Returns a JSON success or failure message.
+
+**Endpoint:** `POST /API/updateItem.php`
+**Input:**
+```json
+{
+  "id": 1,
+  "name": "Organic Apple",
+  "category": "Fruits",
+  "unit": "kg",
+  "price": 120.50,
+  "icon": "fa-apple-alt",
+  "tags": "fresh, organic"
+}
+```
+**Output (Success):**
+```json
+{
+  "success": true,
+  "message": "Item updated successfully"
+}
+```
+
+---
+
 ### `uploadItem.php`
 **Function:**  
 *Under Construction* - Intended to handle the uploading of new items to the database.
