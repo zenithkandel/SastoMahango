@@ -92,19 +92,43 @@
                         let diffHtml = '';
                         
                         // Compare fields to show diffs
-                        const current = req.current_item || {};
+                        const current = req.current_item;
                         
-                        if (req.name !== current.name) {
-                            diffHtml += createDiffBox('Name', current.name, req.name);
-                        }
-                        if (parseFloat(req.price) !== parseFloat(current.price)) {
-                            diffHtml += createDiffBox('Price', 'Rs. ' + current.price, 'Rs. ' + req.price);
-                        }
-                        if (req.unit !== current.unit) {
-                            diffHtml += createDiffBox('Unit', current.unit, req.unit);
-                        }
-                        if (req.category !== current.category) {
-                            diffHtml += createDiffBox('Category', current.category, req.category);
+                        if (!current) {
+                            // New Item Request
+                            diffHtml = `
+                                <div style="margin-bottom: 1rem; padding: 0.5rem; background: rgba(59, 130, 246, 0.1); border-radius: 4px; border-left: 3px solid var(--brand-accent);">
+                                    <strong>New Item Request</strong>
+                                </div>
+                                <div class="diff-grid">
+                                    <div class="diff-box" style="border-color: var(--brand-success);">
+                                        <div class="diff-label">Name</div>
+                                        <div class="diff-val new">${req.name}</div>
+                                    </div>
+                                    <div class="diff-box" style="border-color: var(--brand-success);">
+                                        <div class="diff-label">Price</div>
+                                        <div class="diff-val new">Rs. ${req.price} / ${req.unit}</div>
+                                    </div>
+                                    <div class="diff-box" style="border-color: var(--brand-success);">
+                                        <div class="diff-label">Category</div>
+                                        <div class="diff-val new">${req.category}</div>
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            // Update Request
+                            if (req.name !== current.name) {
+                                diffHtml += createDiffBox('Name', current.name, req.name);
+                            }
+                            if (parseFloat(req.price) !== parseFloat(current.price)) {
+                                diffHtml += createDiffBox('Price', 'Rs. ' + current.price, 'Rs. ' + req.price);
+                            }
+                            if (req.unit !== current.unit) {
+                                diffHtml += createDiffBox('Unit', current.unit, req.unit);
+                            }
+                            if (req.category !== current.category) {
+                                diffHtml += createDiffBox('Category', current.category, req.category);
+                            }
                         }
 
                         card.innerHTML = `

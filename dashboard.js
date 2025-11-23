@@ -373,11 +373,54 @@ addModal.addEventListener('click', (e) => {
     if (e.target === addModal) closeAddModal();
 });
 
-// Handle Add Form Submit (Mock Add for now)
-addForm.addEventListener('submit', (e) => {
+// Handle Add Form Submit
+addForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    alert('Add functionality requires backend implementation.');
-    closeAddModal();
+    
+    const name = document.getElementById('addItemName').value;
+    const category = document.getElementById('addItemCategory').value;
+    const unit = document.getElementById('addItemUnit').value;
+    const price = document.getElementById('addItemPrice').value;
+    const icon = document.getElementById('addItemIcon').value;
+    const tags = document.getElementById('addItemTags').value;
+
+    const submitBtn = addForm.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.textContent;
+    submitBtn.textContent = 'Submitting...';
+    submitBtn.disabled = true;
+
+    try {
+        const response = await fetch('API/addItem.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name,
+                category,
+                unit,
+                price,
+                icon,
+                tags
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert('Success: ' + result.message);
+            closeAddModal();
+            addForm.reset();
+        } else {
+            alert('Error: ' + result.message);
+        }
+    } catch (error) {
+        console.error('Error adding item:', error);
+        alert('An error occurred while submitting the item.');
+    } finally {
+        submitBtn.textContent = originalBtnText;
+        submitBtn.disabled = false;
+    }
 });
 
 // Close modals on Esc key press

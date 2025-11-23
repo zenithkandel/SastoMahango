@@ -19,12 +19,26 @@ try {
     if ($result && $result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
             // Fetch current item details for comparison
-            $targetID = $row['targetID'];
-            $itemSql = "SELECT name, price, category, unit, icon FROM items WHERE id = $targetID";
-            $itemResult = $conn->query($itemSql);
-            $currentItem = $itemResult->fetch_assoc();
+            $targetID = intval($row['targetID']);
             
-            $row['current_item'] = $currentItem;
+            if ($targetID > 0) {
+                $itemSql = "SELECT name, price, category, unit, icon FROM items WHERE id = $targetID";
+                $itemResult = $conn->query($itemSql);
+                if ($itemResult && $itemResult->num_rows > 0) {
+                    $currentItem = $itemResult->fetch_assoc();
+                    $row['current_item'] = $currentItem;
+                    $row['type'] = 'update';
+                } else {
+                    // Item might have been deleted?
+                    $row['current_item'] = null;
+                    $row['type'] = 'unknown';
+                }
+            } else {
+                // New Item Request
+                $row['current_item'] = null;
+                $row['type'] = 'create';
+            }
+            
             $requests[] = $row;
         }
     }
