@@ -63,16 +63,21 @@
         function loadRequests() {
             fetch('../API/admin/getUpdateRequests.php')
                 .then(response => response.json())
-                .then(data => {
+                .then(response => {
                     const container = document.getElementById('requests-container');
                     container.innerHTML = '';
 
-                    if (data.error) {
-                        container.innerHTML = `<p style="color: var(--brand-danger); text-align: center;">${data.error}</p>`;
+                    if (response.success === false) {
+                        container.innerHTML = `<p style="color: var(--brand-danger); text-align: center;">${response.message}</p>`;
+                        if (response.redirect) {
+                            setTimeout(() => window.location.href = response.redirect, 2000);
+                        }
                         return;
                     }
 
-                    if (data.length === 0) {
+                    const data = response.data;
+
+                    if (!data || data.length === 0) {
                         container.innerHTML = `<p style="text-align: center; color: var(--text-secondary);">No pending update requests.</p>`;
                         return;
                     }
@@ -87,28 +92,25 @@
                         let diffHtml = '';
                         
                         // Compare fields to show diffs
-                        // We need to know what changed. The API returns the new values in updateItems.
-                        // We also need the old values. The API getUpdateRequests.php joins with items table.
-                        // Let's check the API response structure again.
-                        // The API returns: u.*, i.name as item_name, i.price as current_price, i.unit as current_unit, i.category as current_category, u.contributor_id, users.username as contributor_name
+                        const current = req.current_item || {};
                         
-                        if (req.name !== req.item_name) {
-                            diffHtml += createDiffBox('Name', req.item_name, req.name);
+                        if (req.name !== current.name) {
+                            diffHtml += createDiffBox('Name', current.name, req.name);
                         }
-                        if (req.price != req.current_price) { // loose comparison for numbers/strings
-                            diffHtml += createDiffBox('Price', 'Rs. ' + req.current_price, 'Rs. ' + req.price);
+                        if (parseFloat(req.price) !== parseFloat(current.price)) {
+                            diffHtml += createDiffBox('Price', 'Rs. ' + current.price, 'Rs. ' + req.price);
                         }
-                        if (req.unit !== req.current_unit) {
-                            diffHtml += createDiffBox('Unit', req.current_unit, req.unit);
+                        if (req.unit !== current.unit) {
+                            diffHtml += createDiffBox('Unit', current.unit, req.unit);
                         }
-                        if (req.category !== req.current_category) {
-                            diffHtml += createDiffBox('Category', req.current_category, req.category);
+                        if (req.category !== current.category) {
+                            diffHtml += createDiffBox('Category', current.category, req.category);
                         }
 
                         card.innerHTML = `
                             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
                                 <div>
-                                    <h3 style="margin: 0; color: var(--text-primary);">${req.item_name}</h3>
+                                    <h3 style="margin: 0; color: var(--text-primary);">${req.name}</h3>
                                     <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-secondary);">
                                         Requested by <span style="color: var(--brand-accent);">${req.contributor_name || 'Unknown'}</span> • ${date}
                                     </p>
