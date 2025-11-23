@@ -6,16 +6,16 @@ USE SastoMahango;
 -- Passwords are set to a placeholder hash (e.g., for 'password123') or plain text depending on your auth system. 
 -- Assuming you might hash them later or use a default dev password.
 INSERT INTO contributors (full_name, email, password, phone, last_login) VALUES
-('Aarav Sharma', 'aarav.sharma@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '9801111111', NOW()),
-('Sita Adhikari', 'sita.adhikari@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '9802222222', NOW()),
-('Ramesh Gupta', 'ramesh.gupta@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '9803333333', NOW()),
-('Gita Paudel', 'gita.paudel@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '9804444444', NOW()),
-('Hari Bahadur', 'hari.bahadur@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '9805555555', NOW()),
-('Maya Sherpa', 'maya.sherpa@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '9806666666', NOW()),
-('Binod Chaudhary', 'binod.c@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '9807777777', NOW()),
-('Rita Thapa', 'rita.thapa@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '9808888888', NOW()),
-('Suresh Karki', 'suresh.karki@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '9809999999', NOW()),
-('Anita Gurung', 'anita.gurung@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '9800000000', NOW());
+('Aarav Sharma', 'aarav.sharma@example.com', '$2y$12$6o7l//raYVC0UvQfuouzW.KuY77WorlC6QmGWCmAbsxwlddoBmQM.', '9801111111', NOW()),
+('Sita Adhikari', 'sita.adhikari@example.com', '$2y$12$6o7l//raYVC0UvQfuouzW.KuY77WorlC6QmGWCmAbsxwlddoBmQM.', '9802222222', NOW()),
+('Ramesh Gupta', 'ramesh.gupta@example.com', '$2y$12$6o7l//raYVC0UvQfuouzW.KuY77WorlC6QmGWCmAbsxwlddoBmQM.', '9803333333', NOW()),
+('Gita Paudel', 'gita.paudel@example.com', '$2y$12$6o7l//raYVC0UvQfuouzW.KuY77WorlC6QmGWCmAbsxwlddoBmQM.', '9804444444', NOW()),
+('Hari Bahadur', 'hari.bahadur@example.com', '$2y$12$6o7l//raYVC0UvQfuouzW.KuY77WorlC6QmGWCmAbsxwlddoBmQM.', '9805555555', NOW()),
+('Maya Sherpa', 'maya.sherpa@example.com', '$2y$12$6o7l//raYVC0UvQfuouzW.KuY77WorlC6QmGWCmAbsxwlddoBmQM.', '9806666666', NOW()),
+('Binod Chaudhary', 'binod.c@example.com', '$2y$12$6o7l//raYVC0UvQfuouzW.KuY77WorlC6QmGWCmAbsxwlddoBmQM.', '9807777777', NOW()),
+('Rita Thapa', 'rita.thapa@example.com', '$2y$12$6o7l//raYVC0UvQfuouzW.KuY77WorlC6QmGWCmAbsxwlddoBmQM.', '9808888888', NOW()),
+('Suresh Karki', 'suresh.karki@example.com', '$2y$12$6o7l//raYVC0UvQfuouzW.KuY77WorlC6QmGWCmAbsxwlddoBmQM.', '9809999999', NOW()),
+('Anita Gurung', 'anita.gurung@example.com', '$2y$12$6o7l//raYVC0UvQfuouzW.KuY77WorlC6QmGWCmAbsxwlddoBmQM.', '9800000000', NOW());
 
 -- 2. Feed 50 Demo Items
 INSERT INTO items (name, category, unit, price, previous_price, icon, created_by, tags, status, views) VALUES
