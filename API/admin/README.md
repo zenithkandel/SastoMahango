@@ -1,9 +1,19 @@
 # Admin API Documentation
 
-This folder contains APIs for administrative tasks, specifically for managing contributors.
+This folder contains APIs for administrative tasks, specifically for managing contributors and items.
 
 ## Base URL
 `/API/admin/`
+
+## Authentication
+All endpoints require an active Admin Session. If the session is invalid, the API returns:
+```json
+{
+  "success": false,
+  "message": "Unauthorized access. Please login as admin.",
+  "redirect": "../login.html"
+}
+```
 
 ## Endpoints
 
@@ -28,7 +38,30 @@ Retrieves a list of all contributors.
   }
   ```
 
-### 2. Update Contributor
+### 2. Add Contributor
+Creates a new contributor account.
+
+- **URL:** `addContributor.php`
+- **Method:** `POST`
+- **Body (JSON):**
+  ```json
+  {
+    "full_name": "Jane Doe",
+    "email": "jane@example.com",
+    "password": "securePassword123",
+    "phone": "9800000000"
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Contributor added successfully",
+    "id": 2
+  }
+  ```
+
+### 3. Update Contributor
 Updates an existing contributor's details.
 
 - **URL:** `updateContributor.php`
@@ -50,7 +83,7 @@ Updates an existing contributor's details.
   }
   ```
 
-### 3. Delete Contributor
+### 4. Delete Contributor
 Deletes a contributor from the system.
 
 - **URL:** `deleteContributor.php`
@@ -66,5 +99,99 @@ Deletes a contributor from the system.
   {
     "success": true,
     "message": "Contributor deleted successfully"
+  }
+  ```
+
+### 5. Get Items
+Retrieves a list of all items in the database.
+
+- **URL:** `getItems.php`
+- **Method:** `GET`
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "data": [
+      {
+        "id": 101,
+        "name": "Tomato Big",
+        "category": "Vegetables",
+        "price": "85.00",
+        "unit": "kg",
+        "icon": "fa-carrot",
+        "status": "active",
+        "views": 120,
+        "last_updated": "2023-11-23 10:00:00"
+      }
+    ]
+  }
+  ```
+
+### 6. Add Item
+Directly adds a new item to the database (Admin only).
+
+- **URL:** `addItem.php`
+- **Method:** `POST`
+- **Body (JSON):**
+  ```json
+  {
+    "name": "Cauliflower",
+    "category": "Vegetables",
+    "price": 60,
+    "unit": "kg",
+    "icon": "fa-leaf",
+    "status": "active"
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Item added successfully",
+    "id": 102
+  }
+  ```
+
+### 7. Update Item
+Updates an existing item. Automatically archives the old price to `previous_price`.
+
+- **URL:** `updateItem.php`
+- **Method:** `POST`
+- **Body (JSON):**
+  ```json
+  {
+    "id": 101,
+    "name": "Tomato Big",
+    "category": "Vegetables",
+    "price": 90,
+    "unit": "kg",
+    "icon": "fa-carrot",
+    "status": "active"
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Item updated successfully"
+  }
+  ```
+
+### 8. Delete Item
+Permanently removes an item from the database.
+
+- **URL:** `deleteItem.php`
+- **Method:** `POST`
+- **Body (JSON):**
+  ```json
+  {
+    "id": 101
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Item deleted successfully"
   }
   ```
