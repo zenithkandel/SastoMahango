@@ -60,7 +60,7 @@ if (abs($price - $currentPrice) > 0.001) {
 }
 
 // 4. Update Database
-// We explicitly update last_updated to NOW() and set updated_by to the user ID
+// We explicitly update last_updated to NOW() and set modified_by to the user ID
 $sql = "UPDATE items SET 
         name = ?, 
         category = ?, 
@@ -70,7 +70,7 @@ $sql = "UPDATE items SET
         icon = ?, 
         tags = ?, 
         last_updated = NOW(), 
-        updated_by = ? 
+        modified_by = ? 
         WHERE id = ?";
 
 $updateStmt = $conn->prepare($sql);
