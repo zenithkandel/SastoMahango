@@ -61,92 +61,134 @@
         </div>
     </div>
 
-    <!-- New Item 1 -->
-    <div class="card">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-            <div>
-                <h3 style="margin: 0; color: var(--text-primary);">Local Ghee (Pure)</h3>
-                <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-secondary);">
-                    Submitted by <span style="color: var(--brand-accent);">Alice Smith</span> • 1 day ago
-                </p>
-            </div>
-            <div style="display: flex; gap: 0.5rem;">
-                <button class="btn-submit" style="width: auto; padding: 0.5rem 1rem; background: var(--brand-success);">
-                    <i class="fas fa-check"></i> Approve
-                </button>
-                <button class="btn-submit" style="width: auto; padding: 0.5rem 1rem; background: var(--brand-danger);">
-                    <i class="fas fa-times"></i> Reject
-                </button>
-            </div>
-        </div>
-
-        <div class="item-preview">
-            <div class="item-icon">
-                <i class="fas fa-bottle-droplet"></i>
-            </div>
-            <div class="item-details">
-                <div class="detail-group">
-                    <label>Category</label>
-                    <span>Dairy</span>
-                </div>
-                <div class="detail-group">
-                    <label>Price</label>
-                    <span>Rs. 1200</span>
-                </div>
-                <div class="detail-group">
-                    <label>Unit</label>
-                    <span>Liter</span>
-                </div>
-                <div class="detail-group" style="grid-column: span 2;">
-                    <label>Tags</label>
-                    <span>Pure, Cow, Local, Kavre</span>
-                </div>
-            </div>
-        </div>
+    <div id="requests-container">
+        <p style="text-align: center; color: var(--text-secondary);">Loading requests...</p>
     </div>
 
-    <!-- New Item 2 -->
-    <div class="card">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-            <div>
-                <h3 style="margin: 0; color: var(--text-primary);">Red Apple (Mustang)</h3>
-                <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-secondary);">
-                    Submitted by <span style="color: var(--brand-accent);">Zenith Kandel</span> • 2 days ago
-                </p>
-            </div>
-            <div style="display: flex; gap: 0.5rem;">
-                <button class="btn-submit" style="width: auto; padding: 0.5rem 1rem; background: var(--brand-success);">
-                    <i class="fas fa-check"></i> Approve
-                </button>
-                <button class="btn-submit" style="width: auto; padding: 0.5rem 1rem; background: var(--brand-danger);">
-                    <i class="fas fa-times"></i> Reject
-                </button>
-            </div>
-        </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', loadRequests);
 
-        <div class="item-preview">
-            <div class="item-icon">
-                <i class="fas fa-apple-alt"></i>
-            </div>
-            <div class="item-details">
-                <div class="detail-group">
-                    <label>Category</label>
-                    <span>Fruits</span>
-                </div>
-                <div class="detail-group">
-                    <label>Price</label>
-                    <span>Rs. 350</span>
-                </div>
-                <div class="detail-group">
-                    <label>Unit</label>
-                    <span>kg</span>
-                </div>
-                <div class="detail-group" style="grid-column: span 2;">
-                    <label>Tags</label>
-                    <span>Fresh, Mustang, Organic</span>
-                </div>
-            </div>
-        </div>
-    </div>
+        function loadRequests() {
+            fetch('../API/admin/getUpdateRequests.php')
+                .then(response => response.json())
+                .then(response => {
+                    const container = document.getElementById('requests-container');
+                    container.innerHTML = '';
+
+                    if (response.success === false) {
+                        container.innerHTML = `<p style="color: var(--brand-danger); text-align: center;">${response.message}</p>`;
+                        if (response.redirect) {
+                            setTimeout(() => window.location.href = response.redirect, 2000);
+                        }
+                        return;
+                    }
+
+                    const data = response.data;
+                    // Filter for New Item Requests (targetID == 0)
+                    const newItems = data.filter(req => parseInt(req.targetID) === 0);
+
+                    if (newItems.length === 0) {
+                        container.innerHTML = `<p style="text-align: center; color: var(--text-secondary);">No pending new item requests.</p>`;
+                        return;
+                    }
+
+                    newItems.forEach(req => {
+                        const card = document.createElement('div');
+                        card.className = 'card';
+                        
+                        const date = new Date(req.created_at).toLocaleString();
+                        const iconClass = req.icon || 'fa-box';
+
+                        card.innerHTML = `
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <div>
+                                    <h3 style="margin: 0; color: var(--text-primary);">${req.name}</h3>
+                                    <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-secondary);">
+                                        Submitted by <span style="color: var(--brand-accent);">${req.contributor_name || 'Unknown'}</span> • ${date}
+                                    </p>
+                                </div>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button onclick="approveRequest(${req.id})" class="btn-submit" style="width: auto; padding: 0.5rem 1rem; background: var(--brand-success);">
+                                        <i class="fas fa-check"></i> Approve
+                                    </button>
+                                    <button onclick="rejectRequest(${req.id})" class="btn-submit" style="width: auto; padding: 0.5rem 1rem; background: var(--brand-danger);">
+                                        <i class="fas fa-times"></i> Reject
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="item-preview">
+                                <div class="item-icon">
+                                    <i class="fas ${iconClass}"></i>
+                                </div>
+                                <div class="item-details">
+                                    <div class="detail-group">
+                                        <label>Category</label>
+                                        <span>${req.category}</span>
+                                    </div>
+                                    <div class="detail-group">
+                                        <label>Price</label>
+                                        <span>Rs. ${req.price}</span>
+                                    </div>
+                                    <div class="detail-group">
+                                        <label>Unit</label>
+                                        <span>${req.unit}</span>
+                                    </div>
+                                    <div class="detail-group" style="grid-column: span 2;">
+                                        <label>Tags</label>
+                                        <span>${req.tags || '-'}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        container.appendChild(card);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('requests-container').innerHTML = '<p style="text-align: center; color: var(--brand-danger);">Error loading requests.</p>';
+                });
+        }
+
+        function approveRequest(id) {
+            if(!confirm('Are you sure you want to approve this new item?')) return;
+
+            fetch('../API/admin/approveUpdate.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success) {
+                    alert('Item approved and created successfully!');
+                    loadRequests();
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(err => console.error(err));
+        }
+
+        function rejectRequest(id) {
+            if(!confirm('Are you sure you want to reject this new item?')) return;
+
+            fetch('../API/admin/rejectUpdate.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success) {
+                    alert('Request rejected.');
+                    loadRequests();
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(err => console.error(err));
+        }
+    </script>
 </body>
 </html>
