@@ -16,8 +16,10 @@ async function checkAuth() {
             // Update User Profile UI
             const userNameEl = document.querySelector('.user-name');
             const userAvatarEl = document.querySelector('.user-avatar');
+            const welcomeNameEl = document.getElementById('welcomeName');
             
             if (userNameEl) userNameEl.textContent = data.user_name;
+            if (welcomeNameEl) welcomeNameEl.textContent = data.user_name.split(' ')[0]; // First name only
             if (userAvatarEl) {
                 userAvatarEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.user_name)}&background=3b82f6&color=fff`;
             }
